@@ -2,7 +2,7 @@ package com.arukai.uajpspeak.activity;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
+import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
@@ -32,9 +32,6 @@ public class AboutFragment extends Fragment {
         menu.findItem(R.id.action_alphabet).setVisible(false);
         menu.findItem(R.id.action_about).setVisible(false);
         menu.findItem(R.id.action_gender_lang).setVisible(false);
-        if (getResources().getString(R.string.app_name).equals("ウクライナ語会話集")) {
-            menu.findItem(R.id.action_buy_pro).setVisible(false);
-        }
     }
 
     @Override

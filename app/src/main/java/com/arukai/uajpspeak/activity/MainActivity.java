@@ -6,14 +6,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.ContextThemeWrapper;
@@ -26,14 +18,29 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+
 import com.arukai.uajpspeak.R;
 import com.arukai.uajpspeak.model.NavDrawerItem;
+import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.common.util.ArrayUtils;
+import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.initialization.InitializationStatus;
+import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
 
 public class MainActivity extends AppCompatActivity implements FragmentDrawer.FragmentDrawerListener {
     private static String TAG = MainActivity.class.getSimpleName();
     public static String PACKAGE_NAME;
     public static Context context;
+    private AdView mAdView;
 
     public static int prev_position = 0;
     public static int current_position = 0;
@@ -54,6 +61,17 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        MobileAds.initialize(this, new OnInitializationCompleteListener() {
+            @Override
+            public void onInitializationComplete(InitializationStatus initializationStatus) {
+            }
+        });
+
+        mAdView = findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.loadAd(adRequest);
+
         PACKAGE_NAME = getApplicationContext().getPackageName();
         MainActivity.context = getApplicationContext();
         app_settings = getSharedPreferences(APP_SETTINGS, MODE_PRIVATE);
@@ -103,11 +121,7 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        if (getResources().getString(R.string.app_name).equals("ウクライナ語会話集 Pro")) {
-            getMenuInflater().inflate(R.menu.menu_main_pro, menu);
-        } else {
-            getMenuInflater().inflate(R.menu.menu_main, menu);
-        }
+        getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
 
@@ -230,14 +244,6 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
             return true;
         }
 
-        if(id == R.id.action_buy_pro){
-            String url = "market://details?id=com.arukai.uajpspeak.pro";
-            Intent i = new Intent(Intent.ACTION_VIEW);
-            i.setData(Uri.parse(url));
-            startActivity(i);
-            return true;
-        }
-
         return super.onOptionsItemSelected(item);
     }
 
@@ -250,32 +256,25 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
     }
 
     private String[] collectAllPhrases(){
-        String[] free_phrases = ArrayUtils.concat(
-                getResources().getStringArray(R.array.greetings),
-                getResources().getStringArray(R.array.signs),
-                getResources().getStringArray(R.array.troubleshooting),
-                getResources().getStringArray(R.array.transportation),
-                getResources().getStringArray(R.array.directions),
-                getResources().getStringArray(R.array.hotel),
-                getResources().getStringArray(R.array.numbers),
-                getResources().getStringArray(R.array.time),
-                getResources().getStringArray(R.array.weekdays),
-                getResources().getStringArray(R.array.months),
-                getResources().getStringArray(R.array.colors),
-                getResources().getStringArray(R.array.common_words)
+        String[] all_phrases = ArrayUtils.concat(
+            getResources().getStringArray(R.array.greetings),
+            getResources().getStringArray(R.array.signs),
+            getResources().getStringArray(R.array.troubleshooting),
+            getResources().getStringArray(R.array.transportation),
+            getResources().getStringArray(R.array.directions),
+            getResources().getStringArray(R.array.hotel),
+            getResources().getStringArray(R.array.numbers),
+            getResources().getStringArray(R.array.time),
+            getResources().getStringArray(R.array.weekdays),
+            getResources().getStringArray(R.array.months),
+            getResources().getStringArray(R.array.colors),
+            getResources().getStringArray(R.array.common_words),
+            getResources().getStringArray(R.array.restaurant),
+            getResources().getStringArray(R.array.love),
+            getResources().getStringArray(R.array.shopping),
+            getResources().getStringArray(R.array.clothing),
+            getResources().getStringArray(R.array.drugstore)
         );
-        if (getResources().getString(R.string.app_name).equals("ウクライナ語会話集 Pro")) {
-            all_phrases = ArrayUtils.concat(
-                    free_phrases,
-                    getResources().getStringArray(R.array.restaurant),
-                    getResources().getStringArray(R.array.love),
-                    getResources().getStringArray(R.array.shopping),
-                    getResources().getStringArray(R.array.clothing),
-                    getResources().getStringArray(R.array.drugstore)
-            );
-        } else {
-            all_phrases = free_phrases;
-        }
         return all_phrases;
     }
 

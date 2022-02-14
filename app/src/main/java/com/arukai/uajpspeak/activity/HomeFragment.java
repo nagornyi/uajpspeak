@@ -3,13 +3,13 @@ package com.arukai.uajpspeak.activity;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.ActionBar;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.util.Log;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.appcompat.app.ActionBar;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,7 +22,6 @@ import com.arukai.uajpspeak.model.DataObject;
 
 import java.util.ArrayList;
 
-import static android.content.ContentValues.TAG;
 import static com.arukai.uajpspeak.activity.MainActivity.category;
 import static com.arukai.uajpspeak.activity.MainActivity.drawerFragment;
 import static com.arukai.uajpspeak.activity.MainActivity.fragment;
@@ -74,7 +73,6 @@ public class HomeFragment extends Fragment {
     public static HomeFragment newInstance(int index, String[] selected_phrases) {
         HomeFragment f = new HomeFragment();
         switch(MainActivity.app_settings.getInt("gender_lang", 0)){
-            case 0: gender = 'm'; break;
             case 1: gender = 'f'; break;
             default: gender = 'm'; break;
         }
@@ -97,10 +95,6 @@ public class HomeFragment extends Fragment {
 
         mRecyclerView = rootView.findViewById(R.id.my_recycler_view);
         mRecyclerView.setHasFixedSize(true);
-
-        //mRecyclerView.setItemViewCacheSize(20);
-        //mRecyclerView.setDrawingCacheEnabled(true);
-        //mRecyclerView.setDrawingCacheQuality(View.DRAWING_CACHE_QUALITY_HIGH);
 
         mLayoutManager = new LinearLayoutManager(mRecyclerView.getContext());
         mRecyclerView.setLayoutManager(mLayoutManager);

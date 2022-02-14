@@ -3,7 +3,6 @@
     android:layout_height="match_parent"
     android:background="@android:color/white">
 
-
     <RelativeLayout
         android:id="@+id/nav_header_container"
         android:layout_width="match_parent"
@@ -29,7 +28,6 @@
             android:src="@drawable/large_flag_ua"
             android:scaleType="fitEnd"
             android:layout_centerInParent="true" />
-
     </RelativeLayout>
 
     <TextView
@@ -40,32 +38,16 @@
         android:layout_alignParentStart="true"
         android:layout_below="@+id/nav_header_container"
         android:paddingTop="10sp"
-        android:paddingBottom="5sp"
+        android:paddingBottom="10sp"
         android:paddingRight="10sp"
         android:paddingLeft="12sp"
         android:textSize="14sp"
         android:layout_alignParentLeft="true" />
 
-    <TextView
-        android:id="@+id/buyPro"
-        android:drawableLeft="@drawable/ic_pro_hexagon"
-        android:drawablePadding="5sp"
-        android:textColor="#000"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/phrasesCount"
-        android:paddingBottom="10sp"
-        android:paddingRight="10sp"
-        android:paddingLeft="10sp"
-        android:textSize="14sp"
-        android:layout_alignParentLeft="true"
-        android:drawableStart="@drawable/ic_pro_hexagon" />
-
-    <android.support.v7.widget.RecyclerView
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/drawerList"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/buyPro" />
+        android:layout_below="@id/phrasesCount" />
 
 </RelativeLayout>

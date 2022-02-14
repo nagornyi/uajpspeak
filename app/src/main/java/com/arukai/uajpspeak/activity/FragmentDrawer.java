@@ -4,13 +4,13 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
+import androidx.fragment.app.Fragment;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.appcompat.widget.Toolbar;
 import android.view.GestureDetector;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -36,9 +36,7 @@ public class FragmentDrawer extends Fragment {
     public static NavigationDrawerAdapter adapter;
     private View containerView;
     private static String[] titles = null;
-    private static String[] titles_pro = null;
     private static int p_counter = 0;
-    private static int p_pro_counter = 0;
     private FragmentDrawerListener drawerListener;
     public static List<NavDrawerItem> activeData;
 
@@ -70,22 +68,12 @@ public class FragmentDrawer extends Fragment {
                 getActivity().getResources().getStringArray(R.array.weekdays).length +
                 getActivity().getResources().getStringArray(R.array.months).length +
                 getActivity().getResources().getStringArray(R.array.colors).length +
-                getActivity().getResources().getStringArray(R.array.common_words).length;
-
-        p_pro_counter = getActivity().getResources().getStringArray(R.array.restaurant).length +
+                getActivity().getResources().getStringArray(R.array.common_words).length +
+                getActivity().getResources().getStringArray(R.array.restaurant).length +
                 getActivity().getResources().getStringArray(R.array.love).length +
                 getActivity().getResources().getStringArray(R.array.shopping).length +
                 getActivity().getResources().getStringArray(R.array.clothing).length +
                 getActivity().getResources().getStringArray(R.array.drugstore).length;
-
-        if (getResources().getString(R.string.app_name).equalsIgnoreCase("ウクライナ語会話集 Pro")) {
-            for (int i = 0; i < titles_pro.length; i++) {
-                NavDrawerItem navItem = new NavDrawerItem();
-                navItem.setTitle(titles_pro[i]);
-                data.add(navItem);
-            }
-            p_counter += p_pro_counter;
-        }
 
         data.get(MainActivity.current_position).setSelected(true);
         return data;
@@ -97,7 +85,6 @@ public class FragmentDrawer extends Fragment {
 
         // drawer labels
         titles = getActivity().getResources().getStringArray(R.array.nav_drawer_labels);
-        titles_pro = getActivity().getResources().getStringArray(R.array.nav_drawer_labels_pro);
     }
 
     @Override
@@ -123,25 +110,8 @@ public class FragmentDrawer extends Fragment {
         }));
         layout.setOnClickListener(null);
 
-        TextView buy_pro_handler = layout.findViewById(R.id.buyPro);
         TextView phrases_count = layout.findViewById(R.id.phrasesCount);
-        if (getResources().getString(R.string.app_name).equals("ウクライナ語会話集 Pro")) {
-            buy_pro_handler.setVisibility(View.GONE);
-            phrases_count.setText(p_counter+"フレーズ（フルバージョン）");
-        } else {
-            phrases_count.setText(p_counter+"フレーズ（フリーバージョン）");
-            buy_pro_handler.setText("+"+p_pro_counter+"フレーズを追加するには、フルバージョンにアップグレードしてください");
-            View.OnClickListener buy_pro_listener = new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    String url = "market://details?id=com.arukai.uajpspeak.pro";
-                    Intent i = new Intent(Intent.ACTION_VIEW);
-                    i.setData(Uri.parse(url));
-                    startActivity(i);
-                }
-            };
-            buy_pro_handler.setOnClickListener(buy_pro_listener);
-        }
+        phrases_count.setText(p_counter+"フレーズ");
         return layout;
     }
 

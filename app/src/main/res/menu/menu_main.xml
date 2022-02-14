@@ -28,10 +28,4 @@
         android:title="@string/action_about"
         android:orderInCategory="400"
         app:showAsAction="never" />
-
-    <item
-        android:id="@+id/action_buy_pro"
-        android:title="@string/action_buy_pro"
-        android:orderInCategory="500"
-        app:showAsAction="never" />
 </menu>
