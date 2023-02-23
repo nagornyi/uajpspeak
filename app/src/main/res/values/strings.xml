@@ -1,9 +1,9 @@
 <resources>
     <string name="app_name">ウクライナ語会話集</string>
-    <string name="app_company">(C) 2016-2022 Artem Nagornyi</string>
+    <string name="app_company">(C) 2016-2023 Artem Nagornyi</string>
     <string name="app_name_ua">Японсько-Український Розмовник</string>
-    <string name="app_version">バージョン3.0</string>
-    <string name="app_version_ua">Версія 3.0</string>
+    <string name="app_version">バージョン3.1</string>
+    <string name="app_version_ua">Версія 3.1</string>
     <string name="action_about">このアプリについて</string>
     <string name="action_alphabet">ウクライナ語アルファベット</string>
     <string name="action_buy_pro">フルバージョンにアップグレードする</string>
@@ -40,6 +40,7 @@
         <item>@string/nav_item_shopping</item>
         <item>@string/nav_item_clothing</item>
         <item>@string/nav_item_drugstore</item>
+        <item>@string/nav_item_driving</item>
     </string-array>
 
     <string name="nav_item_all">すべてのフレーズ</string>
@@ -60,6 +61,7 @@
     <string name="nav_item_shopping">ショッピング</string>
     <string name="nav_item_clothing">衣類の種類</string>
     <string name="nav_item_drugstore">ドラッグストア</string>
+    <string name="nav_item_driving">ドライブ</string>
 
     <!-- sections  -->
     <string name="title_all">すべてのフレーズ</string>
@@ -80,6 +82,7 @@
     <string name="title_shopping">ショッピング</string>
     <string name="title_clothing">衣類の種類</string>
     <string name="title_drugstore">ドラッグストア</string>
+    <string name="title_driving">ドライブ</string>
 
     <string-array name="gender_lang_selection">
         <item>男言葉</item>
@@ -705,7 +708,7 @@
         <item>400/帽子/Капелю*х</item>
         <item>401/スーツ/Костю*м</item>
         <item>402/ネクタイ/Крава*тка</item>
-        <item>403/ベルト/Ремі*нь</item>
+        <item>403/ベルト/Ре*мінь</item>
         <item>404/コート/Пальто*</item>
         <item>405/セーター/Све*тр</item>
         <item>406/ジャケット/Ку*ртка</item>
@@ -747,5 +750,19 @@
         <item>439/インスタントの離乳食はありますか？/У вас є дитя*че харчува*ння?</item>
     </string-array>
 
-    <string name="last_number">439</string>
+    <string-array name="driving">
+        <item>440/レンタカーお願いします。/Я хо*чу орендува*ти автомобі*ль.</item>
+        <item>441/保険入れますか?/Я мо*жу отри*мати автомобі*льну страхо*вку?</item>
+        <item>442/免許証を持っていますか?/У ва*с є воді*йське посві*дчення?</item>
+        <item>443/止まれ（とまれ）/Зупи*нка</item>
+        <item>444/一方通行/Односторо*нній ру*х</item>
+        <item>445/徐行/Попере*дження про* небезпе*ку</item>
+        <item>446/駐車禁止/Стоя*нку заборо*нено</item>
+        <item>447/制限速度/Обме*ження шви*дкості</item>
+        <item>448/ガソリンスタンド/Автозапра*вна ста*нція</item>
+        <item>449/ガソリン/Бензи*н</item>
+        <item>450/軽油（ディーゼル）/Ди*зель</item>
+    </string-array>
+
+    <string name="last_number">450</string>
 </resources>

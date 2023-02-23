@@ -273,7 +273,8 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
             getResources().getStringArray(R.array.love),
             getResources().getStringArray(R.array.shopping),
             getResources().getStringArray(R.array.clothing),
-            getResources().getStringArray(R.array.drugstore)
+            getResources().getStringArray(R.array.drugstore),
+            getResources().getStringArray(R.array.driving)
         );
         return all_phrases;
     }
@@ -467,6 +468,10 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
             case 17:
                 fragment = HomeFragment.newInstance(R.array.drugstore);
                 category = getString(R.string.title_drugstore);
+                break;
+            case 18:
+                fragment = HomeFragment.newInstance(R.array.driving);
+                category = getString(R.string.title_driving);
                 break;
             default:
                 break;
