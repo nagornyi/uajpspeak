@@ -1,14 +1,14 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 32
+    compileSdkVersion 33
 
     defaultConfig {
         applicationId "com.arukai.uajpspeak"
-        minSdkVersion 16
-        targetSdkVersion 32
-        versionCode 13
-        versionName "3.0"
+        minSdkVersion 21
+        targetSdkVersion 33
+        versionCode 14
+        versionName "3.1"
     }
     buildTypes {
         release {
@@ -21,16 +21,15 @@ android {
             zipAlignEnabled true
         }
     }
+    namespace 'com.arukai.uajpspeak'
 }
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    implementation 'androidx.appcompat:appcompat:1.4.1'
+    implementation 'androidx.appcompat:appcompat:1.6.1'
     implementation 'androidx.recyclerview:recyclerview:1.2.1'
     implementation 'androidx.cardview:cardview:1.0.0'
     implementation 'com.daimajia.easing:library:2.1@aar'
     implementation 'com.daimajia.androidanimations:library:2.3@aar'
-    implementation 'com.google.android.gms:play-services-ads:20.5.0'
-    def billing_version = "4.0.0"
-    implementation "com.android.billingclient:billing:$billing_version"
+    implementation 'com.google.android.gms:play-services-ads:21.5.0'
 }

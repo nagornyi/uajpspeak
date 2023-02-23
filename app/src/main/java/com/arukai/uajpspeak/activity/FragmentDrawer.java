@@ -73,7 +73,8 @@ public class FragmentDrawer extends Fragment {
                 getActivity().getResources().getStringArray(R.array.love).length +
                 getActivity().getResources().getStringArray(R.array.shopping).length +
                 getActivity().getResources().getStringArray(R.array.clothing).length +
-                getActivity().getResources().getStringArray(R.array.drugstore).length;
+                getActivity().getResources().getStringArray(R.array.drugstore).length +
+                getActivity().getResources().getStringArray(R.array.driving).length;
 
         data.get(MainActivity.current_position).setSelected(true);
         return data;
