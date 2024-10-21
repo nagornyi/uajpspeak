@@ -1,9 +1,9 @@
 <resources>
     <string name="app_name">ウクライナ語会話集</string>
-    <string name="app_company">(C) 2016-2023 Artem Nagornyi</string>
+    <string name="app_company">(C) 2016-2024 Artem Nagornyi</string>
     <string name="app_name_ua">Японсько-Український Розмовник</string>
-    <string name="app_version">バージョン3.1</string>
-    <string name="app_version_ua">Версія 3.1</string>
+    <string name="app_version">バージョン3.2</string>
+    <string name="app_version_ua">Версія 3.2</string>
     <string name="action_about">このアプリについて</string>
     <string name="action_alphabet">ウクライナ語アルファベット</string>
     <string name="action_buy_pro">フルバージョンにアップグレードする</string>
@@ -41,6 +41,7 @@
         <item>@string/nav_item_clothing</item>
         <item>@string/nav_item_drugstore</item>
         <item>@string/nav_item_driving</item>
+        <item>@string/nav_item_bank</item>
     </string-array>
 
     <string name="nav_item_all">すべてのフレーズ</string>
@@ -62,6 +63,7 @@
     <string name="nav_item_clothing">衣類の種類</string>
     <string name="nav_item_drugstore">ドラッグストア</string>
     <string name="nav_item_driving">ドライブ</string>
+    <string name="nav_item_bank">銀行</string>
 
     <!-- sections  -->
     <string name="title_all">すべてのフレーズ</string>
@@ -83,6 +85,7 @@
     <string name="title_clothing">衣類の種類</string>
     <string name="title_drugstore">ドラッグストア</string>
     <string name="title_driving">ドライブ</string>
+    <string name="title_bank">銀行</string>
 
     <string-array name="gender_lang_selection">
         <item>男言葉</item>
@@ -764,5 +767,26 @@
         <item>450/軽油（ディーゼル）/Ди*зель</item>
     </string-array>
 
-    <string name="last_number">450</string>
+    <string-array name="bank">
+        <item>451/私は口座を開設したいです。/Я хо*чу відкри*ти раху*нок.</item>
+        <item>452/私は貯蓄口座を開設したいです。/Я хо*чу відкри*ти ощад*ний раху*нок.</item>
+        <item>453/私は当座預金口座を開設したいです。/Я хо*чу відкри*ти пото*чний раху*нок.</item>
+        <item>454/口座を開設するのに必要なものは何ですか？/Що мені* потрі*бно для* відкриття* раху*нку?</item>
+        <item>455/パスポートと住民票が必要です。/Вам знадоби*ться па*спорт та* ідентифікаці*йний код.</item>
+        <item>456/初期預金はいくらですか？/Яки*й мініма*льний депози*т?</item>
+        <item>457/初期預金は100グリブナです。/Мініма*льний депози*т - 100 гри*вень.</item>
+        <item>458/お金を預けたいです。/Я хо*чу внести* гро*ші на* раху*нок.</item>
+        <item>459/お金を引き出したいです。/Я хо*чу зня*ти гро*ші з раху*нку.</item>
+        <item>460/残高照会をお願いします。/Я хо*чу дізна*тися бала*нс свого* раху*нку.</item>
+        <item>461/両替をお願いします。/Будь ла*ска, обміня*йте мені* гро*ші.</item>
+        <item>462/ドルをグリブナに両替したいです。/Я хо*чу обміня*ти до*лари на* гри*вні.</item>
+        <item>463/手数料はいくらですか？/Яка* комі*сія?</item>
+        <item>464/ATMはどこにありますか？/Де* знахо*диться банкома*т?</item>
+        <item>465/営業時間は何時から何時までですか？/Яки*й у ва*с гра*фік робо*ти?</item>
+        <item>466/クレジットカードを作りたいです。/Я хо*чу оформи*ти креди*тну ка*ртку.</item>
+        <item>467m/ローンを申し込みたいのですが。/Я хоті*в би* пода*ти зая*вку на* креди*т.</item>
+        <item>467f/ローンを申し込みたいのですが。/Я хоті*ла би* пода*ти зая*вку на* креди*т.</item>
+    </string-array>
+
+    <string name="last_number">467</string>
 </resources>

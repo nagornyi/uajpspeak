@@ -1,6 +1,5 @@
 package com.arukai.uajpspeak.adapter;
 
-import android.os.Environment;
 import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,11 +9,9 @@ import android.widget.Filterable;
 import android.widget.TextView;
 
 import com.arukai.uajpspeak.R;
-import com.arukai.uajpspeak.activity.MainActivity;
 import com.arukai.uajpspeak.model.Abecadlo;
 import com.arukai.uajpspeak.model.DataObject;
 
-import java.io.File;
 import java.util.ArrayList;
 
 import static com.arukai.uajpspeak.activity.HomeFragment.gender;
@@ -86,12 +83,6 @@ public class MyRecyclerViewAdapter extends RecyclerView
             jp = part2;
             phonetic = abc.convert(part3);
             ukr = part3.replace("*", "");
-            //marking phrases without audio
-            int id = MainActivity.context.getResources().getIdentifier("a" + part1, "raw", MainActivity.PACKAGE_NAME);
-            String mFileName = Environment.getExternalStorageDirectory().getAbsolutePath();
-            mFileName += "/uajpspeak/" + "a" + part1 + ".3gp";
-            File mFile = new File(mFileName);
-            if (id == 0 && !mFile.exists()) {ukr = "#!A# "+ukr;}
         }
 
         holder.firstRow.setText(jp);

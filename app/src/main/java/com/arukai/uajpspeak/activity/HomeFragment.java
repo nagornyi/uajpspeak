@@ -122,41 +122,38 @@ public class HomeFragment extends Fragment {
         {
             mLayoutManager.scrollToPosition(index);
         }
-        mAdapter.setOnItemClickListener(new MyRecyclerViewAdapter.MyClickListener() {
-            @Override
-            public void onItemClick(int position, View v) {
-                if(MainActivity.isSearchOpened) {
-                    ActionBar action = ((MainActivity)getActivity()).getSupportActionBar();
-                    action.setDisplayShowCustomEnabled(false); //disable a custom view inside the actionbar
-                    action.setDisplayShowTitleEnabled(true); //show the title in the action bar
+        mAdapter.setOnItemClickListener((position, v) -> {
+            if(MainActivity.isSearchOpened) {
+                ActionBar action = ((MainActivity)getActivity()).getSupportActionBar();
+                action.setDisplayShowCustomEnabled(false); //disable a custom view inside the actionbar
+                action.setDisplayShowTitleEnabled(true); //show the title in the action bar
 
-                    //hides the keyboard
-                    final InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
-                    imm.hideSoftInputFromWindow(getView().getWindowToken(), 0);
+                //hides the keyboard
+                final InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(getView().getWindowToken(), 0);
 
-                    MainActivity.isSearchOpened = false;
-                }
+                MainActivity.isSearchOpened = false;
+            }
 
-                Fragment fragment;
-                String jpn = ((TextView)v.findViewById(R.id.textView)).getText().toString();
-                String ukr = ((TextView)v.findViewById(R.id.textView2)).getText().toString();
-                String phonetic = ((TextView)v.findViewById(R.id.textView3)).getText().toString();
-                fragment = ZoomFragment.newInstance(jpn, ukr, phonetic, getAudio(ukr));
-                if (fragment != null) {
-                    FragmentManager fragmentManager = getFragmentManager();
-                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                    fragmentTransaction.replace(R.id.container_body, fragment, "ZOOM");
-                    fragmentTransaction.addToBackStack(null).commit();
-                    ((MainActivity) getActivity()).setActionBarTitle("");
-                    drawerFragment.setDrawerState(false);
-                    drawerFragment.mDrawerToggle.setToolbarNavigationClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            onBackPressed();
-                        }
-                    });
-                    enableBackButton(true);
-                }
+            Fragment fragment;
+            String jpn = ((TextView)v.findViewById(R.id.textView)).getText().toString();
+            String ukr = ((TextView)v.findViewById(R.id.textView2)).getText().toString();
+            String phonetic = ((TextView)v.findViewById(R.id.textView3)).getText().toString();
+            fragment = ZoomFragment.newInstance(jpn, ukr, phonetic, getAudio(ukr));
+            if (fragment != null) {
+                FragmentManager fragmentManager = getFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.container_body, fragment, "ZOOM");
+                fragmentTransaction.addToBackStack(null).commit();
+                ((MainActivity) getActivity()).setActionBarTitle("");
+                drawerFragment.setDrawerState(false);
+                drawerFragment.mDrawerToggle.setToolbarNavigationClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        onBackPressed();
+                    }
+                });
+                enableBackButton(true);
             }
         });
     }

@@ -39,9 +39,9 @@ public class AlphabetFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_alphabet, container, false);
-        final TextView body = (TextView) rootView.findViewById(R.id.alphabetText);
+        final TextView body = rootView.findViewById(R.id.alphabetText);
         body.setText(Html.fromHtml(getString(R.string.alphabet_html)));
-        final ImageView imageView = (ImageView) rootView.findViewById(R.id.abetkaImg);
+        final ImageView imageView = rootView.findViewById(R.id.abetkaImg);
         YoYo.with(Techniques.FadeIn).duration(700).playOn(imageView);
         YoYo.with(Techniques.FadeIn).duration(700).playOn(body);
 

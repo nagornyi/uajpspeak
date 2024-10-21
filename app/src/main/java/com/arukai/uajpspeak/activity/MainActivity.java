@@ -2,9 +2,7 @@ package com.arukai.uajpspeak.activity;
 
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.SharedPreferences;
-import android.net.Uri;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -22,7 +20,6 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -33,8 +30,6 @@ import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.common.util.ArrayUtils;
 import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.ads.AdView;
-import com.google.android.gms.ads.initialization.InitializationStatus;
-import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
 
 public class MainActivity extends AppCompatActivity implements FragmentDrawer.FragmentDrawerListener {
     private static String TAG = MainActivity.class.getSimpleName();
@@ -62,10 +57,7 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        MobileAds.initialize(this, new OnInitializationCompleteListener() {
-            @Override
-            public void onInitializationComplete(InitializationStatus initializationStatus) {
-            }
+        MobileAds.initialize(this, initializationStatus -> {
         });
 
         mAdView = findViewById(R.id.adView);
@@ -77,36 +69,13 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
         app_settings = getSharedPreferences(APP_SETTINGS, MODE_PRIVATE);
         all_phrases = collectAllPhrases();
 
-// preparing external directory for recording
-//        if (!Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)){
-//            Log.d(TAG, "No SDCARD");
-//        } else {
-//            File directory = new File(Environment.getExternalStorageDirectory()+ File.separator+"uajpspeak/");
-//            directory.mkdirs();
-//            File file = new File(Environment.getExternalStorageDirectory()+ File.separator+"uajpspeak/LICENCE.txt");
-//            try {
-//                FileOutputStream os = new FileOutputStream(file, false);
-//                OutputStreamWriter out = new OutputStreamWriter(os);
-//                out.write("(C) Artem Nagornyi, 2016");
-//                out.close();
-//            } catch (Exception e) {
-//                e.printStackTrace();
-//            }
-//            MediaScannerConnection.scanFile(this,
-//                    new String[]{file.toString()}, null,
-//                    new MediaScannerConnection.OnScanCompletedListener() {
-//                        public void onScanCompleted(String path, Uri uri) {
-//                        }
-//                    });
-//        }
-
         Toolbar mToolbar = findViewById(R.id.toolbar);
 
         setSupportActionBar(mToolbar);
 
         drawerFragment = (FragmentDrawer)
                 getSupportFragmentManager().findFragmentById(R.id.fragment_navigation_drawer);
-        drawerFragment.setUp(R.id.fragment_navigation_drawer, (DrawerLayout) findViewById(R.id.drawer_layout), mToolbar);
+        drawerFragment.setUp(R.id.fragment_navigation_drawer, findViewById(R.id.drawer_layout), mToolbar);
         drawerFragment.setDrawerListener(this);
 
         // display the first navigation drawer view on app launch
@@ -156,12 +125,7 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
             // set the toolbar title
             setActionBarTitle(title);
             drawerFragment.setDrawerState(false);
-            drawerFragment.mDrawerToggle.setToolbarNavigationClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    onBackPressed();
-                }
-            });
+            drawerFragment.mDrawerToggle.setToolbarNavigationClickListener(v -> onBackPressed());
             enableBackButton(true);
 
             return true;
@@ -212,25 +176,17 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
 
             String positiveText = "OK";
             builder.setPositiveButton(positiveText,
-                    new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            editor.apply();
-                            HomeFragment home = (HomeFragment)
-                                    getSupportFragmentManager().findFragmentByTag("HOME");
-                            if (home != null && home.isVisible())
-                                displayView(current_position);
-                        }
+                    (dialog, which) -> {
+                        editor.apply();
+                        HomeFragment home = (HomeFragment)
+                                getSupportFragmentManager().findFragmentByTag("HOME");
+                        if (home != null && home.isVisible())
+                            displayView(current_position);
                     });
 
             String negativeText = "キャンセル";
             builder.setNegativeButton(negativeText,
-                    new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            editor.clear();
-                        }
-                    });
+                    (dialog, which) -> editor.clear());
 
             AlertDialog dialog = builder.create();
             // display dialog
@@ -274,7 +230,8 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
             getResources().getStringArray(R.array.shopping),
             getResources().getStringArray(R.array.clothing),
             getResources().getStringArray(R.array.drugstore),
-            getResources().getStringArray(R.array.driving)
+            getResources().getStringArray(R.array.driving),
+            getResources().getStringArray(R.array.bank)
         );
         return all_phrases;
     }
@@ -472,6 +429,10 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
             case 18:
                 fragment = HomeFragment.newInstance(R.array.driving);
                 category = getString(R.string.title_driving);
+                break;
+            case 19:
+                fragment = HomeFragment.newInstance(R.array.bank);
+                category = getString(R.string.title_bank);
                 break;
             default:
                 break;

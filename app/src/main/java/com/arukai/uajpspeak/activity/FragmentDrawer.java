@@ -1,8 +1,6 @@
 package com.arukai.uajpspeak.activity;
 
 import android.content.Context;
-import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -74,7 +72,8 @@ public class FragmentDrawer extends Fragment {
                 getActivity().getResources().getStringArray(R.array.shopping).length +
                 getActivity().getResources().getStringArray(R.array.clothing).length +
                 getActivity().getResources().getStringArray(R.array.drugstore).length +
-                getActivity().getResources().getStringArray(R.array.driving).length;
+                getActivity().getResources().getStringArray(R.array.driving).length +
+                getActivity().getResources().getStringArray(R.array.bank).length;
 
         data.get(MainActivity.current_position).setSelected(true);
         return data;
