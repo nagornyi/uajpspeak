@@ -1,13 +1,12 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 35
-
     defaultConfig {
         applicationId "com.arukai.uajpspeak"
+        compileSdk 35
         minSdkVersion 21
-        targetSdkVersion 33
-        versionCode 14
+        targetSdkVersion 34
+        versionCode 16
         versionName "3.2"
     }
     buildTypes {
@@ -18,7 +17,6 @@ android {
             jniDebuggable false
             renderscriptDebuggable false
             renderscriptOptimLevel 3
-            zipAlignEnabled true
         }
     }
     namespace 'com.arukai.uajpspeak'
@@ -32,8 +30,8 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.7.0'
     implementation 'androidx.recyclerview:recyclerview:1.3.2'
     implementation 'androidx.cardview:cardview:1.0.0'
-    implementation 'com.daimajia.easing:library:2.1@aar'
-    implementation 'com.daimajia.androidanimations:library:2.3@aar'
+    implementation 'com.daimajia.easing:library:2.4@aar'
+    implementation 'com.daimajia.androidanimations:library:2.4@aar'
     implementation 'com.google.android.gms:play-services-ads:23.4.0'
 }
 

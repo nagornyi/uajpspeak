@@ -8,6 +8,15 @@
     <string name="action_alphabet">ウクライナ語アルファベット</string>
     <string name="action_buy_pro">フルバージョンにアップグレードする</string>
     <string name="action_gender_lang">男言葉・女言葉</string>
+    <string name="action_download_ukr_voice">音声ダウンロード</string>
+    <string name="download_ukrainian_voice_title">ウクライナ語の音声データ</string>
+    <string name="download_ukrainian_voice_message">オフラインで使用するために、ウクライナ語の音声データをダウンロードしますか？</string>
+    <string name="ukrainian_voice_download_started">ウクライナ語の音声データのダウンロードが開始されました。まもなくアプリで使用できるようになります。</string>
+    <string name="ukrainian_voice_download_failed">ダウンロードの開始に失敗しました</string>
+    <string name="yes">はい</string>
+    <string name="no">いいえ</string>
+    <string name="cancel">キャンセル</string>
+    <string name="ok">OK</string>
     <string name="action_search">サーチ</string>
     <string name="drawer_open">開</string>
     <string name="drawer_close">閉</string>

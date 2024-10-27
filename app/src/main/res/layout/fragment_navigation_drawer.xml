@@ -6,14 +6,14 @@
     <RelativeLayout
         android:id="@+id/nav_header_container"
         android:layout_width="match_parent"
-        android:layout_height="100sp"
+        android:layout_height="100dp"
         android:layout_alignParentTop="true"
         android:clickable="false"
         android:background="@color/colorPrimary">
 
         <ImageView
-            android:layout_width="200sp"
-            android:layout_height="75sp"
+            android:layout_width="200dp"
+            android:layout_height="75dp"
             android:id="@+id/banner"
             android:clickable="false"
             android:src="@drawable/large_flag_jp"
@@ -21,8 +21,8 @@
             android:layout_centerInParent="true" />
 
         <ImageView
-            android:layout_width="200sp"
-            android:layout_height="75sp"
+            android:layout_width="200dp"
+            android:layout_height="75dp"
             android:id="@+id/banner1"
             android:clickable="false"
             android:src="@drawable/large_flag_ua"
@@ -37,11 +37,11 @@
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_below="@+id/nav_header_container"
-        android:paddingTop="10sp"
-        android:paddingBottom="10sp"
-        android:paddingRight="10sp"
-        android:paddingLeft="12sp"
-        android:textSize="14sp"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:paddingRight="10dp"
+        android:paddingLeft="12dp"
+        android:textSize="14dp"
         android:layout_alignParentLeft="true" />
 
     <androidx.recyclerview.widget.RecyclerView

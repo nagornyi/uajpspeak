@@ -45,6 +45,7 @@ public class ZoomFragment extends Fragment {
         menu.findItem(R.id.action_search).setVisible(false);
         menu.findItem(R.id.action_alphabet).setVisible(false);
         menu.findItem(R.id.action_about).setVisible(false);
+        menu.findItem(R.id.action_download_ukr_voice).setVisible(false);
         menu.findItem(R.id.action_gender_lang).setVisible(false);
     }
 
@@ -68,7 +69,7 @@ public class ZoomFragment extends Fragment {
 
         View.OnClickListener l = v -> t1 = new TextToSpeech(getActivity().getApplicationContext(), status -> {
             if (status != TextToSpeech.ERROR) {
-                t1.setLanguage(new Locale("uk_UA"));
+                t1.setLanguage(new Locale("uk"));
                 t1.setSpeechRate(0.5f);
                 t1.speak(ukrainian, TextToSpeech.QUEUE_FLUSH, null);
             }

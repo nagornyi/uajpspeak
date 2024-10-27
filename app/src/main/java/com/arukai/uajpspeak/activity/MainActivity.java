@@ -1,7 +1,6 @@
 package com.arukai.uajpspeak.activity;
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.Editable;
@@ -31,7 +30,16 @@ import com.google.android.gms.common.util.ArrayUtils;
 import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.ads.AdView;
 
-public class MainActivity extends AppCompatActivity implements FragmentDrawer.FragmentDrawerListener {
+import android.content.Intent;
+import android.speech.tts.TextToSpeech;
+import android.util.Log;
+import android.widget.Toast;
+
+import java.util.Locale;
+
+public class MainActivity
+        extends AppCompatActivity
+        implements FragmentDrawer.FragmentDrawerListener, TextToSpeech.OnInitListener {
     private static String TAG = MainActivity.class.getSimpleName();
     public static String PACKAGE_NAME;
     public static Context context;
@@ -51,6 +59,7 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
     private EditText editSearch;
     public static String[] all_phrases;
     public static FragmentDrawer drawerFragment;
+    private TextToSpeech textToSpeech;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,6 +89,25 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
 
         // display the first navigation drawer view on app launch
         displayView(0);
+
+        // Initialize TextToSpeech
+        textToSpeech = new TextToSpeech(this, this);
+    }
+
+    @Override
+    public void onInit(int status) {
+        if (status == TextToSpeech.SUCCESS) {
+            // Set Ukrainian language
+            int result = textToSpeech.setLanguage(new Locale("uk"));
+            // Log whether language is available or not
+            if (result == TextToSpeech.LANG_MISSING_DATA || result == TextToSpeech.LANG_NOT_SUPPORTED) {
+                Log.e("TTS", "Ukrainian language data is missing or not supported.");
+            } else {
+                Log.i("TTS", "Ukrainian language data is available.");
+            }
+        } else {
+            Log.e("TTS", "TextToSpeech initialization failed.");
+        }
     }
 
     @Override
@@ -131,6 +159,12 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
             return true;
         }
 
+        if (id == R.id.action_download_ukr_voice) {
+            showDownloadUkrainianVoiceDialog();
+
+            return true;
+        }
+
         if (id == R.id.action_alphabet) {
             if(isSearchOpened){ //test if the search is open
                 hideSearchBar();
@@ -167,14 +201,9 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
             //list of items
             String[] items = getResources().getStringArray(R.array.gender_lang_selection);
             builder.setSingleChoiceItems(items, app_settings.getInt("gender_lang", 0),
-                    new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            editor.putInt("gender_lang", which);
-                        }
-                    });
+                    (dialog, which) -> editor.putInt("gender_lang", which));
 
-            String positiveText = "OK";
+            String positiveText = getString(R.string.ok);
             builder.setPositiveButton(positiveText,
                     (dialog, which) -> {
                         editor.apply();
@@ -184,7 +213,7 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
                             displayView(current_position);
                     });
 
-            String negativeText = "キャンセル";
+            String negativeText = getString(R.string.cancel);
             builder.setNegativeButton(negativeText,
                     (dialog, which) -> editor.clear());
 
@@ -208,6 +237,30 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
             hideSearchBar();
         } else { //open the search entry
             openSearchBar();
+        }
+    }
+
+    private void showDownloadUkrainianVoiceDialog() {
+        new AlertDialog.Builder(new ContextThemeWrapper(this, R.style.AlertDialogCustom))
+                .setTitle(R.string.download_ukrainian_voice_title)
+                .setMessage(R.string.download_ukrainian_voice_message)
+                .setPositiveButton(R.string.yes, (dialog, which) -> {
+                    downloadUkrainianVoiceData();
+                })
+                .setNegativeButton(R.string.no, (dialog, which) -> {
+                })
+                .show();
+    }
+
+    private void downloadUkrainianVoiceData() {
+        Intent installIntent = new Intent();
+        installIntent.setAction(TextToSpeech.Engine.ACTION_INSTALL_TTS_DATA);
+        try {
+            startActivity(installIntent);
+        } catch (Exception e) {
+            // Display the failure message
+            Toast.makeText(this, R.string.ukrainian_voice_download_failed, Toast.LENGTH_SHORT).show();
+            Log.e("TTS", "Error starting download activity: " + e.getMessage());
         }
     }
 

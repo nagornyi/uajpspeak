@@ -24,8 +24,14 @@
         app:showAsAction="never" />
 
     <item
+        android:id="@+id/action_download_ukr_voice"
+        android:title="@string/action_download_ukr_voice"
+        android:orderInCategory="400"
+        app:showAsAction="never" />
+
+    <item
         android:id="@+id/action_about"
         android:title="@string/action_about"
-        android:orderInCategory="400"
+        android:orderInCategory="500"
         app:showAsAction="never" />
 </menu>
