@@ -2,19 +2,10 @@
     <string name="app_name">ウクライナ語会話集</string>
     <string name="app_company">(C) 2016-2024 Artem Nagornyi</string>
     <string name="app_name_ua">Японсько-Український Розмовник</string>
-    <string name="app_version">バージョン3.2</string>
-    <string name="app_version_ua">Версія 3.2</string>
     <string name="action_about">このアプリについて</string>
     <string name="action_alphabet">ウクライナ語アルファベット</string>
     <string name="action_buy_pro">フルバージョンにアップグレードする</string>
     <string name="action_gender_lang">男言葉・女言葉</string>
-    <string name="action_download_ukr_voice">音声ダウンロード</string>
-    <string name="download_ukrainian_voice_title">ウクライナ語の音声データ</string>
-    <string name="download_ukrainian_voice_message">オフラインで使用するために、ウクライナ語の音声データをダウンロードしますか？</string>
-    <string name="ukrainian_voice_download_started">ウクライナ語の音声データのダウンロードが開始されました。まもなくアプリで使用できるようになります。</string>
-    <string name="ukrainian_voice_download_failed">ダウンロードの開始に失敗しました</string>
-    <string name="yes">はい</string>
-    <string name="no">いいえ</string>
     <string name="cancel">キャンセル</string>
     <string name="ok">OK</string>
     <string name="action_search">サーチ</string>
@@ -22,12 +13,6 @@
     <string name="drawer_close">閉</string>
     <string name="title_about">このアプリについて</string>
     <string name="title_alphabet">アルファベット</string>
-
-    <!-- real ad units -->
-    <string name="main_screen_ad_id">ca-app-pub-5925166783691550/4426793610</string>
-
-    <!-- test ad units -->
-<!--    <string name="main_screen_ad_id">ca-app-pub-3940256099942544/6300978111</string>-->
 
     <!-- navigation drawer item labels  -->
     <string-array name="nav_drawer_labels">

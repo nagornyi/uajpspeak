@@ -25,7 +25,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/aboutText1"
         android:textSize="18dp"
-        android:text="@string/app_version"
+        android:text="@string/app_version_jp"
         android:layout_below="@+id/aboutText"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="5dp" />

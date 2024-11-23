@@ -31,7 +31,6 @@ public class AboutFragment extends Fragment {
         menu.findItem(R.id.action_search).setVisible(false);
         menu.findItem(R.id.action_alphabet).setVisible(false);
         menu.findItem(R.id.action_about).setVisible(false);
-        menu.findItem(R.id.action_download_ukr_voice).setVisible(false);
         menu.findItem(R.id.action_gender_lang).setVisible(false);
     }
 

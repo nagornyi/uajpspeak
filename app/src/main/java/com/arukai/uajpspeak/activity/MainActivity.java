@@ -30,17 +30,14 @@ import com.google.android.gms.common.util.ArrayUtils;
 import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.ads.AdView;
 
-import android.content.Intent;
 import android.speech.tts.TextToSpeech;
 import android.util.Log;
-import android.widget.Toast;
 
 import java.util.Locale;
 
 public class MainActivity
         extends AppCompatActivity
         implements FragmentDrawer.FragmentDrawerListener, TextToSpeech.OnInitListener {
-    private static String TAG = MainActivity.class.getSimpleName();
     public static String PACKAGE_NAME;
     public static Context context;
     private AdView mAdView;
@@ -159,12 +156,6 @@ public class MainActivity
             return true;
         }
 
-        if (id == R.id.action_download_ukr_voice) {
-            showDownloadUkrainianVoiceDialog();
-
-            return true;
-        }
-
         if (id == R.id.action_alphabet) {
             if(isSearchOpened){ //test if the search is open
                 hideSearchBar();
@@ -237,30 +228,6 @@ public class MainActivity
             hideSearchBar();
         } else { //open the search entry
             openSearchBar();
-        }
-    }
-
-    private void showDownloadUkrainianVoiceDialog() {
-        new AlertDialog.Builder(new ContextThemeWrapper(this, R.style.AlertDialogCustom))
-                .setTitle(R.string.download_ukrainian_voice_title)
-                .setMessage(R.string.download_ukrainian_voice_message)
-                .setPositiveButton(R.string.yes, (dialog, which) -> {
-                    downloadUkrainianVoiceData();
-                })
-                .setNegativeButton(R.string.no, (dialog, which) -> {
-                })
-                .show();
-    }
-
-    private void downloadUkrainianVoiceData() {
-        Intent installIntent = new Intent();
-        installIntent.setAction(TextToSpeech.Engine.ACTION_INSTALL_TTS_DATA);
-        try {
-            startActivity(installIntent);
-        } catch (Exception e) {
-            // Display the failure message
-            Toast.makeText(this, R.string.ukrainian_voice_download_failed, Toast.LENGTH_SHORT).show();
-            Log.e("TTS", "Error starting download activity: " + e.getMessage());
         }
     }
 
@@ -500,10 +467,6 @@ public class MainActivity
             // set the toolbar title
             setActionBarTitle(category);
         }
-    }
-
-    public static Context getAppContext() {
-        return MainActivity.context;
     }
 
     public void setActionBarTitle(String title){

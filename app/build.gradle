@@ -6,17 +6,19 @@ android {
         compileSdk 35
         minSdkVersion 21
         targetSdkVersion 34
-        versionCode 16
-        versionName "3.2"
+        versionCode 17
+        versionName "3.3"
+        resValue "string", "app_version_jp", "バージョン${versionName}"
+        resValue "string", "app_version_ua", "Версія ${versionName}"
     }
     buildTypes {
+        debug {
+            resValue "string", "main_screen_ad_id", "ca-app-pub-3940256099942544/6300978111" // Test ad ID
+        }
         release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            debuggable false
-            jniDebuggable false
-            renderscriptDebuggable false
-            renderscriptOptimLevel 3
+            resValue "string", "main_screen_ad_id", "ca-app-pub-5925166783691550/4426793610" // Real ad ID
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
         }
     }
     namespace 'com.arukai.uajpspeak'
@@ -32,7 +34,7 @@ dependencies {
     implementation 'androidx.cardview:cardview:1.0.0'
     implementation 'com.daimajia.easing:library:2.4@aar'
     implementation 'com.daimajia.androidanimations:library:2.4@aar'
-    implementation 'com.google.android.gms:play-services-ads:23.4.0'
+    implementation 'com.google.android.gms:play-services-ads:23.5.0'
 }
 
 java {
