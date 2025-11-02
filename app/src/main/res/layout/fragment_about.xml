@@ -1,0 +1,75 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/about_screen"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.arukai.uajpspeak.activity.AboutFragment">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/aboutText"
+        android:textSize="18dp"
+        android:drawableLeft="@drawable/jp"
+        android:drawableRight="@drawable/ua"
+        android:drawablePadding="5dp"
+        android:text="@string/app_name"
+        android:textStyle="bold"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="40dp"
+        android:layout_marginBottom="5dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/aboutText1"
+        android:textSize="18dp"
+        android:text="@string/app_version_jp"
+        android:layout_below="@+id/aboutText"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="5dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/aboutText2"
+        android:textSize="18dp"
+        android:text="@string/app_name_ua"
+        android:layout_below="@+id/aboutText1"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="5dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/aboutText3"
+        android:textSize="18dp"
+        android:text="@string/app_version_ua"
+        android:layout_below="@+id/aboutText2"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="5dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/aboutText4"
+        android:textSize="18dp"
+        android:text="@string/app_company"
+        android:layout_below="@+id/aboutText3"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="5dp" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/aboutPicture"
+        android:src="@drawable/about_picture"
+        android:layout_below="@+id/aboutText4"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="40dp"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp"
+        android:layout_marginBottom="40dp" />
+
+</RelativeLayout>
