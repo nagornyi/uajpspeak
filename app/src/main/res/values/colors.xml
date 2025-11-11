@@ -6,6 +6,10 @@
     <color name="windowBackground">#FFFFFF</color>
     <color name="navigationBarColor">#000000</color>
     <color name="colorAccent">#FFFFFF</color>
-    <color name="selectedCategory">#DCDCDC</color>
-    <color name="unselectedCategory">#FFFFFF</color>
+    <color name="drawerBackground">#00304e</color>
+    <color name="selectedCategory">#1a4d6d</color>
+    <color name="selectedCategoryText">#FFFFFF</color>
+    <color name="unselectedCategory">#00304e</color>
+    <color name="unselectedCategoryText">#B0BEC5</color>
+    <color name="drawerDivider">#0d3a56</color>
 </resources>

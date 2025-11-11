@@ -1,53 +1,68 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/white">
+    android:orientation="vertical"
+    android:background="@color/drawerBackground">
 
+    <!-- Header with flags - transparent/dark background to match toolbar -->
     <RelativeLayout
         android:id="@+id/nav_header_container"
         android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:layout_alignParentTop="true"
-        android:clickable="false"
-        android:background="@color/colorPrimary">
+        android:layout_height="120dp"
+        android:background="@color/drawerBackground">
 
         <ImageView
-            android:layout_width="200dp"
-            android:layout_height="75dp"
             android:id="@+id/banner"
-            android:clickable="false"
-            android:src="@drawable/large_flag_jp"
-            android:scaleType="fitStart"
-            android:layout_centerInParent="true" />
-
-        <ImageView
             android:layout_width="200dp"
             android:layout_height="75dp"
-            android:id="@+id/banner1"
+            android:layout_centerInParent="true"
             android:clickable="false"
-            android:src="@drawable/large_flag_ua"
+            android:contentDescription="@string/app_name"
+            android:scaleType="fitStart"
+            android:src="@drawable/large_flag_jp" />
+
+        <ImageView
+            android:id="@+id/banner1"
+            android:layout_width="200dp"
+            android:layout_height="75dp"
+            android:layout_centerInParent="true"
+            android:clickable="false"
+            android:contentDescription="@string/app_name"
             android:scaleType="fitEnd"
-            android:layout_centerInParent="true" />
+            android:src="@drawable/large_flag_ua" />
     </RelativeLayout>
 
+    <!-- Phrases count with dark theme styling -->
     <TextView
         android:id="@+id/phrasesCount"
-        android:textColor="#000"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/nav_header_container"
-        android:paddingTop="10dp"
-        android:paddingBottom="10dp"
-        android:paddingRight="10dp"
-        android:paddingLeft="12dp"
-        android:textSize="14dp"
-        android:layout_alignParentLeft="true" />
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
+        android:paddingTop="12dp"
+        android:paddingBottom="12dp"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:textColor="#90CAF9"
+        android:textSize="13sp"
+        android:textStyle="italic"
+        android:background="@color/drawerBackground" />
 
+    <!-- Subtle divider -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/drawerDivider" />
+
+    <!-- Navigation items list -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/drawerList"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/phrasesCount" />
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp"
+        android:clipToPadding="false"
+        android:scrollbars="vertical" />
 
-</RelativeLayout>
+</LinearLayout>

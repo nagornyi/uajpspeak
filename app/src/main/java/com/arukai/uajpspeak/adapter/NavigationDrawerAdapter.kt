@@ -30,9 +30,13 @@ class NavigationDrawerAdapter(
         val current = data[position]
         holder.title.text = current.title
         if (current.isSelected) {
-            holder.title.setBackgroundResource(R.color.selectedCategory)
+            holder.title.setBackgroundResource(R.drawable.drawer_item_selected)
+            holder.title.setTextColor(holder.itemView.context.getColor(R.color.selectedCategoryText))
+            holder.title.setTypeface(null, android.graphics.Typeface.BOLD)
         } else {
-            holder.title.setBackgroundResource(R.color.unselectedCategory)
+            holder.title.setBackgroundResource(R.drawable.drawer_item_unselected)
+            holder.title.setTextColor(holder.itemView.context.getColor(R.color.unselectedCategoryText))
+            holder.title.setTypeface(null, android.graphics.Typeface.NORMAL)
         }
     }
 

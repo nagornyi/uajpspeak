@@ -68,6 +68,35 @@ class MainActivity : AppCompatActivity(), FragmentDrawer.FragmentDrawerListener,
         displayView(0)
 
         textToSpeech = TextToSpeech(this, this)
+
+        // Handle back press with OnBackPressedDispatcher
+        onBackPressedDispatcher.addCallback(this, object : androidx.activity.OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                val zoom = supportFragmentManager.findFragmentByTag("ZOOM") as? ZoomFragment
+                val about = supportFragmentManager.findFragmentByTag("ABOUT") as? AboutFragment
+                val alphabet = supportFragmentManager.findFragmentByTag("ALPHABET") as? AlphabetFragment
+
+                if ((zoom != null && zoom.isVisible) || (about != null && about.isVisible) ||
+                    (alphabet != null && alphabet.isVisible)) {
+                    fragment?.let {
+                        val fragmentManager = supportFragmentManager
+
+                        if (fragmentManager.backStackEntryCount != 0) {
+                            fragmentManager.popBackStack()
+                        } else {
+                            val fragmentTransaction = fragmentManager.beginTransaction()
+                            fragmentTransaction.replace(R.id.container_body, it, "HOME")
+                            fragmentTransaction.commit()
+                        }
+                        setActionBarTitle(category)
+                        enableBackButton(false)
+                        drawerFragment?.setDrawerState(true)
+                    }
+                } else {
+                    finish()
+                }
+            }
+        })
     }
 
     override fun onInit(status: Int) {
@@ -110,7 +139,7 @@ class MainActivity : AppCompatActivity(), FragmentDrawer.FragmentDrawerListener,
 
             setActionBarTitle(title)
             drawerFragment?.setDrawerState(false)
-            drawerFragment?.mDrawerToggle?.setToolbarNavigationClickListener { onBackPressed() }
+            drawerFragment?.mDrawerToggle?.setToolbarNavigationClickListener { onBackPressedDispatcher.onBackPressed() }
             enableBackButton(true)
 
             return true
@@ -130,7 +159,7 @@ class MainActivity : AppCompatActivity(), FragmentDrawer.FragmentDrawerListener,
 
             setActionBarTitle(title)
             drawerFragment?.setDrawerState(false)
-            drawerFragment?.mDrawerToggle?.setToolbarNavigationClickListener { onBackPressed() }
+            drawerFragment?.mDrawerToggle?.setToolbarNavigationClickListener { onBackPressedDispatcher.onBackPressed() }
             enableBackButton(true)
 
             return true
@@ -266,31 +295,6 @@ class MainActivity : AppCompatActivity(), FragmentDrawer.FragmentDrawerListener,
         home?.mAdapter?.filter?.filter(searchString)
     }
 
-    override fun onBackPressed() {
-        val zoom = supportFragmentManager.findFragmentByTag("ZOOM") as? ZoomFragment
-        val about = supportFragmentManager.findFragmentByTag("ABOUT") as? AboutFragment
-        val alphabet = supportFragmentManager.findFragmentByTag("ALPHABET") as? AlphabetFragment
-
-        if ((zoom != null && zoom.isVisible) || (about != null && about.isVisible) ||
-            (alphabet != null && alphabet.isVisible)) {
-            fragment?.let {
-                val fragmentManager = supportFragmentManager
-
-                if (fragmentManager.backStackEntryCount != 0) {
-                    fragmentManager.popBackStack()
-                } else {
-                    val fragmentTransaction = fragmentManager.beginTransaction()
-                    fragmentTransaction.replace(R.id.container_body, it, "HOME")
-                    fragmentTransaction.commit()
-                }
-                setActionBarTitle(category)
-                enableBackButton(false)
-                drawerFragment?.setDrawerState(true)
-            }
-        } else {
-            super.onBackPressed()
-        }
-    }
 
     override fun onDrawerItemSelected(view: View, position: Int) {
         displayView(position)

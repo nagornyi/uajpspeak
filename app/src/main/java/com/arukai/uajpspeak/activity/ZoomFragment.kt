@@ -8,23 +8,37 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.view.MenuHost
+import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Lifecycle
 import com.arukai.uajpspeak.R
 import java.util.Locale
 
 class ZoomFragment : Fragment() {
     private var t1: TextToSpeech? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setHasOptionsMenu(true)
-    }
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
-    override fun onPrepareOptionsMenu(menu: Menu) {
-        menu.findItem(R.id.action_search).isVisible = false
-        menu.findItem(R.id.action_alphabet).isVisible = false
-        menu.findItem(R.id.action_about).isVisible = false
-        menu.findItem(R.id.action_gender_lang).isVisible = false
+        // Use modern MenuProvider instead of deprecated setHasOptionsMenu
+        val menuHost: MenuHost = requireActivity()
+        menuHost.addMenuProvider(object : MenuProvider {
+            override fun onPrepareMenu(menu: Menu) {
+                menu.findItem(R.id.action_search)?.isVisible = false
+                menu.findItem(R.id.action_alphabet)?.isVisible = false
+                menu.findItem(R.id.action_about)?.isVisible = false
+                menu.findItem(R.id.action_gender_lang)?.isVisible = false
+            }
+
+            override fun onCreateMenu(menu: Menu, menuInflater: android.view.MenuInflater) {
+                // Menu already created by activity
+            }
+
+            override fun onMenuItemSelected(menuItem: android.view.MenuItem): Boolean {
+                return false
+            }
+        }, viewLifecycleOwner, Lifecycle.State.RESUMED)
     }
 
     override fun onCreateView(

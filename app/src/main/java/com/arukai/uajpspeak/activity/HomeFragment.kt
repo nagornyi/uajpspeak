@@ -1,6 +1,5 @@
 package com.arukai.uajpspeak.activity
 
-import android.app.Activity
 import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -102,9 +101,8 @@ class HomeFragment : Fragment() {
         return rootView
     }
 
-    @Deprecated("Deprecated in Java")
-    override fun onAttach(activity: Activity) {
-        super.onAttach(activity)
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
     }
 
     override fun onResume() {
@@ -141,7 +139,7 @@ class HomeFragment : Fragment() {
                 (activity as MainActivity).setActionBarTitle("")
                 MainActivity.drawerFragment?.setDrawerState(false)
                 MainActivity.drawerFragment?.mDrawerToggle?.setToolbarNavigationClickListener {
-                    onBackPressed()
+                    (activity as? MainActivity)?.onBackPressedDispatcher?.onBackPressed()
                 }
                 enableBackButton(true)
             }
@@ -156,20 +154,6 @@ class HomeFragment : Fragment() {
         top = if (v == null) 0 else v.top - mRecyclerView.paddingTop
     }
 
-    fun onBackPressed() {
-        if (fragmentManager?.backStackEntryCount != 0) {
-            fragmentManager?.popBackStack()
-        } else {
-            MainActivity.fragment?.let {
-                val fragmentTransaction = fragmentManager?.beginTransaction()
-                fragmentTransaction?.replace(R.id.container_body, it, "HOME")
-                fragmentTransaction?.commit()
-            }
-        }
-        (activity as MainActivity).supportActionBar?.title = MainActivity.category
-        enableBackButton(false)
-        MainActivity.drawerFragment?.setDrawerState(true)
-    }
 
     fun enableBackButton(state: Boolean) {
         val actionbar = (activity as MainActivity).supportActionBar
