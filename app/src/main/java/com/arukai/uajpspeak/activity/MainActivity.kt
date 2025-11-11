@@ -22,16 +22,12 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import com.arukai.uajpspeak.R
-import com.arukai.uajpspeak.model.NavDrawerItem
-import com.google.android.gms.ads.AdRequest
-import com.google.android.gms.ads.AdView
 import com.google.android.gms.ads.MobileAds
 import com.google.android.gms.common.util.ArrayUtils
 import java.util.Locale
 
 class MainActivity : AppCompatActivity(), FragmentDrawer.FragmentDrawerListener, TextToSpeech.OnInitListener {
 
-    private lateinit var mAdView: AdView
     private var mSearchAction: MenuItem? = null
     private var editSearch: EditText? = null
     private lateinit var textToSpeech: TextToSpeech
@@ -56,9 +52,6 @@ class MainActivity : AppCompatActivity(), FragmentDrawer.FragmentDrawerListener,
 
         MobileAds.initialize(this) {}
 
-        mAdView = findViewById(R.id.adView)
-        val adRequest = AdRequest.Builder().build()
-        mAdView.loadAd(adRequest)
 
         PACKAGE_NAME = applicationContext.packageName
         context = applicationContext

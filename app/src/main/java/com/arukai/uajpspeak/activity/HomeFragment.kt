@@ -14,6 +14,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.arukai.uajpspeak.R
 import com.arukai.uajpspeak.adapter.MyRecyclerViewAdapter
 import com.arukai.uajpspeak.model.DataObject
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.AdView
 
 class HomeFragment : Fragment() {
 
@@ -21,6 +23,7 @@ class HomeFragment : Fragment() {
     lateinit var mAdapter: MyRecyclerViewAdapter
     private lateinit var mLayoutManager: RecyclerView.LayoutManager
     private lateinit var dataSet: ArrayList<DataObject>
+    private lateinit var mAdView: AdView
 
     companion object {
         var index = -1
@@ -90,6 +93,11 @@ class HomeFragment : Fragment() {
         dataSet = getDataSet()
         mAdapter = MyRecyclerViewAdapter(dataSet)
         mRecyclerView.adapter = mAdapter
+
+        // Initialize ad banner
+        mAdView = rootView.findViewById(R.id.adView)
+        val adRequest = AdRequest.Builder().build()
+        mAdView.loadAd(adRequest)
 
         return rootView
     }
