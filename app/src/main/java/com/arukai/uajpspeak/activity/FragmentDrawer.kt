@@ -113,8 +113,18 @@ class FragmentDrawer : Fragment() {
         )
         layout.setOnClickListener(null)
 
+        // Set flags dynamically based on language
+        val banner = layout.findViewById<android.widget.ImageView>(R.id.banner)
+        val lang = com.arukai.uajpspeak.util.LocaleHelper.getSavedLanguage(requireContext())
+        val sourceFlagRes = when (lang) {
+            "en" -> R.drawable.large_flag_uk
+            "ja" -> R.drawable.large_flag_jp
+            else -> R.drawable.large_flag_jp
+        }
+        banner?.setImageResource(sourceFlagRes)
+
         val phrasesCount = layout.findViewById<TextView>(R.id.phrasesCount)
-        phrasesCount.text = "${pCounter}フレーズ"
+        phrasesCount.text = "$pCounter ${getString(R.string.phrases_counter)}"
         return layout
     }
 

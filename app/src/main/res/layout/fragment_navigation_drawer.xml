@@ -18,8 +18,7 @@
             android:layout_centerInParent="true"
             android:clickable="false"
             android:contentDescription="@string/app_name"
-            android:scaleType="fitStart"
-            android:src="@drawable/large_flag_jp" />
+            android:scaleType="fitStart" />
 
         <ImageView
             android:id="@+id/banner1"
@@ -66,3 +65,4 @@
         android:scrollbars="vertical" />
 
 </LinearLayout>
+

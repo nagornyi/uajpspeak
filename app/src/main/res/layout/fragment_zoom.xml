@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/zoom_screen"
@@ -5,47 +6,49 @@
     android:layout_height="match_parent"
     android:layout_margin="15dp"
     tools:context="com.arukai.uajpspeak.activity.ZoomFragment">
-
     <TextView
+        android:id="@+id/zoomSource"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/zoomJapanese"
-        android:textSize="18dp"
-        android:drawableLeft="@drawable/jp"
-        android:drawablePadding="10dp"
-        android:text="This is a test phrase and I make it very long"
+        android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_alignParentTop="true" />
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/zoomUkrainian"
-        android:textSize="24dp"
-        android:text="This is a test phrase and I make it very long to see how it will work with long phrases"
-        android:gravity="center"
-        android:drawablePadding="10dp"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true" />
-
-    <TextView
+        android:textSize="26sp"
+        android:padding="8dp"
+        android:textStyle="bold"
+        tools:text="Good morning" />
+    <LinearLayout
+        android:id="@+id/centerContainer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/zoomPhonetic"
-        android:textSize="18dp"
-        android:drawableLeft="@drawable/eye"
-        android:drawablePadding="10dp"
-        android:text="This is a test phrase and I make it very long"
-        android:layout_centerHorizontal="true"
-        android:layout_alignParentBottom="true" />
-
+        android:orientation="vertical"
+        android:layout_centerInParent="true"
+        android:gravity="center_horizontal">
+        <TextView
+            android:id="@+id/zoomUkrainian"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="26sp"
+            android:padding="8dp"
+            android:textStyle="bold"
+            tools:text="ДОБРИЙ РАНОК" />
+        <TextView
+            android:id="@+id/zoomPhonetic"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:padding="8dp"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            tools:text="dobryj ranok" />
+    </LinearLayout>
     <ImageView
         android:id="@+id/zoomSpeaker"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/zoomUkrainian"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="5dp"
-        android:src="@drawable/speaker" />
-
+        android:layout_marginBottom="20dp"
+        android:contentDescription="Speak Ukrainian"
+        android:src="@drawable/speaker"
+        android:padding="8dp" />
 </RelativeLayout>

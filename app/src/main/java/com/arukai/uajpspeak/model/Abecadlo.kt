@@ -9,6 +9,11 @@ class Abecadlo {
     private val dzv = LinkedHashMap<String, String>()
     private val spc = LinkedHashMap<String, String>()
 
+    // Romanization maps
+    private val roman_hol = LinkedHashMap<String, String>()
+    private val roman_prh = LinkedHashMap<String, String>()
+    private val roman_spc = LinkedHashMap<String, String>()
+
     init {
         spc["*"] = "ー"
         spc["-"] = "・"
@@ -325,6 +330,60 @@ class Abecadlo {
         dzv["джя"] = "ジャ"
         dzv["джю"] = "ジュ"
         dzv["джьо"] = "ジョ"
+
+        // Initialize romanization maps
+        roman_spc["*"] = ""
+        roman_spc["-"] = "-"
+        roman_spc["..."] = "..."
+        roman_spc["."] = "."
+        roman_spc[","] = ","
+        roman_spc[":"] = ":"
+        roman_spc[";"] = ";"
+        roman_spc["!"] = "!"
+        roman_spc["("] = "("
+        roman_spc[")"] = ")"
+        roman_spc["?"] = "?"
+        roman_spc[" "] = " "
+
+        // Vowels
+        roman_hol["а"] = "a"
+        roman_hol["е"] = "e"
+        roman_hol["і"] = "i"
+        roman_hol["и"] = "y"
+        roman_hol["о"] = "o"
+        roman_hol["у"] = "u"
+        roman_hol["ї"] = "yi"
+        roman_hol["є"] = "ye"
+        roman_hol["ю"] = "yu"
+        roman_hol["я"] = "ya"
+
+        // Consonants
+        roman_prh["б"] = "b"
+        roman_prh["в"] = "v"
+        roman_prh["г"] = "h"
+        roman_prh["ґ"] = "g"
+        roman_prh["д"] = "d"
+        roman_prh["ж"] = "zh"
+        roman_prh["з"] = "z"
+        roman_prh["й"] = "y"
+        roman_prh["к"] = "k"
+        roman_prh["л"] = "l"
+        roman_prh["м"] = "m"
+        roman_prh["н"] = "n"
+        roman_prh["п"] = "p"
+        roman_prh["р"] = "r"
+        roman_prh["с"] = "s"
+        roman_prh["т"] = "t"
+        roman_prh["ф"] = "f"
+        roman_prh["х"] = "kh"
+        roman_prh["ц"] = "ts"
+        roman_prh["ч"] = "ch"
+        roman_prh["ш"] = "sh"
+        roman_prh["щ"] = "shch"
+        roman_prh["ь"] = ""
+        roman_prh["'"] = ""
+
+        // ...existing code...
     }
 
     fun convert(str: String): String {
@@ -394,5 +453,29 @@ class Abecadlo {
 
         return s
     }
-}
 
+    fun romanize(str: String): String {
+        var s = str.lowercase()
+
+        // Special characters
+        for ((key, value) in roman_spc) {
+            s = s.replace(key, value)
+        }
+
+        // Apostrophe and soft sign
+        s = s.replace("'", "")
+        s = s.replace("ь", "")
+
+        // Consonants (before vowels for proper handling)
+        for ((key, value) in roman_prh) {
+            s = s.replace(key, value)
+        }
+
+        // Vowels
+        for ((key, value) in roman_hol) {
+            s = s.replace(key, value)
+        }
+
+        return s
+    }
+}

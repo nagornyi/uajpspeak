@@ -48,30 +48,42 @@ class ZoomFragment : Fragment() {
     ): View? {
         val rootView = inflater.inflate(R.layout.fragment_zoom, container, false)
 
-        val japaneseView = rootView.findViewById<TextView>(R.id.zoomJapanese)
+        val sourceView = rootView.findViewById<TextView>(R.id.zoomSource) // renamed id
         val ukrainianView = rootView.findViewById<TextView>(R.id.zoomUkrainian)
         val speakerIcon = rootView.findViewById<ImageView>(R.id.zoomSpeaker)
         val phoneticView = rootView.findViewById<TextView>(R.id.zoomPhonetic)
 
         val args = arguments
-        val japanese = args?.getString("japanese")
+        val sourceText = args?.getString("japanese")
         val ukrainian = args?.getString("ukrainian")
         val phonetic = args?.getString("phonetic")
 
-        japaneseView.text = japanese
+        sourceView.text = sourceText
         ukrainianView.text = ukrainian?.uppercase()
         phoneticView.text = phonetic
+
+        val lang = com.arukai.uajpspeak.util.LocaleHelper.getSavedLanguage(MainActivity.context)
+        val sourceFlagRes = when (lang) { "en" -> R.drawable.uk; "ja" -> R.drawable.jp; else -> R.drawable.jp }
+
+        // Set flags with padding
+        sourceView.compoundDrawablePadding = 12
+        sourceView.setCompoundDrawablesWithIntrinsicBounds(sourceFlagRes, 0, 0, 0)
+
+        ukrainianView.compoundDrawablePadding = 12
+        ukrainianView.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ua, 0, 0, 0)
+
+        phoneticView.compoundDrawablePadding = 10
+        phoneticView.setCompoundDrawablesWithIntrinsicBounds(R.drawable.eye, 0, 0, 0)
 
         val clickListener = View.OnClickListener {
             t1 = TextToSpeech(activity?.applicationContext) { status ->
                 if (status != TextToSpeech.ERROR) {
                     t1?.language = Locale("uk")
-                    t1?.setSpeechRate(0.5f)
+                    t1?.setSpeechRate(1.0f)
                     t1?.speak(ukrainian, TextToSpeech.QUEUE_FLUSH, null, null)
                 }
             }
         }
-
         ukrainianView.setOnClickListener(clickListener)
         speakerIcon.setOnClickListener(clickListener)
 
@@ -91,4 +103,3 @@ class ZoomFragment : Fragment() {
         }
     }
 }
-

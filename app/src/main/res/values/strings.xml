@@ -1,19 +1,21 @@
 <?xml version='1.0' encoding='utf-8'?>
 <resources>
-    <string name="app_name">ウクライナ語会話集</string>
+    <string name="app_name">SayUA</string>
     <string name="app_company">© 2016–2025 Artem Nagornyi</string>
-    <string name="app_name_ua">Японсько-Український Розмовник</string>
-    <string name="action_about">このアプリについて</string>
-    <string name="action_alphabet">ウクライナ語アルファベット</string>
-    <string name="action_buy_pro">フルバージョンにアップグレードする</string>
-    <string name="action_gender_lang">男言葉・女言葉</string>
-    <string name="cancel">キャンセル</string>
+    <string name="app_name_ua">Ukrainian Phrasebook</string>
+    <string name="action_about">About this app</string>
+    <string name="action_alphabet">Ukrainian Alphabet</string>
+    <string name="action_buy_pro">Upgrade to Full Version</string>
+    <string name="action_gender_lang">Male/Female Speech</string>
+    <string name="action_language">Language</string>
+    <string name="cancel">Cancel</string>
     <string name="ok">OK</string>
-    <string name="action_search">サーチ</string>
-    <string name="drawer_open">開</string>
-    <string name="drawer_close">閉</string>
-    <string name="title_about">このアプリについて</string>
-    <string name="title_alphabet">アルファベット</string>
+    <string name="action_search">Search</string>
+    <string name="drawer_open">Open</string>
+    <string name="drawer_close">Close</string>
+    <string name="title_about">About this app</string>
+    <string name="title_alphabet">Alphabet</string>
+    <string name="phrases_counter">phrases</string>
 
     <!-- navigation drawer item labels  -->
     <string-array name="nav_drawer_labels">
@@ -39,303 +41,221 @@
         <item>@string/nav_item_bank</item>
     </string-array>
 
-    <string name="nav_item_all">すべてのフレーズ</string>
-    <string name="nav_item_greetings">挨拶</string>
-    <string name="nav_item_signs">標識</string>
-    <string name="nav_item_troubleshooting">トラブル</string>
-    <string name="nav_item_transportation">交通</string>
-    <string name="nav_item_directions">道順</string>
-    <string name="nav_item_restaurant">レストラン</string>
-    <string name="nav_item_hotel">ホテル</string>
-    <string name="nav_item_numbers">数字</string>
-    <string name="nav_item_time">時間</string>
-    <string name="nav_item_weekdays">曜日</string>
-    <string name="nav_item_months">月の名前</string>
-    <string name="nav_item_colors">色の名前</string>
-    <string name="nav_item_common_words">最も一般的な単語</string>
-    <string name="nav_item_love">ラブラブの言葉</string>
-    <string name="nav_item_shopping">ショッピング</string>
-    <string name="nav_item_clothing">衣類の種類</string>
-    <string name="nav_item_drugstore">ドラッグストア</string>
-    <string name="nav_item_driving">ドライブ</string>
-    <string name="nav_item_bank">銀行</string>
+    <string name="nav_item_all">All Phrases</string>
+    <string name="nav_item_greetings">Greetings</string>
+    <string name="nav_item_signs">Signs</string>
+    <string name="nav_item_troubleshooting">Troubleshooting</string>
+    <string name="nav_item_transportation">Transportation</string>
+    <string name="nav_item_directions">Directions</string>
+    <string name="nav_item_restaurant">Restaurant</string>
+    <string name="nav_item_hotel">Hotel</string>
+    <string name="nav_item_numbers">Numbers</string>
+    <string name="nav_item_time">Time</string>
+    <string name="nav_item_weekdays">Weekdays</string>
+    <string name="nav_item_months">Months</string>
+    <string name="nav_item_colors">Colors</string>
+    <string name="nav_item_common_words">Most Common Words</string>
+    <string name="nav_item_love">Love Words</string>
+    <string name="nav_item_shopping">Shopping</string>
+    <string name="nav_item_clothing">Types of Clothing</string>
+    <string name="nav_item_drugstore">Drugstore</string>
+    <string name="nav_item_driving">Driving</string>
+    <string name="nav_item_bank">Bank</string>
 
     <!-- sections  -->
-    <string name="title_all">すべてのフレーズ</string>
-    <string name="title_greetings">挨拶</string>
-    <string name="title_signs">標識</string>
-    <string name="title_troubleshooting">トラブル</string>
-    <string name="title_transportation">交通</string>
-    <string name="title_directions">道順</string>
-    <string name="title_restaurant">レストラン</string>
-    <string name="title_hotel">ホテル</string>
-    <string name="title_numbers">数字</string>
-    <string name="title_time">時間</string>
-    <string name="title_weekdays">曜日</string>
-    <string name="title_months">月の名前</string>
-    <string name="title_colors">色の名前</string>
-    <string name="title_common_words">最も一般的な単語</string>
-    <string name="title_love">ラブラブの言葉</string>
-    <string name="title_shopping">ショッピング</string>
-    <string name="title_clothing">衣類の種類</string>
-    <string name="title_drugstore">ドラッグストア</string>
-    <string name="title_driving">ドライブ</string>
-    <string name="title_bank">銀行</string>
+    <string name="title_all">All Phrases</string>
+    <string name="title_greetings">Greetings</string>
+    <string name="title_signs">Signs</string>
+    <string name="title_troubleshooting">Troubleshooting</string>
+    <string name="title_transportation">Transportation</string>
+    <string name="title_directions">Directions</string>
+    <string name="title_restaurant">Restaurant</string>
+    <string name="title_hotel">Hotel</string>
+    <string name="title_numbers">Numbers</string>
+    <string name="title_time">Time</string>
+    <string name="title_weekdays">Weekdays</string>
+    <string name="title_months">Months</string>
+    <string name="title_colors">Colors</string>
+    <string name="title_common_words">Most Common Words</string>
+    <string name="title_love">Love Words</string>
+    <string name="title_shopping">Shopping</string>
+    <string name="title_clothing">Types of Clothing</string>
+    <string name="title_drugstore">Drugstore</string>
+    <string name="title_driving">Driving</string>
+    <string name="title_bank">Bank</string>
 
     <string-array name="gender_lang_selection">
-        <item>男言葉</item>
-        <item>女言葉</item>
+        <item>Male speech</item>
+        <item>Female speech</item>
     </string-array>
 
     <string name="alphabet_html">
     <![CDATA[
+<h3>Ukrainian Alphabet Overview</h3>
+<p>The Ukrainian alphabet consists of 33 letters based on the Cyrillic script.</p>
 
-<h3 id="section-1">母音</h3>
-<p>ウクライナ語には硬音（日本語のア行に相当）と軟音(日本語のヤ行に相当)の区別があり、子音の発音に影響する。</p>
+<h3>Vowels</h3>
+<p>Ukrainian has 10 vowel letters:</p>
 
-<h3 id="section-2">硬音</h3>
-<p><strong>А а</strong> /a/ 日本語のアとほぼ同じ。</p>
+<h4>Basic Vowels (Hard)</h4>
+<p><strong>А а</strong> /a/ like a in father</p>
+<p><strong>Е е</strong> /e/ like e in bed</p>
+<p><strong>И и</strong> /ɪ/ like i in bit</p>
+<p><strong>О о</strong> /o/ like o in more</p>
+<p><strong>У у</strong> /u/ like oo in boot</p>
 
-<p><strong>Е е</strong> /e/ 日本語のエとほぼ同じ。</p>
+<h4>Iotated Vowels (Soft)</h4>
+<p><strong>Я я</strong> /ja/ like ya in yard</p>
+<p><strong>Є є</strong> /je/ like ye in yes</p>
+<p><strong>І і</strong> /i/ like ee in see</p>
+<p><strong>Ї ї</strong> /ji/ like yi in yield</p>
+<p><strong>Ю ю</strong> /ju/ like yu in yule</p>
 
-<p><strong>И и</strong> /ɪ/ イの口で発音するウ音。</p>
+<h3>Consonants</h3>
 
-<p><strong>О о</strong> /o/ 日本語のオとほぼ同じ。</p>
+<h4>Stop Consonants</h4>
+<p><strong>П п</strong> /p/ like p in park</p>
+<p><strong>Б б</strong> /b/ like b in book</p>
+<p><strong>Т т</strong> /t/ like t in top</p>
+<p><strong>Д д</strong> /d/ like d in dog</p>
+<p><strong>К к</strong> /k/ like k in kite</p>
+<p><strong>Г г</strong> /ɦ/ voiced h sound</p>
+<p><strong>Ґ ґ</strong> /g/ like g in go (rare)</p>
 
-<p><strong>У у</strong> /u/ 日本語よりも唇を尖らせて発音するウ。</p>
+<h4>Fricative Consonants</h4>
+<p><strong>Ф ф</strong> /f/ like f in fish</p>
+<p><strong>В в</strong> /v/ or /w/ like v in voice</p>
+<p><strong>С с</strong> /s/ like s in sun</p>
+<p><strong>З з</strong> /z/ like z in zoo</p>
+<p><strong>Ш ш</strong> /ʃ/ like sh in show</p>
+<p><strong>Ж ж</strong> /ʒ/ like s in pleasure</p>
+<p><strong>Х х</strong> /x/ like ch in loch</p>
 
-<h3 id="section-3">軟音</h3>
-<p><strong>Я я</strong> /ja/ 日本語のヤとほぼ同じ。</p>
+<h4>Affricates</h4>
+<p><strong>Ц ц</strong> /ts/ like ts in bits</p>
+<p><strong>Ч ч</strong> /tʃ/ like ch in church</p>
+<p><strong>Щ щ</strong> /ʃtʃ/ like shch</p>
 
-<p><strong>Є є</strong> /je/ イェ音。</p>
+<h4>Nasals and Liquids</h4>
+<p><strong>М м</strong> /m/ like m in man</p>
+<p><strong>Н н</strong> /n/ like n in no</p>
+<p><strong>Л л</strong> /l/ like l in love</p>
+<p><strong>Р р</strong> /r/ rolled r</p>
+<p><strong>Й й</strong> /j/ like y in yes</p>
 
-<p><strong>І і</strong> /i/ 日本語のイとほぼ同じ。</p>
+<h3>Special Characters</h3>
+<p><strong>ь</strong> (soft sign) softens consonants</p>
+<p>Apostrophe separates sounds</p>
 
-<p><strong>Ї ї</strong> /ji/ 舌の中央部を少し持ち上げて発音するイ。</p>
-
-<p><strong>Ю ю</strong> /yu/ 日本語よりも唇を尖らせて発音するユ。</p>
-
-<h3 id="section-4">子音</h3>
-<p><strong>П п</strong><br>
-（硬音）/p/ パ行<br>
-（軟音）/pʲ/ ピャ音</p>
-
-<p><strong>Б б</strong><br>
-（硬音）/b/ バ行<br>
-（軟音）/bʲ/ ビャ音</p>
-
-<p><strong>М м</strong><br>
-（硬音）/m/ マ行<br>
-（軟音）/mʲ/ ミャ音</p>
-
-<p><strong>Ф ф</strong><br>
-（硬音）/f/ ファ音（下唇を嚙んで発音する）<br>
-（軟音）/fʲ/ フャ音</p>
-
-<p><strong>В в</strong><br>
-（硬音）/v/ ヴァ音（下唇を嚙んで発音する)<br>
-（軟音）/vʲ/ ヴャ音</p>
-
-<p><strong>Т т</strong><br>
-（硬音）/t/ タ行<br>
-（軟音）/ʨ/ チャ音（日本語とほぼ同じ。舌先を上歯茎裏に当てて発音する）</p>
-
-<p><strong>Д д</strong><br>
-（硬音）/d/ ダ行<br>
-（軟音）/ʥ/ ヂャ音（日本語とほぼ同じ。舌先を上歯茎裏に当てて発音する）</p>
-
-<p><strong>Н н</strong><br>
-（硬音）/n/ ナ行<br>
-（軟音）/ɲ/ ニャ音</p>
-
-<p><strong>С с</strong><br>
-（硬音）/s/ サ行<br>
-（軟音）/ɕ/ シャ音（日本語とほぼ同じ）</p>
-
-<p><strong>З з</strong><br>
-（硬音）/z/ ザ行<br>
-（軟音）/ʑ/ ジャ音（舌を上歯茎裏に近付けて息の摩擦で発音する）</p>
-
-<p><strong>Ш ш</strong><br>
-（硬音）/ʃ/ シァ音（日本語より奥まった位置で発音する）<br>
-（軟音）/ʃʲ/ シャ音</p>
-
-<p><strong>Ж ж</strong><br>
-（硬音）/ʒ/ ジァ音（日本語より奥まった位置で発音する）<br>
-（軟音）/ʒʲ/ ジャ音</p>
-
-<p><strong>Ц ц</strong><br>
-（硬音）/ʦ/ ツァ音<br>
-（軟音）/ʦʲ/ ツャ音</p>
-
-<p><strong>“дз”</strong><br>
-（硬音）/ʣ/ ヅァ音<br>
-（軟音）/ʣʲ/ ヅャ音</p>
-
-<p><strong>Ч ч</strong><br>
-（硬音）/ʧ/ チァ音（舌の中央を口蓋に当てて発音する）<br>
-（軟音）/ʧʲ/ チャ音</p>
-
-<p><strong>“дж”</strong><br>
-（硬音）/ʤ/ ヂァ音（舌の中央を口蓋に当てて発音する）<br>
-（軟音）/ʤʲ/ ヂャ音</p>
-
-<p><strong>Щ щ</strong>
- /ʃ͡ʧ/ шчの合字</p>
-
-<p><strong>К к</strong><br>
-（硬音）/k/ カ行<br>
-（軟音）/c/ キャ音</p>
-
-<p><strong>Ґ ґ</strong><br>
-（硬音）/g/ ガ行<br>
-（軟音）/ɟ/ ギャ音</p>
-
-<p><strong>Х х</strong><br>
-（硬音）/x/ ハ音（日本語よりも喉の奥から息を強く摩擦させながら発音する）<br>
-（軟音）/ç/ ヒ音（日本語とほぼ同じ）</p>
-
-<p><strong>Г г</strong><br>
-（硬音）/ɦ/ ハ行（日本語よりもやや濁った音）<br>
-（軟音）/ɦʲ/ ヒ音</p>
-
-<p><strong>Л л</strong><br>
-（硬音）/l/ ラ行（舌先を上前歯の裏に当てて発音する）<br>
-（軟音）/ʎ/ リャ音</p>
-
-<p><strong>Р р</strong><br>
-（硬音）/r/ ラ行（巻き舌で発音する）<br>
-（軟音）/rʲ/ リ音</p>
-
-<p><strong>Й й</strong>（軟音）/jʲ/ ヤ行（舌の中央を持ち上げて発音する。発音構造上、相当する硬音は存在しない）</p>
-
-<h3 id="section-5">その他符号</h3>
-<p><strong>ь</strong> /ʲ/ 直前の子音を軟音にする。</p>
-
-<p><strong>\'</strong> /ˠ/ 直前の子音を硬音にし、後に続く軟音母音と別個に発音する。</p>
-
-<h3 id="section-6">アクセント</h3>
-<p>ウクライナ語のアクセントは強弱アクセントで、アクセントのある母音をやや長めに発音する。</p>
-
-<h3 id="section-7">イントネーション</h3>
-<p>ウクライナ語では、文章が平叙文か疑問文かをイントネーションで区別する。</p>
-
-<h3 id="section-8">平叙文の場合</h3>
-<p>高音から始め、最後の単語のアクセントが付いた音節から低音に移行する。</p>
-
-<h3 id="section-9">疑問文の場合</h3>
-<p>低音から始め、質問したい部分の単語、または疑問詞のアクセントが付いた音節のみを高音にする。</p>
-
-<h3 id="section-10">楽音調</h3>
-<p>ウクライナ語では、母音や子音が連続しないように発音が変わる場合がある。</p>
-
-<p><strong>В</strong> は直前か直後に子音が来る場合（単語の語頭にあり、母音が続く場合を除く）、ウ音 /U, W/ で発音される。</p>
-
-<p><strong>И, У</strong> の二文字は、語頭にあってアクセントを持たない場合、直前の単語が母音で終わるならばそれぞれ /Й, В/ に置き換えられる。</p>
-
+<h3>Pronunciation Tips</h3>
+<ul>
+<li>Ukrainian uses dynamic stress</li>
+<li>Vowels do not reduce in unstressed positions</li>
+<li>Most consonants can be hard or soft</li>
+<li>Words are pronounced as spelled</li>
+</ul>
     ]]>
     </string>
 
     <!-- phrases  -->
-
     <string-array name="greetings">
-        <item>n/こんにちは/До*брий де*нь</item>
-        <item>n/おはようございます/До*брого ра*нку</item>
-        <item>n/こんばんは/До*брий ве*чір</item>
-        <item>n/おやすみなさい/На добра*ніч</item>
-        <item>n/お元気ですか/Як спра*ви?</item>
-        <item>n/元気です/До*бре, дя*кую</item>
-        <item>n/お名前は何ですか/Як вас зва*ти?</item>
-        <item>n/私の名前は … です/Мене* звуть …</item>
-        <item>n/どうぞよろしく/Ду*же приє*мно познайо*митися</item>
-        <item>n/お願いします/Будь ла*ска</item>
-        <item>n/どうぞ/Про*шу</item>
-        <item>n/どうもありがとう/Дя*кую</item>
-        <item>n/すみません/Перепро*шую</item>
-        <item>n/ごめんなさい/Ви*бачте</item>
-        <item>n/さようなら/До поба*чення</item>
-        <item>n/ウクライナ語を話せません/Я не гово*рю украї*нською</item>
-        <item>n/わかりません/Я не розумі*ю</item>
-        <item>n/日本語を話せますか/Чи ви гово*рите япо*нською?</item>
-        <item>n/英語を話せますか/Чи ви гово*рите англі*йською?</item>
-        <item>n/だれか日本語を話せますか/Чи хтось гово*рить япо*нською?</item>
-        <item>n/だれか英語を話せますか/Чи хтось гово*рить англі*йською?</item>
+        <item>n/Hello/До*брий де*нь</item>
+        <item>n/Good morning/До*брого ра*нку</item>
+        <item>n/Good evening/До*брий ве*чір</item>
+        <item>n/Good night/На добра*ніч</item>
+        <item>n/How are you?/Як спра*ви?</item>
+        <item>n/I\'m fine, thank you/До*бре, дя*кую</item>
+        <item>n/What is your name?/Як вас зва*ти?</item>
+        <item>n/My name is …/Мене* звуть …</item>
+        <item>n/Nice to meet you/Ду*же приє*мно познайо*митися</item>
+        <item>n/Please/Будь ла*ска</item>
+        <item>n/Here you go/Про*шу</item>
+        <item>n/Thank you/Дя*кую</item>
+        <item>n/Excuse me/Перепро*шую</item>
+        <item>n/Sorry/Ви*бачте</item>
+        <item>n/Goodbye/До поба*чення</item>
+        <item>n/I don\'t speak Ukrainian/Я не гово*рю украї*нською</item>
+        <item>n/I don\'t understand/Я не розумі*ю</item>
+        <item>n/Do you speak Japanese?/Чи ви гово*рите япо*нською?</item>
+        <item>n/Do you speak English?/Чи ви гово*рите англі*йською?</item>
+        <item>n/Does anyone speak Japanese?/Чи хтось гово*рить япо*нською?</item>
+        <item>n/Does anyone speak English?/Чи хтось гово*рить англі*йською?</item>
     </string-array>
 
     <string-array name="signs">
-        <item>n/開くドア/ВІДЧИ*НЕНО</item>
-        <item>n/閉切/ЗАЧИ*НЕНО</item>
-        <item>n/入口/ВХІД</item>
-        <item>n/出口/ВИ*ХІД</item>
-        <item>n/押す/ВІД СЕ*БЕ</item>
-        <item>n/引く/ДО СЕ*БЕ</item>
-        <item>n/洗面所/ВБИРА*ЛЬНЯ/</item>
-        <item>n/トイレ/ТУАЛЕ*Т</item>
-        <item>n/男性/ЧОЛОВІ*ЧИЙ</item>
-        <item>n/女性/ЖІНО*ЧИЙ</item>
-        <item>n/立ち入り禁止/ПРОХІ*Д ЗАБОРО*НЕНИЙ</item>
+        <item>n/Open door/ВІДЧИ*НЕНО</item>
+        <item>n/Closed/ЗАЧИ*НЕНО</item>
+        <item>n/Entrance/ВХІД</item>
+        <item>n/Exit/ВИ*ХІД</item>
+        <item>n/Push/ВІД СЕ*БЕ</item>
+        <item>n/Pull/ДО СЕ*БЕ</item>
+        <item>n/Restroom/ВБИРА*ЛЬНЯ/</item>
+        <item>n/Toilet/ТУАЛЕ*Т</item>
+        <item>n/Men/ЧОЛОВІ*ЧИЙ</item>
+        <item>n/Women/ЖІНО*ЧИЙ</item>
+        <item>n/No entry/ПРОХІ*Д ЗАБОРО*НЕНИЙ</item>
     </string-array>
 
     <string-array name="troubleshooting">
-        <item>n/助けて/Допоможі*ть!</item>
-        <item>n/危ない/Обере*жно!</item>
-        <item>n/ほっといて/Відчепі*ться від ме*не!</item>
-        <item>n/警察/Полі*ція!</item>
-        <item>n/助けてください/Допоможі*ть мені!</item>
-        <item>n/トイレはどこですか/Де туале*т?</item>
-        <item>m/病気です/Я захворі*в</item>
-        <item>f/病気です/Я захворі*ла</item>
-        <item>n/鞄をなくしました/У ме*не вкра*ли су*мку</item>
-        <item>m/財布をおとしました/Я загуби*в гамане*ць</item>
-        <item>f/財布をおとしました/Я загуби*ла гамане*ць</item>
-        <item>m/けがしました/Я пора*нений</item>
-        <item>f/けがしました/Я пора*нена</item>
-        <item>n/医者を呼んでください/Ви*кличте лі*каря</item>
-        <item>n/電話を使っていいですか?/Чи мо*жу я скориста*тися телефо*ном?</item>
+        <item>n/Help!/Допоможі*ть!</item>
+        <item>n/Be careful!/Обере*жно!</item>
+        <item>n/Leave me alone!/Відчепі*ться від ме*не!</item>
+        <item>n/Police!/Полі*ція!</item>
+        <item>n/Help me!/Допоможі*ть мені!</item>
+        <item>n/Where is the toilet?/Де туале*т?</item>
+        <item>m/I\'m sick/Я захворі*в</item>
+        <item>f/I\'m sick/Я захворі*ла</item>
+        <item>n/My bag was stolen/У ме*не вкра*ли су*мку</item>
+        <item>m/I lost my wallet/Я загуби*в гамане*ць</item>
+        <item>f/I lost my wallet/Я загуби*ла гамане*ць</item>
+        <item>m/I\'m injured/Я пора*нений</item>
+        <item>f/I\'m injured/Я пора*нена</item>
+        <item>n/Call a doctor, please/Ви*кличте лі*каря</item>
+        <item>n/Can I use your phone?/Чи мо*жу я скориста*тися телефо*ном?</item>
     </string-array>
 
     <string-array name="transportation">
-        <item>n/マイクロバス/маршру*тка</item>
-        <item>n/バス/авто*бус</item>
-        <item>n/電車/по*їзд</item>
-        <item>n/… までいくらですか?/Скі*льки ко*штує квито*к до … ?</item>
-        <item>n/… まで一枚お願いします/Будь ла*ска, один квито*к до …</item>
-        <item>n/この電車はどこへ行きますか？/Куди* ї*де це*й по*їзд?</item>
-        <item>n/このバスはどこへ行きますか？/Куди* ї*де це*й авто*бус?</item>
-        <item>n/この電車はどこで止まりますか？/Де зупиня*ється це*й по*їзд?</item>
-        <item>n/このバスはどこで止まりますか？/Де зупиня*ється це*й авто*бус?</item>
-        <item>n/このメトロはダウンタウンまで行きますか？/Чи цей поїзд метро* ї*де в це*нтр мі*ста?</item>
-        <item>n/このバスはダウンタウンまで行きますか？/Чи цей авто*бус ї*де в це*нтр мі*ста?</item>
-        <item>n/タクシー！/Таксі*!</item>
-        <item>n/… までお願いします/Будь ла*ска, до …</item>
-        <item>n/… までいくらですか?/Скі*льки ко*штує проїхати до … ?</item>
+        <item>n/Minibus/маршру*тка</item>
+        <item>n/Bus/авто*бус</item>
+        <item>n/Train/по*їзд</item>
+        <item>n/How much is a ticket to …?/Скі*льки ко*штує квито*к до …?</item>
+        <item>n/One ticket to …, please/Будь ла*ска, один квито*к до …</item>
+        <item>n/Where does this train go?/Куди* ї*де це*й по*їзд?</item>
+        <item>n/Where does this bus go?/Куди* ї*де це*й авто*бус?</item>
+        <item>n/Where does this train stop?/Де зупиня*ється це*й по*їзд?</item>
+        <item>n/Where does this bus stop?/Де зупиня*ється це*й авто*бус?</item>
+        <item>n/Does this metro train go downtown?/Чи цей поїзд метро* ї*де в це*нтр мі*ста?</item>
+        <item>n/Does this bus go downtown?/Чи цей авто*бус ї*де в це*нтр мі*ста?</item>
+        <item>n/Taxi!/Таксі*!</item>
+        <item>n/To …, please/Будь ла*ска, до …</item>
+        <item>n/How much does it cost to go to …?/Скі*льки ко*штує проїхати до …?</item>
     </string-array>
 
     <string-array name="directions">
-        <item>n/… はどちらですか?/Де знахо*диться … ?</item>
-        <item>n/駅/вокза*л</item>
-        <item>n/バス停/зупи*нка авто*буса</item>
-        <item>n/空港/аеропо*рт</item>
-        <item>n/街の中心/це*нтр мі*ста</item>
-        <item>n/ホテル/готе*ль</item>
-        <item>n/大使館/посо*льство</item>
-        <item>n/領事館/ко*нсульство</item>
-        <item>n/日本/Япо*нія</item>
-        <item>n/ウクライナ/Украї*на</item>
-        <item>n/レストラン/рестора*н</item>
-        <item>n/バー/ба*р</item>
-        <item>n/道/доро*га</item>
-        <item>n/左/ліво*руч</item>
-        <item>n/右/право*руч</item>
-        <item>n/まっすぐ/пря*мо</item>
-        <item>n/… へ向かって/до …</item>
-        <item>n/… の先/за …</item>
-        <item>n/… の前/пе*ред …</item>
-        <item>n/交差点/перехре*стя</item>
-        <item>n/北/пі*вніч</item>
-        <item>n/南/пі*вдень</item>
-        <item>n/東/схі*д</item>
-        <item>n/西/за*хід</item>
+        <item>n/Where is …?/Де знахо*диться …?</item>
+        <item>n/Train station/вокза*л</item>
+        <item>n/Bus stop/зупи*нка авто*буса</item>
+        <item>n/Airport/аеропо*рт</item>
+        <item>n/City center/це*нтр мі*ста</item>
+        <item>n/Hotel/готе*ль</item>
+        <item>n/Embassy/посо*льство</item>
+        <item>n/Consulate/ко*нсульство</item>
+        <item>n/Japan/Япо*нія</item>
+        <item>n/Ukraine/Украї*на</item>
+        <item>n/Restaurant/рестора*н</item>
+        <item>n/Bar/ба*р</item>
+        <item>n/Road/доро*га</item>
+        <item>n/Left/ліво*руч</item>
+        <item>n/Right/право*руч</item>
+        <item>n/Straight ahead/пря*мо</item>
+        <item>n/Towards …/до …</item>
+        <item>n/Behind …/за …</item>
+        <item>n/In front of …/пе*ред …</item>
+        <item>n/Intersection/перехре*стя</item>
+        <item>n/North/пі*вніч</item>
+        <item>n/South/пі*вдень</item>
+        <item>n/East/схі*д</item>
+        <item>n/West/за*хід</item>
     </string-array>
 
     <string-array name="numbers">
@@ -382,405 +302,405 @@
         <item>n/1,000/ти*сяча</item>
         <item>n/2,000/дві* ти*сячі</item>
         <item>n/10,000/де*сять ти*сяч</item>
-        <item>n/1,000,000（百万）/мільйо*н</item>
-        <item>n/100,000,000（一億）/сто* мільйо*нів</item>
-        <item>n/1,000,000,000（十億）/мілья*рд</item>
-        <item>n/1,000,000,000,000（一兆）/трильйо*н</item>
-        <item>n/… 番 （列車・バスなど）/но*мер</item>
-        <item>n/半分/полови*на</item>
-        <item>n/少ない/ма*ло</item>
-        <item>n/多い/бага*то</item>
+        <item>n/1,000,000 (million)/мільйо*н</item>
+        <item>n/100,000,000 (100 million)/сто* мільйо*нів</item>
+        <item>n/1,000,000,000 (billion)/мілья*рд</item>
+        <item>n/1,000,000,000,000 (trillion)/трильйо*н</item>
+        <item>n/Number (train, bus, etc.)/но*мер</item>
+        <item>n/Half/полови*на</item>
+        <item>n/Little/ма*ло</item>
+        <item>n/Much/бага*то</item>
     </string-array>
 
     <string-array name="time">
-        <item>n/今/за*раз</item>
-        <item>n/後で/по*тім</item>
-        <item>n/前に/рані*ше</item>
-        <item>n/… の前に/пе*ред …</item>
-        <item>n/昼/Де*нь</item>
-        <item>n/朝/ра*нок</item>
-        <item>n/午後/пі*сля полу*дня</item>
-        <item>n/夕方/ве*чір</item>
-        <item>n/夜/ні*ч</item>
-        <item>n/冬/Зима*</item>
-        <item>n/春/Весна*</item>
-        <item>n/夏/Лі*то</item>
-        <item>n/秋/О*сінь</item>
-        <item>n/朝6時/Шо*ста годи*на ра*нку</item>
-        <item>n/朝7時/Сьо*ма годи*на ра*нку</item>
-        <item>n/午前9時/Дев\'я*та годи*на ра*нку</item>
-        <item>n/正午/опі*вдні</item>
-        <item>n/午後1時/Пе*рша годи*на дня*</item>
-        <item>n/午後2時/Дру*га годи*на дня*</item>
-        <item>n/夜12時/Опі*вночі</item>
-        <item>n/… 分/… хвили*н</item>
-        <item>n/… 時間/… годи*н</item>
-        <item>n/… 日/… дні*в</item>
-        <item>n/… 週間/… ти*жнів</item>
-        <item>n/… ヶ月/… мі*сяців</item>
-        <item>n/… 年/… ро*ків</item>
-        <item>n/今日/сього*дні</item>
-        <item>n/昨日/вчо*ра</item>
-        <item>n/明日/за*втра</item>
-        <item>n/今週/це*й ти*ждень</item>
-        <item>n/先週/мину*лий ти*ждень</item>
-        <item>n/来週/насту*пний ти*ждень</item>
+        <item>n/Now/за*раз</item>
+        <item>n/Later/по*тім</item>
+        <item>n/Earlier/рані*ше</item>
+        <item>n/Before …/пе*ред …</item>
+        <item>n/Day/Де*нь</item>
+        <item>n/Morning/ра*нок</item>
+        <item>n/Afternoon/пі*сля полу*дня</item>
+        <item>n/Evening/ве*чір</item>
+        <item>n/Night/ні*ч</item>
+        <item>n/Winter/Зима*</item>
+        <item>n/Spring/Весна*</item>
+        <item>n/Summer/Лі*то</item>
+        <item>n/Autumn/О*сінь</item>
+        <item>n/6 AM/Шо*ста годи*на ра*нку</item>
+        <item>n/7 AM/Сьо*ма годи*на ра*нку</item>
+        <item>n/9 AM/Дев\'я*та годи*на ра*нку</item>
+        <item>n/Noon/опі*вдні</item>
+        <item>n/1 PM/Пе*рша годи*на дня*</item>
+        <item>n/2 PM/Дру*га годи*на дня*</item>
+        <item>n/Midnight/Опі*вночі</item>
+        <item>n/… minutes/… хвили*н</item>
+        <item>n/… hours/… годи*н</item>
+        <item>n/… days/… дні*в</item>
+        <item>n/… weeks/… ти*жнів</item>
+        <item>n/… months/… мі*сяців</item>
+        <item>n/… years/… ро*ків</item>
+        <item>n/Today/сього*дні</item>
+        <item>n/Yesterday/вчо*ра</item>
+        <item>n/Tomorrow/за*втра</item>
+        <item>n/This week/це*й ти*ждень</item>
+        <item>n/Last week/мину*лий ти*ждень</item>
+        <item>n/Next week/насту*пний ти*ждень</item>
     </string-array>
 
     <string-array name="weekdays">
-        <item>n/月曜日/понеді*лок</item>
-        <item>n/火曜日/вівто*рок</item>
-        <item>n/水曜日/середа*</item>
-        <item>n/木曜日/четве*р</item>
-        <item>n/金曜日/п\'я*тниця</item>
-        <item>n/土曜日/субо*та</item>
-        <item>n/日曜日/неді*ля</item>
+        <item>n/Monday/понеді*лок</item>
+        <item>n/Tuesday/вівто*рок</item>
+        <item>n/Wednesday/середа*</item>
+        <item>n/Thursday/четве*р</item>
+        <item>n/Friday/п\'я*тниця</item>
+        <item>n/Saturday/субо*та</item>
+        <item>n/Sunday/неді*ля</item>
     </string-array>
 
     <string-array name="months">
-        <item>n/1月/сі*чень</item>
-        <item>n/2月/лю*тий</item>
-        <item>n/3月/бе*резень</item>
-        <item>n/4月/кві*тень</item>
-        <item>n/5月/тра*вень</item>
-        <item>n/6月/че*рвень</item>
-        <item>n/7月/ли*пень</item>
-        <item>n/8月/се*рпень</item>
-        <item>n/9月/ве*ресень</item>
-        <item>n/10月/жо*втень</item>
-        <item>n/11月/листопа*д</item>
-        <item>n/12月/гру*день</item>
-        <item>n/2005年3月24日（火）/вівто*рок, два*дцять четве*рте бе*резня дві* ти*сячі п\'я*того ро*ку</item>
+        <item>n/January/сі*чень</item>
+        <item>n/February/лю*тий</item>
+        <item>n/March/бе*резень</item>
+        <item>n/April/кві*тень</item>
+        <item>n/May/тра*вень</item>
+        <item>n/June/че*рвень</item>
+        <item>n/July/ли*пень</item>
+        <item>n/August/се*рпень</item>
+        <item>n/September/ве*ресень</item>
+        <item>n/October/жо*втень</item>
+        <item>n/November/листопа*д</item>
+        <item>n/December/гру*день</item>
+        <item>n/Tuesday, March 24, 2005/вівто*рок, два*дцять четве*рте бе*резня дві* ти*сячі п\'я*того ро*ку</item>
     </string-array>
 
     <string-array name="colors">
-        <item>n/黒/чо*рний</item>
-        <item>n/白/бі*лий</item>
-        <item>n/灰色/сі*рий</item>
-        <item>n/赤/черво*ний</item>
-        <item>n/青/си*ній</item>
-        <item>n/黄色/жо*втий</item>
-        <item>n/緑/зеле*ний</item>
-        <item>n/橙/помара*нчевий</item>
-        <item>n/紫/фіоле*товий</item>
-        <item>n/茶色/кори*чневий</item>
+        <item>n/Black/чо*рний</item>
+        <item>n/White/бі*лий</item>
+        <item>n/Gray/сі*рий</item>
+        <item>n/Red/черво*ний</item>
+        <item>n/Blue/си*ній</item>
+        <item>n/Yellow/жо*втий</item>
+        <item>n/Green/зеле*ний</item>
+        <item>n/Orange/помара*нчевий</item>
+        <item>n/Purple/фіоле*товий</item>
+        <item>n/Brown/кори*чневий</item>
     </string-array>
 
     <string-array name="common_words">
-        <item>n/はい/Так</item>
-        <item>n/いいえ/Ні*</item>
-        <item>n/女の子/Ді*вчина</item>
-        <item>n/男の子/Хло*пець</item>
-        <item>n/女性/Жі*нка</item>
-        <item>n/男性/Чо*ловік</item>
-        <item>n/妻/Дружи*на</item>
-        <item>n/夫/Чолові*к</item>
-        <item>n/おばあさん/Бабу*ся</item>
-        <item>n/おじいさん/Діду*сь</item>
-        <item>n/コサック/Коза*к</item>
-        <item>n/たき火/Бага*ття</item>
-        <item>n/セラー/Льо*х</item>
-        <item>n/月/Мі*сяць</item>
-        <item>n/星/Зі*рка</item>
-        <item>n/世界/Сві*т</item>
-        <item>n/雲/Хма*ра</item>
-        <item>n/雪/Сні*г</item>
-        <item>n/雨/До*щ</item>
-        <item>n/稲妻/Бли*скавка</item>
-        <item>n/水/Вода*</item>
-        <item>n/川/Рі*чка</item>
-        <item>n/湖/О*зеро</item>
-        <item>n/海/Мо*ре</item>
-        <item>n/平野/Рівни*на</item>
-        <item>n/山/Гора*</item>
-        <item>n/森/Лі*с</item>
-        <item>n/草原/Сте*п</item>
-        <item>n/木/Дере*во</item>
-        <item>n/花/Кві*тка</item>
-        <item>n/サクランボ/Ви*шня</item>
-        <item>n/パン/Хлі*б</item>
-        <item>n/ネコ/Кі*т</item>
-        <item>n/イヌ/Соба*ка</item>
-        <item>n/ウシ/Коро*ва</item>
-        <item>n/ウマ/Кі*нь</item>
-        <item>n/めんどり/Ку*рка</item>
-        <item>n/ヤギ/Коза*</item>
-        <item>n/ヒツジ/Вівця*</item>
-        <item>n/ブタ/Свиня*</item>
-        <item>n/キツネ/Лиси*ця</item>
-        <item>n/オオカミ/Во*вк</item>
-        <item>n/イノシシ/Каба*н</item>
-        <item>n/クマ/Ведмі*дь</item>
-        <item>n/ネズミ/Ми*ша</item>
-        <item>n/シカ/О*лень</item>
-        <item>n/ハヤブサ/Со*кіл</item>
-        <item>n/ミミズク/Пу*гач</item>
+        <item>n/Yes/Так</item>
+        <item>n/No/Ні*</item>
+        <item>n/Girl/Ді*вчина</item>
+        <item>n/Boy/Хло*пець</item>
+        <item>n/Woman/Жі*нка</item>
+        <item>n/Man/Чо*ловік</item>
+        <item>n/Wife/Дружи*на</item>
+        <item>n/Husband/Чолові*к</item>
+        <item>n/Grandmother/Бабу*ся</item>
+        <item>n/Grandfather/Діду*сь</item>
+        <item>n/Cossack/Коза*к</item>
+        <item>n/Bonfire/Бага*ття</item>
+        <item>n/Cellar/Льо*х</item>
+        <item>n/Moon/Мі*сяць</item>
+        <item>n/Star/Зі*рка</item>
+        <item>n/World/Сві*т</item>
+        <item>n/Cloud/Хма*ра</item>
+        <item>n/Snow/Сні*г</item>
+        <item>n/Rain/До*щ</item>
+        <item>n/Lightning/Бли*скавка</item>
+        <item>n/Water/Вода*</item>
+        <item>n/River/Рі*чка</item>
+        <item>n/Lake/О*зеро</item>
+        <item>n/Sea/Мо*ре</item>
+        <item>n/Plain/Рівни*на</item>
+        <item>n/Mountain/Гора*</item>
+        <item>n/Forest/Лі*с</item>
+        <item>n/Steppe/Сте*п</item>
+        <item>n/Tree/Дере*во</item>
+        <item>n/Flower/Кві*тка</item>
+        <item>n/Cherry/Ви*шня</item>
+        <item>n/Bread/Хлі*б</item>
+        <item>n/Cat/Кі*т</item>
+        <item>n/Dog/Соба*ка</item>
+        <item>n/Cow/Коро*ва</item>
+        <item>n/Horse/Кі*нь</item>
+        <item>n/Hen/Ку*рка</item>
+        <item>n/Goat/Коза*</item>
+        <item>n/Sheep/Вівця*</item>
+        <item>n/Pig/Свиня*</item>
+        <item>n/Fox/Лиси*ця</item>
+        <item>n/Wolf/Во*вк</item>
+        <item>n/Boar/Каба*н</item>
+        <item>n/Bear/Ведмі*дь</item>
+        <item>n/Mouse/Ми*ша</item>
+        <item>n/Deer/О*лень</item>
+        <item>n/Falcon/Со*кіл</item>
+        <item>n/Owl/Пу*гач</item>
     </string-array>
 
     <string-array name="love">
-        <item>n/私の彼女（ガールフレンド）/Моя* ді*вчина</item>
-        <item>n/私の彼氏（ボーイフレンド）/Мі*й хло*пець</item>
-        <item>n/運命の人（ガールフレンド）/Моя* коха*на</item>
-        <item>n/運命の人（ボーイフレンド）/Мі*й коха*ний</item>
-        <item>n/好きです/Ти мені* подо*баєшся</item>
-        <item>n/大好きです/Я тебе* коха*ю</item>
-        <item>n/あなたのことが全部好きです/Мені* все* в тобі* подо*бається</item>
-        <item>n/今度どこかに一緒にデートしない？/Дава*й бу*демо зустріча*тись?</item>
-        <item>n/私には付き合っている人がいます/Я вже* перебува*ю в стосу*нках</item>
-        <item>n/私には彼女がいます/В ме*не вже* є ді*вчина</item>
-        <item>n/私には彼氏がいます/В ме*не вже* є хло*пець</item>
-        <item>n/彼女は、私の一番新しい彼女だ/Це моя* нова* ді*вчина</item>
-        <item>m/私と結婚してください/Вихо*дь за ме*не за*між</item>
-        <item>f/私と結婚してください/Дава*й одру*жимося</item>
-        <item>n/きれいだよ（ガールフレンド）/Ти ду*же га*рна</item>
-        <item>n/ハンサムだよ（ボーイフレンド）/Ти ду*же симпати*чний</item>
-        <item>n/なかなかカッコいいよ/Ти кла*сно вигляда*єш</item>
-        <item>n/今日は特別に（きれい／ハンサム）だね/Сього*дні ти про*сто неймові*рно вигляда*єш</item>
-        <item>n/きれいな目だね/В те*бе ду*же га*рні очі</item>
-        <item>n/あなたは私にとって大切な人です（ガールフレンド）/Ти ду*же особли*ва для мене</item>
-        <item>n/あなたは私にとって大切な人です（ボーイフレンド）/Ти ду*же особли*вий для мене</item>
-        <item>m/あなたがずっと好きでした/Я за*вжди тебе* коха*в</item>
-        <item>f/あなたがずっと好きでした/Я за*вжди тебе* коха*ла</item>
-        <item>n/ずっと一緒にいたいよ/Я хо*чу бу*ти за*вжди по*руч з тобо*ю</item>
-        <item>n/よくここに来るの？/Ти ча*сто сюди* захо*диш?</item>
-        <item>n/一杯おごらせてください/Дозво*ль мені* купи*ти тобі* напі*й</item>
-        <item>n/ここに誰か座ってる？/Ви*бачте, ту*т вже* за*йнято?</item>
-        <item>m/前に会ったことあったっけ？/Я вже* тебе* ту*т зустріча*в рані*ше?</item>
-        <item>f/前に会ったことあったっけ？/Я вже* тебе* ту*т зустріча*ла рані*ше?</item>
-        <item>n/付き合っている人はいますか？/Ти вже* з ки*мось зустріча*єшся?</item>
-        <item>n/お似合いのカップルだね/Вони* чудо*во підхо*дять одне*-о*дному</item>
-        <item>n/これは真の愛かな？/Чи це спра*вжнє коха*ння?</item>
-        <item>n/私は彼氏と別れる事にしました/Мі*й хло*пець і я розлуча*ємось</item>
-        <item>n/私の彼女と別れる事にしました/Моя* ді*вчина і я розлуча*ємось</item>
-        <item>n/まだマジになりたくない/За*раз для* ме*не не найкра*щий час розпочина*ти стосу*нки</item>
-        <item>m/まだ結婚したくない/Я по*ки що не гото*вий до одру*ження</item>
-        <item>m/まだ婚約したくない/Я по*ки що не гото*вий до зару*чення</item>
-        <item>f/まだ結婚したくない/Я по*ки що не гото*ва до одру*ження</item>
-        <item>f/まだ婚約したくない/Я по*ки що не гото*ва до зару*чення</item>
-        <item>n/私達どうも上手くいってない/У на*с не склада*ються стосу*нки</item>
-        <item>n/もう会えない/Ми вже* не змо*жемо зустріча*тись</item>
-        <item>n/まだ友達でいられるかな？/Ми змо*жемо зали*шитись дру*зями?</item>
-        <item>n/もう一度やり直せない？/Ми змо*жемо розпоча*ти все* з чи*стого а*ркуша?</item>
-        <item>m/いい彼氏じゃなくて、ごめん/Ви*бач, я та*к і не змі*г ста*ти тобі* га*рним хло*пцем</item>
-        <item>f/いい彼女じゃなくて、ごめん/Ви*бач, я та*к і не змогла* ста*ти тобі* га*рною ді*вчиною</item>
-        <item>n/あなたを心から愛しています/Я щи*ро тебе* коха*ю</item>
-        <item>n/話をつけようじゃないか/Дава*й про* це відве*рто погово*римо</item>
-        <item>n/元気でね/Бережи* себе*</item>
-        <item>n/時々メールするよ/Я тобі* і*ноді бу*ду писа*ти</item>
+        <item>n/My girlfriend/Моя* ді*вчина</item>
+        <item>n/My boyfriend/Мі*й хло*пець</item>
+        <item>n/My beloved (girlfriend)/Моя* коха*на</item>
+        <item>n/My beloved (boyfriend)/Мі*й коха*ний</item>
+        <item>n/I like you/Ти мені* подо*баєшся</item>
+        <item>n/I love you/Я тебе* коха*ю</item>
+        <item>n/I like everything about you/Мені* все* в тобі* подо*бається</item>
+        <item>n/Shall we go out sometime?/Дава*й бу*демо зустріча*тись?</item>
+        <item>n/I\'m already in a relationship/Я вже* перебува*ю в стосу*нках</item>
+        <item>n/I already have a girlfriend/В ме*не вже* є ді*вчина</item>
+        <item>n/I already have a boyfriend/В ме*не вже* є хло*пець</item>
+        <item>n/She is my new girlfriend/Це моя* нова* ді*вчина</item>
+        <item>m/Marry me/Вихо*дь за ме*не за*між</item>
+        <item>f/Let\'s get married/Дава*й одру*жимося</item>
+        <item>n/You are very beautiful/Ти ду*же га*рна</item>
+        <item>n/You are very handsome/Ти ду*же симпати*чний</item>
+        <item>n/You look cool/Ти кла*сно вигляда*єш</item>
+        <item>n/You look especially (beautiful/handsome) today/Сього*дні ти про*сто неймові*рно вигляда*єш</item>
+        <item>n/You have beautiful eyes/В те*бе ду*же га*рні очі</item>
+        <item>n/You are very special to me (girlfriend)/Ти ду*же особли*ва для мене</item>
+        <item>n/You are very special to me (boyfriend)/Ти ду*же особли*вий для мене</item>
+        <item>m/I have always loved you/Я за*вжди тебе* коха*в</item>
+        <item>f/I have always loved you/Я за*вжди тебе* коха*ла</item>
+        <item>n/I want to always be with you/Я хо*чу бу*ти за*вжди по*руч з тобо*ю</item>
+        <item>n/Do you come here often?/Ти ча*сто сюди* захо*диш?</item>
+        <item>n/Let me buy you a drink/Дозво*ль мені* купи*ти тобі* напі*й</item>
+        <item>n/Is this seat taken?/Ви*бачте, ту*т вже* за*йнято?</item>
+        <item>m/Haven\'t we met before?/Я вже* тебе* ту*т зустріча*в рані*ше?</item>
+        <item>f/Haven\'t we met before?/Я вже* тебе* ту*т зустріча*ла рані*ше?</item>
+        <item>n/Are you seeing someone?/Ти вже* з ки*мось зустріча*єшся?</item>
+        <item>n/You make a lovely couple/Вони* чудо*во підхо*дять одне*-о*дному</item>
+        <item>n/Is this true love?/Чи це спра*вжнє коха*ння?</item>
+        <item>n/My boyfriend and I are breaking up/Мі*й хло*пець і я розлуча*ємось</item>
+        <item>n/My girlfriend and I are breaking up/Моя* ді*вчина і я розлуча*ємось</item>
+        <item>n/It\'s not the right time for me to start a relationship/За*раз для* ме*не не найкра*щий час розпочина*ти стосу*нки</item>
+        <item>m/I\'m not ready to get married yet/Я по*ки що не гото*вий до одру*ження</item>
+        <item>m/I\'m not ready to get engaged yet/Я по*ки що не гото*вий до зару*чення</item>
+        <item>f/I\'m not ready to get married yet/Я по*ки що не гото*ва до одру*ження</item>
+        <item>f/I\'m not ready to get engaged yet/Я по*ки що не гото*ва до зару*чення</item>
+        <item>n/Our relationship isn\'t working out/У на*с не склада*ються стосу*нки</item>
+        <item>n/We can\'t see each other anymore/Ми вже* не змо*жемо зустріча*тись</item>
+        <item>n/Can we still be friends?/Ми змо*жемо зали*шитись дру*зями?</item>
+        <item>n/Can we start over?/Ми змо*жемо розпоча*ти все* з чи*стого а*ркуша?</item>
+        <item>m/Sorry I wasn\'t a good boyfriend/Ви*бач, я та*к і не змі*г ста*ти тобі* га*рним хло*пцем</item>
+        <item>f/Sorry I wasn\'t a good girlfriend/Ви*бач, я та*к і не змогла* ста*ти тобі* га*рною ді*вчиною</item>
+        <item>n/I love you with all my heart/Я щи*ро тебе* коха*ю</item>
+        <item>n/Let\'s talk about it openly/Дава*й про* це відве*рто погово*римо</item>
+        <item>n/Take care/Бережи* себе*</item>
+        <item>n/I\'ll write to you sometimes/Я тобі* і*ноді бу*ду писа*ти</item>
     </string-array>
 
     <string-array name="hotel">
-        <item>n/いらっしゃいませ/Ласка*во про*симо</item>
-        <item>n/お風呂付きのダブルルームをおねがいします/На*м потрі*бен но*мер з одни*м двоспа*льним лі*жком та ва*нною кімна*тою</item>
-        <item>n/ツインルームをおねがいします/На*м потрі*бен но*мер з двома* окре*мими лі*жками</item>
-        <item>n/お手洗らいはどこですか/Ви*бачте, де туале*т?</item>
-        <item>n/予約をしてあります/Ми забронюва*ли но*мер</item>
-        <item>n/田中で予約をしてあります/Ми забронюва*ли но*мер на прі*звище Тана*ка</item>
-        <item>m/先週しました/Я зроби*в це мину*лого ти*жня</item>
-        <item>f/先週しました/Я зроби*ла це мину*лого ти*жня</item>
-        <item>n/わたしの予約ははいっていますか/У ва*с є на*ше бронюва*ння?</item>
-        <item>n/料金はいくらですか/Скі*льки ко*штує прожива*ння в цьо*му но*мері?</item>
-        <item>n/ひと晩いくらですか/Скі*льки ко*штує оди*н де*нь прожива*ння в цьо*му но*мері?</item>
-        <item>n/サービス料は含まれていますか/Чи пла*та за по*слуги вклю*чена в ціну* но*мера?</item>
-        <item>n/チェックインは何時からですか/З яко*ї годи*ни засе*лення в но*мер?</item>
-        <item>n/チェックアウトは何時までですか/До яко*ї годи*ни ви*селення з но*меру?</item>
-        <item>n/このクレジットカードは使えますか/Я мо*жу оплати*ти ціє*ю креди*тною ка*рткою?</item>
-        <item>n/トラベラーズチェックで払います/Я оплачу* доро*жнім че*ком</item>
-        <item>n/かぎをおねがいします/Да*йте мені* будь-ла*ска клю*ч ві*д мого* но*меру</item>
-        <item>n/明日のあさ8時にモーニングコールをおねがいします/Будь-ла*ска розбуді*ть мене* дзвінко*м в но*мер за*втра о во*сьмій годи*ні ра*нку</item>
-        <item>n/今から部屋を使えますか/Вже* мо*жна заселя*тись в но*мер?</item>
-        <item>n/荷物を部屋に運んでもらえますか/Ви*бачте, мо*жете допомогти* підне*сти бага*ж до но*меру?</item>
-        <item>n/荷物を預かってもらえますか/Ви*бачте, я мо*жу зали*шити бага*ж в готе*лі?</item>
-        <item>m/預かって頂いていた荷物をお願いします。名前は田中です/Ви*бачте, я мо*жу забра*ти сві*й бага*ж, яки*й я залиша*в у ва*с? Моє* прі*звище Тана*ка.</item>
-        <item>f/預かって頂いていた荷物をお願いします。名前は田中です/Ви*бачте, я мо*жу забра*ти сві*й бага*ж, яки*й я залиша*ла у ва*с? Моє* прі*звище Тана*ка.</item>
-        <item>n/バスルーム（シャワー）つきの部屋ですか？/В цьо*му но*мері є ва*нна кімна*та або* ду*ш?</item>
+        <item>n/Welcome/Ласка*во про*симо</item>
+        <item>n/We\'d like a double room with a bath, please/На*м потрі*бен но*мер з одни*м двоспа*льним лі*жком та ва*нною кімна*тою</item>
+        <item>n/We\'d like a twin room, please/На*м потрі*бен но*мер з двома* окре*мими лі*жками</item>
+        <item>n/Excuse me, where is the restroom?/Ви*бачте, де туале*т?</item>
+        <item>n/We have a reservation/Ми забронюва*ли но*мер</item>
+        <item>n/We have a reservation under Tanaka/Ми забронюва*ли но*мер на прі*звище Тана*ка</item>
+        <item>m/I did it last week/Я зроби*в це мину*лого ти*жня</item>
+        <item>f/I did it last week/Я зроби*ла це мину*лого ти*жня</item>
+        <item>n/Do you have our reservation?/У ва*с є на*ше бронюва*ння?</item>
+        <item>n/How much is the room?/Скі*льки ко*штує прожива*ння в цьо*му но*мері?</item>
+        <item>n/How much is it per night?/Скі*льки ко*штує оди*н де*нь прожива*ння в цьо*му но*мері?</item>
+        <item>n/Is the service charge included?/Чи пла*та за по*слуги вклю*чена в ціну* но*мера?</item>
+        <item>n/What time is check-in?/З яко*ї годи*ни засе*лення в но*мер?</item>
+        <item>n/What time is check-out?/До яко*ї годи*ни ви*селення з но*меру?</item>
+        <item>n/Can I pay with this credit card?/Я мо*жу оплати*ти ціє*ю креди*тною ка*рткою?</item>
+        <item>n/I\'ll pay with traveler\'s checks/Я оплачу* доро*жнім че*ком</item>
+        <item>n/Can I have the key to my room, please?/Да*йте мені* будь-ла*ска клю*ч ві*д мого* но*меру</item>
+        <item>n/Please wake me up with a call at 8 AM tomorrow/Будь-ла*ска розбуді*ть мене* дзвінко*м в но*мер за*втра о во*сьмій годи*ні ра*нку</item>
+        <item>n/Can I check in now?/Вже* мо*жна заселя*тись в но*мер?</item>
+        <item>n/Excuse me, can you help me carry my luggage to my room?/Ви*бачте, мо*жете допомогти* підне*сти бага*ж до но*меру?</item>
+        <item>n/Excuse me, can I leave my luggage at the hotel?/Ви*бачте, я мо*жу зали*шити бага*ж в готе*лі?</item>
+        <item>m/Excuse me, can I pick up my luggage that I left with you? My last name is Tanaka/Ви*бачте, я мо*жу забра*ти сві*й бага*ж, яки*й я залиша*в у ва*с? Моє* прі*звище Тана*ка.</item>
+        <item>f/Excuse me, can I pick up my luggage that I left with you? My last name is Tanaka/Ви*бачте, я мо*жу забра*ти сві*й бага*ж, яки*й я залиша*ла у ва*с? Моє* прі*звище Тана*ка.</item>
+        <item>n/Does this room have a bathroom (shower)?/В цьо*му но*мері є ва*нна кімна*та або* ду*ш?</item>
     </string-array>
 
     <string-array name="restaurant">
-        <item>n/開いてますか？（今、営業中ですか？）/Ви за*раз відкри*ті?</item>
-        <item>n/こんばんは、いらっしゃいませ。何名様で？/До*брий ве*чір. Скі*льки ва*с?</item>
-        <item>n/４名です。/На*с че*тверо.</item>
-        <item>n/２名のテーブルをお願いします。/Сто*лик на дво*х, бу*дь-ла*ска.</item>
-        <item>n/喫煙席、禁煙席のどちらに？/Ви па*лите?</item>
-        <item>n/禁煙席をお願いします。/Сто*лик для* ти*х, хто* не па*лить, бу*дь-ла*ска.</item>
-        <item>n/喫煙席をお願いします。/Сто*лик для* ти*х, хто* па*лить, бу*дь-ла*ска.</item>
-        <item>n/あのテーブル（席）に座っていいですか？（指差しながら）/Чи мо*жна сі*сти за то*й сто*лик?</item>
-        <item>n/すみません、只今、満席なので、お待ち頂くことになります。/Ви*бачте, за*раз нема*є ві*льного сто*лику. Ми зму*шені проси*ти ва*с зачека*ти.</item>
-        <item>n/待ち時間はどれくらいですか？/Скі*льки прибли*зно на*м чека*ти?</item>
-        <item>n/待ち時間は30分ほどになります。/Потрі*бно бу*де зачека*ти бли*зько тридцяти* хвили*н.</item>
-        <item>n/それでは、待ちます。/До*бре, ми зачека*ємо.</item>
-        <item>n/それでは、またにします。/Ви*бачте, у на*с нема*є ча*су на очі*кування.</item>
-        <item>n/すみません、どこに上着を掛けていいですか？/Ви*бачте, де я мо*жу пові*сити сві*й піджа*к?</item>
-        <item>n/上着を掛ける場所はこちらにあります。/Та*к, у на*с є мі*сце, де ви мо*жете пові*сити сві*й піджа*к.</item>
-        <item>n/ラストオーダーは何時ですか？/Коли* ча*с оста*ннього замо*влення?</item>
-        <item>n/メニューをください。/Мо*жна бу*дь-ла*ска меню*?</item>
-        <item>n/決まったらお呼びします。/Ми дамо* ва*м зна*ти, коли* ви*рішимо, що бу*демо замовля*ти.</item>
-        <item>n/お決まりになりましたらお呼びください。/Бу*дь-ла*ска да*йте на*м зна*ти, коли* ви*рішите, що бу*дете замовля*ти.</item>
-        <item>n/ご注文よろしいですか？（お決まりになりましたか？）/Ви вже* гото*ві зроби*ти замо*влення?</item>
-        <item>n/オーダーお願いします。/Ви*бачте, коли* принесу*ть на*ше замо*влення?</item>
-        <item>n/お飲み物は何にいたしましょうか？/Що ви бу*дете пи*ти?</item>
-        <item>n/ビールを２つ。/Два* бока*ли пи*ва бу*дь-ла*ска.</item>
-        <item>n/グラスワイン１つとビール１つ。/Бока*л вина* та оди*н бока*л пи*ва бу*дь-ла*ска.</item>
-        <item>n/どのビールになさいますか？/Яке* са*ме пи*во ви бажа*єте?</item>
-        <item>n/輸入ビールと国産ビールのどちらに？/І*мпортне пи*во чи украї*нське пи*во?</item>
-        <item>n/白ワインをボトルで１本。/Одну* пля*шку бі*лого вина* бу*дь-ла*ска.</item>
-        <item>n/赤ワインをボトルで１本。/Одну* пля*шку черво*ного вина* бу*дь-ла*ска.</item>
-        <item>n/これを下さい。(メニュー内の料理名を指差しながら）/Мені* бу*дь-ла*ска о*сь це.</item>
-        <item>n/今日のスペシャルメーニューはありますか？/У ва*с є спеціа*льне меню* на сього*дні?</item>
-        <item>n/はい、ございます。こちらの３品が今日のスペシャルメーニューです。（メニュー内を指差しながら）/Та*к, у на*с є спеціа*льне меню*.</item>
-        <item>n/それじゃあ、これをください。/До*бре, тоді* мені* бу*дь-ла*ска о*сь це.</item>
-        <item>n/おすすめはどの料理ですか？/Що ви порекоменду*єте?</item>
-        <item>n/ベジタリアン料理はありますか？/У ва*с є вегетаріа*нські стра*ви?</item>
-        <item>n/ウクライナ料理はありますか？/У ва*с є украї*нські стра*ви?</item>
-        <item>n/牛肉料理が食べたいんですけど、メニューにありますか？/Мені* б хоті*лось стра*ви з ялови*чини. У ва*с є в меню*?</item>
-        <item>n/豚肉料理が食べたいんですけど、メニューにありますか？/Мені* б хоті*лось стра*ви зі свини*ни. У ва*с є в меню*?</item>
-        <item>n/鶏肉料理が食べたいんですけど、メニューにありますか？/Мені* б хоті*лось стра*ви з ку*рятини. У ва*с є в меню*?</item>
-        <item>n/野菜料理が食べたいんですけど、メニューにありますか？/Мені* б хоті*лось стра*ви з ово*чів. У ва*с є в меню*?</item>
-        <item>n/調理した魚料理が食べたいんですけど、メニューにありますか？/Мені* б хоті*лось стра*ви з ри*би. У ва*с є в меню*?</item>
-        <item>n/生の魚料理が食べたいんですけど、メニューにありますか？/Мені* б хоті*лось стра*ви з сиро*ї ри*би. У ва*с є в меню*?</item>
-        <item>n/サラダが食べたいんですけど、メニューにありますか？/Мені* б хоті*лось сала*ту. У ва*с є в меню*?</item>
-        <item>n/はい、ございます．こちらが牛肉料理です。（メニューを指差しながら）/Та*к, у на*с є, о*сь ця стра*ва з ялови*чини.</item>
-        <item>n/甘い（味付け）ですか？/Ця стра*ва соло*дка?</item>
-        <item>n/辛いですか？/Ця стра*ва гірка*?</item>
-        <item>n/酸っぱいですか？/Ця стра*ва ки*сла?</item>
-        <item>n/塩味ですか？/Ця стра*ва соло*на?</item>
-        <item>n/揚げ物ですか？/Ця стра*ва сма*жена на олі*ї?</item>
-        <item>n/炒め物ですか？/Ця стра*ва сма*жена?</item>
-        <item>n/煮物ですか？/Ця стра*ва зва*рена, сма*жена або тушко*вана?</item>
-        <item>n/生ですか？/Ця стра*ва сира*?</item>
-        <item>n/分かりました。それじゃあ、これとコーヒーを１つ。/До*бре, тоді* мені* бу*дь-ла*ска о*сь це і філіжа*нку ка*ви.</item>
-        <item>n/コーヒーはいつお持ち致しましょうか？食前ですか？食後ですか？/Коли* б ви хоті*ли в*ашу ка*ву, до ї*жі чи пі*сля ї*жі?</item>
-        <item>n/こちらお下げしてよろしいですか？(接客係が空になった皿を下げていいか聞く）/Ви вже* закі*нчили?</item>
-        <item>n/お勘定お願いします。/Че*к бу*дь-ла*ска.</item>
-        <item>n/クレジットカードで支払えますか？/Я мо*жу заплати*ти креди*тною ка*рткою?</item>
-        <item>n/はい、（カードでのお支払を）承っております。/Та*к, звича*йно.</item>
-        <item>n/すみません、カードでのお支払は承っておりません。/Ви*бачте, ми не прийма*ємо опла*ту креди*тними картка*ми.</item>
-        <item>n/レシート（領収書）を下さい。/Квита*нцію, бу*дь-ла*ска.</item>
+        <item>n/Are you open?/Ви за*раз відкри*ті?</item>
+        <item>n/Good evening, welcome. How many are you?/До*брий ве*чір. Скі*льки ва*с?</item>
+        <item>n/There are four of us./На*с че*тверо.</item>
+        <item>n/A table for two, please./Сто*лик на дво*х, бу*дь-ла*ска.</item>
+        <item>n/Smoking or non-smoking?/Ви па*лите?</item>
+        <item>n/Non-smoking, please./Сто*лик для* ти*х, хто* не па*лить, бу*дь-ла*ска.</item>
+        <item>n/Smoking, please./Сто*лик для* ти*х, хто* па*лить, бу*дь-ла*ска.</item>
+        <item>n/Can we sit at that table? (pointing)/Чи мо*жна сі*сти за то*й сто*лик?</item>
+        <item>n/Sorry, we are fully booked right now. We will have to ask you to wait./Ви*бачте, за*раз нема*є ві*льного сто*лику. Ми зму*шені проси*ти ва*с зачека*ти.</item>
+        <item>n/How long is the wait?/Скі*льки прибли*зно на*м чека*ти?</item>
+        <item>n/You will have to wait about 30 minutes./Потрі*бно бу*де зачека*ти бли*зько тридцяти* хвили*н.</item>
+        <item>n/Okay, we\'ll wait./До*бре, ми зачека*ємо.</item>
+        <item>n/Sorry, we don\'t have time to wait./Ви*бачте, у на*с нема*є ча*су на очі*кування.</item>
+        <item>n/Excuse me, where can I hang my jacket?/Ви*бачте, де я мо*жу пові*сити сві*й піджа*к?</item>
+        <item>n/You can hang your jacket here./Та*к, у на*с є мі*сце, де ви мо*жете пові*сити сві*й піджа*к.</item>
+        <item>n/What time is last order?/Коли* ча*с оста*ннього замо*влення?</item>
+        <item>n/Can we have the menu, please?/Мо*жна бу*дь-ла*ска меню*?</item>
+        <item>n/We\'ll let you know when we decide what to order./Ми дамо* ва*м зна*ти, коли* ви*рішимо, що бу*демо замовля*ти.</item>
+        <item>n/Please let us know when you are ready to order./Бу*дь-ла*ска да*йте на*м зна*ти, коли* ви*рішите, що бу*дете замовля*ти.</item>
+        <item>n/Are you ready to order?/Ви вже* гото*ві зроби*ти замо*влення?</item>
+        <item>n/Excuse me, when will our order arrive?/Ви*бачте, коли* принесу*ть на*ше замо*влення?</item>
+        <item>n/What would you like to drink?/Що ви бу*дете пи*ти?</item>
+        <item>n/Two beers, please./Два* бока*ли пи*ва бу*дь-ла*ска.</item>
+        <item>n/One glass of wine and one beer, please./Бока*л вина* та оди*н бока*л пи*ва бу*дь-ла*ска.</item>
+        <item>n/Which beer would you like?/Яке* са*ме пи*во ви бажа*єте?</item>
+        <item>n/Imported or Ukrainian beer?/І*мпортне пи*во чи украї*нське пи*во?</item>
+        <item>n/One bottle of white wine, please./Одну* пля*шку бі*лого вина* бу*дь-ла*ска.</item>
+        <item>n/One bottle of red wine, please./Одну* пля*шку черво*ного вина* бу*дь-ла*ска.</item>
+        <item>n/I\'ll have this, please. (pointing at the menu)/Мені* бу*дь-ла*ска о*сь це.</item>
+        <item>n/Do you have a special menu today?/У ва*с є спеціа*льне меню* на сього*дні?</item>
+        <item>n/Yes, we do. These three dishes are today\'s specials. (pointing at the menu)/Та*к, у на*с є спеціа*льне меню*.</item>
+        <item>n/Okay, I\'ll have this, please./До*бре, тоді* мені* бу*дь-ла*ска о*сь це.</item>
+        <item>n/What do you recommend?/Що ви порекоменду*єте?</item>
+        <item>n/Do you have vegetarian dishes?/У ва*с є вегетаріа*нські стра*ви?</item>
+        <item>n/Do you have Ukrainian dishes?/У ва*с є украї*нські стра*ви?</item>
+        <item>n/I\'d like a beef dish. Do you have it on the menu?/Мені* б хоті*лось стра*ви з ялови*чини. У ва*с є в меню*?</item>
+        <item>n/I\'d like a pork dish. Do you have it on the menu?/Мені* б хоті*лось стра*ви зі свини*ни. У ва*с є в меню*?</item>
+        <item>n/I\'d like a chicken dish. Do you have it on the menu?/Мені* б хоті*лось стра*ви з ку*рятини. У ва*с є в меню*?</item>
+        <item>n/I\'d like a vegetable dish. Do you have it on the menu?/Мені* б хоті*лось стра*ви з ово*чів. У ва*с є в меню*?</item>
+        <item>n/I\'d like a cooked fish dish. Do you have it on the menu?/Мені* б хоті*лось стра*ви з ри*би. У ва*с є в меню*?</item>
+        <item>n/I\'d like a raw fish dish. Do you have it on the menu?/Мені* б хоті*лось стра*ви з сиро*ї ри*би. У ва*с є в меню*?</item>
+        <item>n/I\'d like a salad. Do you have it on the menu?/Мені* б хоті*лось сала*ту. У ва*с є в меню*?</item>
+        <item>n/Yes, we do. Here is a beef dish. (pointing at the menu)/Та*к, у на*с є, о*сь ця стра*ва з ялови*чини.</item>
+        <item>n/Is it sweet?/Ця стра*ва соло*дка?</item>
+        <item>n/Is it bitter?/Ця стра*ва гірка*?</item>
+        <item>n/Is it sour?/Ця стра*ва ки*сла?</item>
+        <item>n/Is it salty?/Ця стра*ва соло*на?</item>
+        <item>n/Is it fried in oil?/Ця стра*ва сма*жена на олі*ї?</item>
+        <item>n/Is it fried?/Ця стра*ва сма*жена?</item>
+        <item>n/Is it boiled, fried, or stewed?/Ця стра*ва зва*рена, сма*жена або тушко*вана?</item>
+        <item>n/Is it raw?/Ця стра*ва сира*?</item>
+        <item>n/Okay, I\'ll have this and a cup of coffee./До*бре, тоді* мені* бу*дь-ла*ска о*сь це і філіжа*нку ка*ви.</item>
+        <item>n/When would you like your coffee, before or after the meal?/Коли* б ви хоті*ли в*ашу ка*ву, до ї*жі чи пі*сля ї*жі?</item>
+        <item>n/Can I take this away? (waiter asking if they can clear the empty plate)/Ви вже* закі*нчили?</item>
+        <item>n/Check, please./Че*к бу*дь-ла*ска.</item>
+        <item>n/Can I pay by credit card?/Я мо*жу заплати*ти креди*тною ка*рткою?</item>
+        <item>n/Yes, of course./Та*к, звича*йно.</item>
+        <item>n/Sorry, we don\'t accept credit cards./Ви*бачте, ми не прийма*ємо опла*ту креди*тними картка*ми.</item>
+        <item>n/Receipt, please./Квита*нцію, бу*дь-ла*ска.</item>
     </string-array>
 
     <string-array name="shopping">
-        <item>n/いいえ、ちょっと見ているだけです。/Дя*кую, я по*ки що про*сто дивлю*сь.</item>
-        <item>n/すみません、ちょっとお願いできますか？（手助けしてもらえますか？）/Ви*бачте, ви мо*жете мені* допомогти*?</item>
-        <item>n/スカートを探しています。ありますか？/Я шука*ю спідни*цю, у вас є?</item>
-        <item>n/ブラウスを探しています。ありますか？/Я шука*ю блу*зу, у вас є?</item>
-        <item>n/シャツを探しています。ありますか？/Я шука*ю соро*чку, у вас є?</item>
-        <item>n/ズボンを探しています。ありますか？/Я шука*ю брю*ки, у вас є?</item>
-        <item>n/ワンピースを探しています。ありますか？/Я шука*ю су*кню, у вас є?</item>
-        <item>n/ジャケットを探しています。ありますか？/Я шука*ю ку*ртку, у вас є?</item>
-        <item>n/靴を探しています。ありますか？/Я шука*ю взуття*, у вас є?</item>
-        <item>n/ウインドウに飾ってあるものがほしいのですが。/Мені* б хоті*лось те, що у вітри*ні.</item>
-        <item>n/あちらの商品棚にあるものがほしいのですが。/Мені* б хоті*лось те, що там на поли*ці.</item>
-        <item>n/はい、それです。/Так, мені* он те, бу*дь-ла*ска.</item>
-        <item>n/すみません、ほしかったのとはちょっと違いました。/Ви*бачте, це не зо*всім те, чого* мені* хоті*лось.</item>
-        <item>n/はい、これを下さい。/Так, я візьму* це.</item>
-        <item>n/これを試着してよろしいですか？/Мо*жна це примі*ряти?</item>
-        <item>n/ちょっと大き過ぎるようです。/Це зана*дто вели*ке на ме*не.</item>
-        <item>n/もう少し小さいサイズはありますか？/У вас є ця річ ме*ншого ро*зміру?</item>
-        <item>n/ちょっと小さ過ぎるようです。/Це зана*дто мале*ньке на ме*не.</item>
-        <item>n/もう少し大きいサイズはありますか？/У вас є ця річ бі*льшого ро*зміру?</item>
-        <item>n/私のサイズは３７です。/Мій ро*змір 37.</item>
-        <item>n/旅行者なので、ウクライナのサイズ基準が分かりません。/Я тури*ст, тому* я нажа*ль не зна*ю свої*х ро*змірів о*дягу за украї*нськими станда*ртами.</item>
-        <item>n/私に合いそうなサイズのものを選んでもらえませんか？/Ви мо*жете підібра*ти мені* о*дяг мого* ро*зміру?</item>
-        <item>n/このサイズはピッタリです。これにします。/Цей ро*змір мені* підхо*дить. Я візьму* це.</item>
-        <item>n/このサイズは合いません。/Цей ро*змір мені* не підхо*дить.</item>
-        <item>n/残念ですが、またにします。/Вибача*юсь, я зайду* пізні*ше.</item>
-        <item>n/すみません、決められないのでまたにします。/Ви*бачте, по*ки що не мо*жу ви*значитись.</item>
-        <item>n/クレジットカードで支払えますか？/Я мо*жу заплати*ти креди*ткою?</item>
-        <item>n/Visaカードです。/Це ка*ртка Visa.</item>
-        <item>n/分かりました。現金で支払ます。/До*бре, я заплачу* готі*вкою.</item>
-        <item>n/これを別々に包んでもらえますか？/Ви мо*жете загорну*ти це окре*мо?</item>
-        <item>n/プレゼント用に包んでもらえますか？/Ви мо*жете загорну*ти це в подарунко*вий папі*р?</item>
-        <item>n/お土産なので紙袋（レジ袋）をもう一枚余分にもらえますか？/Ви мо*жете загорну*ти це додатко*во (або* да*ти ще оди*н пла*стиковий паке*т), ця річ на сувені*р.</item>
-        <item>n/バーゲンセールはいつからですか？/Коли* розпочина*ється розпро*даж?</item>
+        <item>n/No, thank you, I\'m just looking./Дя*кую, я по*ки що про*сто дивлю*сь.</item>
+        <item>n/Excuse me, can you help me?/Ви*бачте, ви мо*жете мені* допомогти*?</item>
+        <item>n/I\'m looking for a skirt. Do you have any?/Я шука*ю спідни*цю, у вас є?</item>
+        <item>n/I\'m looking for a blouse. Do you have any?/Я шука*ю блу*зу, у вас є?</item>
+        <item>n/I\'m looking for a shirt. Do you have any?/Я шука*ю соро*чку, у вас є?</item>
+        <item>n/I\'m looking for pants. Do you have any?/Я шука*ю брю*ки, у вас є?</item>
+        <item>n/I\'m looking for a dress. Do you have any?/Я шука*ю су*кню, у вас є?</item>
+        <item>n/I\'m looking for a jacket. Do you have any?/Я шука*ю ку*ртку, у вас є?</item>
+        <item>n/I\'m looking for shoes. Do you have any?/Я шука*ю взуття*, у вас є?</item>
+        <item>n/I\'d like what\'s in the window./Мені* б хоті*лось те, що у вітри*ні.</item>
+        <item>n/I\'d like what\'s on that shelf over there./Мені* б хоті*лось те, що там на поли*ці.</item>
+        <item>n/Yes, that one, please./Так, мені* он те, бу*дь-ла*ска.</item>
+        <item>n/Sorry, it\'s not quite what I wanted./Ви*бачте, це не зо*всім те, чого* мені* хоті*лось.</item>
+        <item>n/Yes, I\'ll take this./Так, я візьму* це.</item>
+        <item>n/Can I try this on?/Мо*жна це примі*ряти?</item>
+        <item>n/This is a bit too big for me./Це зана*дто вели*ке на ме*не.</item>
+        <item>n/Do you have this in a smaller size?/У вас є ця річ ме*ншого ро*зміру?</item>
+        <item>n/This is a bit too small for me./Це зана*дто мале*ньке на ме*не.</item>
+        <item>n/Do you have this in a larger size?/У вас є ця річ бі*льшого ро*зміру?</item>
+        <item>n/My size is 37./Мій ро*змір 37.</item>
+        <item>n/I\'m a tourist, so I don\'t know the Ukrainian size standards./Я тури*ст, тому* я нажа*ль не зна*ю свої*х ро*змірів о*дягу за украї*нськими станда*ртами.</item>
+        <item>n/Can you help me pick something in my size?/Ви мо*жете підібра*ти мені* о*дяг мого* ро*зміру?</item>
+        <item>n/This size fits me. I\'ll take it./Цей ро*змір мені* підхо*дить. Я візьму* це.</item>
+        <item>n/This size doesn\'t fit me./Цей ро*змір мені* не підхо*дить.</item>
+        <item>n/Sorry, I\'ll come back later./Вибача*юсь, я зайду* пізні*ше.</item>
+        <item>n/Sorry, I can\'t decide yet./Ви*бачте, по*ки що не мо*жу ви*значитись.</item>
+        <item>n/Can I pay by credit card?/Я мо*жу заплати*ти креди*ткою?</item>
+        <item>n/It\'s a Visa card./Це ка*ртка Visa.</item>
+        <item>n/Okay, I\'ll pay in cash./До*бре, я заплачу* готі*вкою.</item>
+        <item>n/Can you wrap this separately?/Ви мо*жете загорну*ти це окре*мо?</item>
+        <item>n/Can you gift wrap this?/Ви мо*жете загорну*ти це в подарунко*вий папі*р?</item>
+        <item>n/Can you give me an extra bag? It\'s a souvenir./Ви мо*жете загорну*ти це додатко*во (або* да*ти ще оди*н пла*стиковий паке*т), ця річ на сувені*р.</item>
+        <item>n/When does the sale start?/Коли* розпочина*ється розпро*даж?</item>
     </string-array>
 
     <string-array name="clothing">
-        <item>n/ティーシャツ/Футбо*лка</item>
-        <item>n/ズボン/Брю*ки</item>
-        <item>n/スカート/Спідни*ця</item>
-        <item>n/ワンピース/Су*кня</item>
-        <item>n/靴/Взуття*</item>
-        <item>n/靴下/Шкарпе*тки</item>
-        <item>n/下着/Спі*дня біли*зна</item>
-        <item>n/上着/Ве*рхній о*дяг</item>
-        <item>n/帽子/Капелю*х</item>
-        <item>n/スーツ/Костю*м</item>
-        <item>n/ネクタイ/Крава*тка</item>
-        <item>n/ベルト/Ре*мінь</item>
-        <item>n/コート/Пальто*</item>
-        <item>n/セーター/Све*тр</item>
-        <item>n/ジャケット/Ку*ртка</item>
-        <item>n/パーカー/Ху*ді</item>
-        <item>n/ブレザー/Бле*йзер</item>
-        <item>n/ブラウス/Блу*за</item>
-        <item>n/ジーンズ/Джи*нси</item>
-        <item>n/パジャマ/Піжа*ма</item>
-        <item>n/ブラジャー/Бюстга*льтер</item>
-        <item>n/水着/Купа*льник</item>
+        <item>n/T-shirt/Футбо*лка</item>
+        <item>n/Pants/Брю*ки</item>
+        <item>n/Skirt/Спідни*ця</item>
+        <item>n/Dress/Су*кня</item>
+        <item>n/Shoes/Взуття*</item>
+        <item>n/Socks/Шкарпе*тки</item>
+        <item>n/Underwear/Спі*дня біли*зна</item>
+        <item>n/Outerwear/Ве*рхній о*дяг</item>
+        <item>n/Hat/Капелю*х</item>
+        <item>n/Suit/Костю*м</item>
+        <item>n/Tie/Крава*тка</item>
+        <item>n/Belt/Ре*мінь</item>
+        <item>n/Coat/Пальто*</item>
+        <item>n/Sweater/Све*тр</item>
+        <item>n/Jacket/Ку*ртка</item>
+        <item>n/Hoodie/Ху*ді</item>
+        <item>n/Blazer/Бле*йзер</item>
+        <item>n/Blouse/Блу*за</item>
+        <item>n/Jeans/Джи*нси</item>
+        <item>n/Pajamas/Піжа*ма</item>
+        <item>n/Bra/Бюстга*льтер</item>
+        <item>n/Swimsuit/Купа*льник</item>
     </string-array>
 
     <string-array name="drugstore">
-        <item>n/下痢止めの薬はありますか？/У вас є лі*ки від діаре*ї?</item>
-        <item>n/便秘薬はありますか？(便秘＝コンスティペイション）/У вас є лі*ки від запо*ру?</item>
-        <item>n/風邪薬はありますか？/У вас є лі*ки від засту*ди?</item>
-        <item>n/頭痛薬はありますか？(頭痛＝ヘデック）/У вас є табле*тки від головно*го бо*лю?</item>
-        <item>n/胃薬（胃痛薬）はありますか？/У вас є табле*тки від бо*лю у шлу*нку?</item>
-        <item>n/むねやけ止めの薬はありますか？(むねやけ＝ハートバーン）/У вас є табле*тки від печії*?</item>
-        <item>n/解熱薬はありますか？/У вас є лі*ки для зни*ження температу*ри?</item>
-        <item>n/吐き気を止める薬はありますか？(吐き気＝ノーシャス）/У вас є лі*ки від нудо*ти?</item>
-        <item>n/歯の痛みを止める薬はありますか？(歯痛＝トゥースィック）/У вас є лі*ки від зубно*го бо*лю?</item>
-        <item>n/痔に効く薬はありますか？(痔＝ヘモ ゥロイド）/У вас є лі*ки від геморо*ю?</item>
-        <item>n/～の薬はありますか？/У вас є лі*ки від … ?</item>
-        <item>n/どれがお勧めですか？/Що б ви пора*дили?</item>
-        <item>n/それではこれを下さい。/До*бре, я візьму* це.</item>
-        <item>n/この処方箋の薬を下さい。/Мо*жете прода*ти мені* лі*ки за цим реце*птом, бу*дь-ла*ска?</item>
-        <item>n/どのように飲むのですか？/Як прийма*ти ці лі*ки?</item>
-        <item>n/念の為、服用方法をここに書いて下さい。/Мо*жете тут бу*дь-ла*ска написа*ти, як мені* прийма*ти ці лі*ки, щоб не забу*ти?</item>
-        <item>n/かゆみ止めの塗り薬はありますか？/У вас є лі*ки від свербежу*?</item>
-        <item>n/虫除けのローションはありますか？/У вас є лосьйо*н від кома*х?</item>
-        <item>n/目薬はありますか？/У вас є кра*плі для оче*й?</item>
-        <item>n/バンソウコウはありますか？/У вас є пла*стир?</item>
-        <item>n/冷湿布（温湿布）はありますか？/У вас є холо*дні (гаря*чі) компре*си?</item>
-        <item>n/綿棒はありますか？/У вас є ва*тні па*лички?</item>
-        <item>n/ビタミンＣ剤はありますか？(ビタミン＝ヴァイタミン）/У вас є вітамі*н C?</item>
-        <item>n/ビタミンE剤はありますか？/У вас є вітамі*н E?</item>
-        <item>n/日焼け止めはありますか？/У вас є крем для за*хисту від со*нця?</item>
-        <item>n/オムツはありますか？/У вас є підгу*зники?</item>
-        <item>n/インスタントの離乳食はありますか？/У вас є дитя*че харчува*ння?</item>
+        <item>n/Do you have medicine for diarrhea?/У вас є лі*ки від діаре*ї?</item>
+        <item>n/Do you have medicine for constipation?/У вас є лі*ки від запо*ру?</item>
+        <item>n/Do you have cold medicine?/У вас є лі*ки від засту*ди?</item>
+        <item>n/Do you have headache medicine?/У вас є табле*тки від головно*го бо*лю?</item>
+        <item>n/Do you have stomachache medicine?/У вас є табле*тки від бо*лю у шлу*нку?</item>
+        <item>n/Do you have heartburn medicine?/У вас є табле*тки від печії*?</item>
+        <item>n/Do you have fever reducer?/У вас є лі*ки для зни*ження температу*ри?</item>
+        <item>n/Do you have medicine for nausea?/У вас є лі*ки від нудо*ти?</item>
+        <item>n/Do you have medicine for toothache?/У вас є лі*ки від зубно*го бо*лю?</item>
+        <item>n/Do you have medicine for hemorrhoids?/У вас є лі*ки від геморо*ю?</item>
+        <item>n/Do you have medicine for …?/У вас є лі*ки від …?</item>
+        <item>n/What do you recommend?/Що б ви пора*дили?</item>
+        <item>n/Okay, I\'ll take this./До*бре, я візьму* це.</item>
+        <item>n/Can I have the medicine for this prescription, please?/Мо*жете прода*ти мені* лі*ки за цим реце*птом, бу*дь-ла*ска?</item>
+        <item>n/How do I take it?/Як прийма*ти ці лі*ки?</item>
+        <item>n/Can you write down how to take it here so I don\'t forget?/Мо*жете тут бу*дь-ла*ска написа*ти, як мені* прийма*ти ці лі*ки, щоб не забу*ти?</item>
+        <item>n/Do you have anti-itch cream?/У вас є лі*ки від свербежу*?</item>
+        <item>n/Do you have insect repellent lotion?/У вас є лосьйо*н від кома*х?</item>
+        <item>n/Do you have eye drops?/У вас є кра*плі для оче*й?</item>
+        <item>n/Do you have band-aids?/У вас є пла*стир?</item>
+        <item>n/Do you have cold (hot) compresses?/У вас є холо*дні (гаря*чі) компре*си?</item>
+        <item>n/Do you have cotton swabs?/У вас є ва*тні па*лички?</item>
+        <item>n/Do you have vitamin C?/У вас є вітамі*н C?</item>
+        <item>n/Do you have vitamin E?/У вас є вітамі*н E?</item>
+        <item>n/Do you have sunscreen?/У вас є крем для за*хисту від со*нця?</item>
+        <item>n/Do you have diapers?/У вас є підгу*зники?</item>
+        <item>n/Do you have instant baby food?/У вас є дитя*че харчува*ння?</item>
     </string-array>
 
     <string-array name="driving">
-        <item>n/レンタカーお願いします。/Я хо*чу орендува*ти автомобі*ль.</item>
-        <item>n/保険入れますか?/Я мо*жу отри*мати автострахува*ння?</item>
-        <item>n/免許証を持っていますか?/У ва*с є воді*йське посві*дчення?</item>
-        <item>n/止まれ（とまれ）/Зупи*нка</item>
-        <item>n/一方通行/Односторо*нній ру*х</item>
-        <item>n/徐行/Попере*дження про* небезпе*ку</item>
-        <item>n/駐車禁止/Стоя*нку заборо*нено</item>
-        <item>n/制限速度/Обме*ження шви*дкості</item>
-        <item>n/ガソリンスタンド/Автозапра*вна ста*нція</item>
-        <item>n/ガソリン/Бензи*н</item>
-        <item>n/軽油（ディーゼル）/Ди*зель</item>
+        <item>n/I\'d like to rent a car./Я хо*чу орендува*ти автомобі*ль.</item>
+        <item>n/Can I get insurance?/Я мо*жу отри*мати автострахува*ння?</item>
+        <item>n/Do you have a driver\'s license?/У ва*с є воді*йське посві*дчення?</item>
+        <item>n/Stop/Зупи*нка</item>
+        <item>n/One way/Односторо*нній ру*х</item>
+        <item>n/Caution/Попере*дження про* небезпе*ку</item>
+        <item>n/No parking/Стоя*нку заборо*нено</item>
+        <item>n/Speed limit/Обме*ження шви*дкості</item>
+        <item>n/Gas station/Автозапра*вна ста*нція</item>
+        <item>n/Gasoline/Бензи*н</item>
+        <item>n/Diesel/Ди*зель</item>
     </string-array>
 
     <string-array name="bank">
-        <item>n/私は口座を開設したいです。/Я хо*чу відкри*ти раху*нок.</item>
-        <item>n/私は貯蓄口座を開設したいです。/Я хо*чу відкри*ти ощад*ний раху*нок.</item>
-        <item>n/私は当座預金口座を開設したいです。/Я хо*чу відкри*ти пото*чний раху*нок.</item>
-        <item>n/口座を開設するのに必要なものは何ですか？/Що мені* потрі*бно для* відкриття* раху*нку?</item>
-        <item>n/パスポートと住民票が必要です。/Ва*м знадоби*ться па*спорт та ідентифікаці*йний код.</item>
-        <item>n/初期預金はいくらですか？/Яки*й мініма*льний депози*т?</item>
-        <item>n/初期預金は100グリブナです。/Мініма*льний депози*т - 100 гри*вень.</item>
-        <item>n/お金を預けたいです。/Я хо*чу внести* гро*ші на раху*нок.</item>
-        <item>n/お金を引き出したいです。/Я хо*чу зня*ти гро*ші з раху*нку.</item>
-        <item>n/残高照会をお願いします。/Я хо*чу дізна*тися бала*нс свого* раху*нку.</item>
-        <item>n/両替をお願いします。/Будь ла*ска, обміня*йте мені* гро*ші.</item>
-        <item>n/ドルをグリブナに両替したいです。/Я хо*чу обміня*ти до*лари на гри*вні.</item>
-        <item>n/手数料はいくらですか？/Яка* комі*сія?</item>
-        <item>n/ATMはどこにありますか？/Де знахо*диться банкома*т?</item>
-        <item>n/営業時間は何時から何時までですか？/Яки*й у ва*с гра*фік робо*ти?</item>
-        <item>n/クレジットカードを作りたいです。/Я хо*чу оформи*ти креди*тну ка*ртку.</item>
-        <item>m/ローンを申し込みたいのですが。/Я хоті*в би* пода*ти зая*вку на* креди*т.</item>
-        <item>f/ローンを申し込みたいのですが。/Я хоті*ла би* пода*ти зая*вку на* креди*т.</item>
+        <item>n/I\'d like to open an account./Я хо*чу відкри*ти раху*нок.</item>
+        <item>n/I\'d like to open a savings account./Я хо*чу відкри*ти ощад*ний раху*нок.</item>
+        <item>n/I\'d like to open a checking account./Я хо*чу відкри*ти пото*чний раху*нок.</item>
+        <item>n/What do I need to open an account?/Що мені* потрі*бно для* відкриття* раху*нку?</item>
+        <item>n/You need a passport and an identification code./Ва*м знадоби*ться па*спорт та ідентифікаці*йний код.</item>
+        <item>n/What is the minimum deposit?/Яки*й мініма*льний депози*т?</item>
+        <item>n/The minimum deposit is 100 hryvnia./Мініма*льний депози*т - 100 гри*вень.</item>
+        <item>n/I\'d like to deposit money./Я хо*чу внести* гро*ші на раху*нок.</item>
+        <item>n/I\'d like to withdraw money./Я хо*чу зня*ти гро*ші з раху*нку.</item>
+        <item>n/I\'d like to check my balance./Я хо*чу дізна*тися бала*нс свого* раху*нку.</item>
+        <item>n/I\'d like to exchange money./Будь ла*ска, обміня*йте мені* гро*ші.</item>
+        <item>n/I\'d like to exchange dollars for hryvnia./Я хо*чу обміня*ти до*лари на гри*вні.</item>
+        <item>n/What is the commission?/Яка* комі*сія?</item>
+        <item>n/Where is the ATM?/Де знахо*диться банкома*т?</item>
+        <item>n/What are your business hours?/Яки*й у ва*с гра*фік робо*ти?</item>
+        <item>n/I\'d like to get a credit card./Я хо*чу оформи*ти креди*тну ка*ртку.</item>
+        <item>m/I\'d like to apply for a loan./Я хоті*в би* пода*ти зая*вку на* креди*т.</item>
+        <item>f/I\'d like to apply for a loan./Я хоті*ла би* пода*ти зая*вку на* креди*т.</item>
     </string-array>
 </resources>

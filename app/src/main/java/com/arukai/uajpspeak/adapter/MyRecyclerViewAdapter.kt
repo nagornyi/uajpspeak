@@ -11,6 +11,8 @@ import com.arukai.uajpspeak.R
 import com.arukai.uajpspeak.activity.HomeFragment
 import com.arukai.uajpspeak.model.Abecadlo
 import com.arukai.uajpspeak.model.DataObject
+import com.arukai.uajpspeak.util.LocaleHelper
+import com.arukai.uajpspeak.activity.MainActivity
 
 class MyRecyclerViewAdapter(
     private val mDataset: ArrayList<DataObject>
@@ -59,20 +61,30 @@ class MyRecyclerViewAdapter(
         val part2 = mDataset[position].mText2
         val part3 = mDataset[position].mText3
 
-        var jp = ""
+        var firstLine = ""
         var ukr = ""
         var phonetic = ""
 
         val code = part1[part1.length - 1]
         if (code == HomeFragment.gender || (code != 'm' && code != 'f')) {
-            jp = part2
-            phonetic = abc.convert(part3)
+            firstLine = part2
             ukr = part3.replace("*", "")
+            val lang = LocaleHelper.getSavedLanguage(MainActivity.context)
+            phonetic = if (lang == "ja") abc.convert(part3) else abc.romanize(part3)
         }
 
-        holder.firstRow.text = jp
+        holder.firstRow.text = firstLine
         holder.secondRow.text = ukr
         holder.thirdRow.text = phonetic
+
+        val lang = LocaleHelper.getSavedLanguage(MainActivity.context)
+        val firstFlagRes = when (lang) {
+            "en" -> R.drawable.uk
+            "ja" -> R.drawable.jp
+            else -> R.drawable.jp
+        }
+        holder.firstRow.setCompoundDrawablesWithIntrinsicBounds(firstFlagRes, 0, 0, 0)
+        holder.secondRow.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ua, 0, 0, 0)
     }
 
     fun addItem(dataObj: DataObject, index: Int) {
@@ -131,4 +143,3 @@ class MyRecyclerViewAdapter(
         }
     }
 }
-

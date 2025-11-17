@@ -14,11 +14,13 @@ import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
+import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import com.arukai.uajpspeak.R
+import com.arukai.uajpspeak.util.LocaleHelper
 import com.google.android.gms.ads.MobileAds
 import com.google.android.gms.common.util.ArrayUtils
 import java.util.Locale
@@ -44,6 +46,10 @@ class MainActivity : AppCompatActivity(), FragmentDrawer.FragmentDrawerListener,
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        // apply saved locale before inflating views
+        val base = LocaleHelper.applyLocale(this)
+        val newConfig = base.resources.configuration
+        resources.updateConfiguration(newConfig, base.resources.displayMetrics)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
@@ -67,7 +73,7 @@ class MainActivity : AppCompatActivity(), FragmentDrawer.FragmentDrawerListener,
         textToSpeech = TextToSpeech(this, this)
 
         // Handle back press with OnBackPressedDispatcher
-        onBackPressedDispatcher.addCallback(this, object : androidx.activity.OnBackPressedCallback(true) {
+        onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
                 val zoom = supportFragmentManager.findFragmentByTag("ZOOM") as? ZoomFragment
                 val about = supportFragmentManager.findFragmentByTag("ABOUT") as? AboutFragment
@@ -192,6 +198,23 @@ class MainActivity : AppCompatActivity(), FragmentDrawer.FragmentDrawerListener,
             return true
         }
 
+        if (id == R.id.action_language) {
+            val builder = AlertDialog.Builder(ContextThemeWrapper(this, R.style.AlertDialogCustom))
+            builder.setTitle(R.string.action_language)
+            val langs = arrayOf("English", "日本語")
+            val current = when (LocaleHelper.getSavedLanguage(this)) { "ja" -> 1 else -> 0 }
+            var selected = current
+            builder.setSingleChoiceItems(langs, current) { _, which -> selected = which }
+            builder.setPositiveButton(getString(R.string.ok)) { _, _ ->
+                val code = if (selected == 1) "ja" else "en"
+                LocaleHelper.setLanguage(this, code)
+                recreate()
+            }
+            builder.setNegativeButton(getString(R.string.cancel), null)
+            builder.show()
+            return true
+        }
+
         if (id == R.id.action_search) {
             handleMenuSearch()
             return true
@@ -239,7 +262,7 @@ class MainActivity : AppCompatActivity(), FragmentDrawer.FragmentDrawerListener,
         action?.setDisplayShowTitleEnabled(true)
 
         currentFocus?.let { view ->
-            val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
             imm.hideSoftInputFromWindow(view.windowToken, 0)
         }
 
@@ -279,7 +302,7 @@ class MainActivity : AppCompatActivity(), FragmentDrawer.FragmentDrawerListener,
 
         editSearch?.requestFocus()
 
-        val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
         editSearch?.let { imm.showSoftInput(it, InputMethodManager.SHOW_IMPLICIT) }
 
         mSearchAction?.setIcon(getDrawable(R.drawable.ic_action_close))

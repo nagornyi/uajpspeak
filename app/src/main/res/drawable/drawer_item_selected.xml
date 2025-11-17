@@ -4,3 +4,4 @@
     <solid android:color="@color/selectedCategory" />
     <corners android:radius="4dp" />
 </shape>
+

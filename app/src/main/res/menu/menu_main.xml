@@ -18,6 +18,12 @@
         app:showAsAction="ifRoom" />
 
     <item
+        android:id="@+id/action_language"
+        android:title="@string/action_language"
+        android:orderInCategory="250"
+        app:showAsAction="never" />
+
+    <item
         android:id="@+id/action_gender_lang"
         android:title="@string/action_gender_lang"
         android:orderInCategory="300"

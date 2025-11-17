@@ -8,9 +8,8 @@ android {
         minSdkVersion 23
         targetSdkVersion 36
         versionCode 17
-        versionName "3.3"
-        resValue "string", "app_version_jp", "バージョン${versionName}"
-        resValue "string", "app_version_ua", "Версія ${versionName}"
+        versionName "4.0"
+        resValue "string", "app_version", "Version ${versionName}"
     }
     buildTypes {
         debug {
