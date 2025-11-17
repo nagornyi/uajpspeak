@@ -61,8 +61,8 @@ class HomeFragment : Fragment() {
 
         phrases?.forEach { s ->
             val parts = s.split("/")
-            val code = parts[0][parts[0].length - 1]
-            if (code == gender || (code != 'm' && code != 'f')) {
+            val phraseGender = parts[0]
+            if (phraseGender == gender.toString() || phraseGender == "n") {
                 val obj = DataObject(parts[0], parts[1], parts[2])
                 results.add(obj)
             }
