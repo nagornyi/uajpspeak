@@ -41,8 +41,9 @@ class AboutFragment : Fragment() {
         val aboutText = view.findViewById<android.widget.TextView>(R.id.aboutText)
         val leftFlag = when (lang) {
             "en" -> R.drawable.uk
+            "de" -> R.drawable.de
             "ja" -> R.drawable.jp
-            else -> R.drawable.jp
+            else -> R.drawable.uk
         }
         aboutText.setCompoundDrawablesWithIntrinsicBounds(leftFlag, 0, R.drawable.ua, 0)
     }

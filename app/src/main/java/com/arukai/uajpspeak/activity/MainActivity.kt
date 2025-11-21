@@ -201,12 +201,20 @@ class MainActivity : AppCompatActivity(), FragmentDrawer.FragmentDrawerListener,
         if (id == R.id.action_language) {
             val builder = AlertDialog.Builder(ContextThemeWrapper(this, R.style.AlertDialogCustom))
             builder.setTitle(R.string.action_language)
-            val langs = arrayOf("English", "日本語")
-            val current = when (LocaleHelper.getSavedLanguage(this)) { "ja" -> 1 else -> 0 }
+            val langs = arrayOf("English", "Deutsch", "日本語")
+            val current = when (LocaleHelper.getSavedLanguage(this)) {
+                "de" -> 1
+                "ja" -> 2
+                else -> 0
+            }
             var selected = current
             builder.setSingleChoiceItems(langs, current) { _, which -> selected = which }
             builder.setPositiveButton(getString(R.string.ok)) { _, _ ->
-                val code = if (selected == 1) "ja" else "en"
+                val code = when (selected) {
+                    1 -> "de"
+                    2 -> "ja"
+                    else -> "en"
+                }
                 LocaleHelper.setLanguage(this, code)
                 recreate()
             }

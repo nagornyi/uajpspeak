@@ -63,7 +63,12 @@ class ZoomFragment : Fragment() {
         phoneticView.text = phonetic
 
         val lang = com.arukai.uajpspeak.util.LocaleHelper.getSavedLanguage(MainActivity.context)
-        val sourceFlagRes = when (lang) { "en" -> R.drawable.uk; "ja" -> R.drawable.jp; else -> R.drawable.jp }
+        val sourceFlagRes = when (lang) {
+            "en" -> R.drawable.uk
+            "de" -> R.drawable.de
+            "ja" -> R.drawable.jp
+            else -> R.drawable.uk
+        }
 
         // Set flags with padding
         sourceView.compoundDrawablePadding = 12

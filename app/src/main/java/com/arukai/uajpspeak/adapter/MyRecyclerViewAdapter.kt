@@ -80,8 +80,9 @@ class MyRecyclerViewAdapter(
         val lang = LocaleHelper.getSavedLanguage(MainActivity.context)
         val firstFlagRes = when (lang) {
             "en" -> R.drawable.uk
+            "de" -> R.drawable.de
             "ja" -> R.drawable.jp
-            else -> R.drawable.jp
+            else -> R.drawable.uk
         }
         holder.firstRow.setCompoundDrawablesWithIntrinsicBounds(firstFlagRes, 0, 0, 0)
         holder.secondRow.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ua, 0, 0, 0)

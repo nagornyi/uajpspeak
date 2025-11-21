@@ -19,10 +19,11 @@ object LocaleHelper {
             // Get system language
             val systemLang = Locale.getDefault().language
 
-            // Map system language to supported languages (en or ja)
+            // Map system language to supported languages
             val appLang = when (systemLang) {
-                "ja" -> "ja"  // Japanese
                 "en" -> "en"  // English
+                "de" -> "de"  // German
+                "ja" -> "ja"  // Japanese
                 else -> "en"  // Default to English for all other languages
             }
 
