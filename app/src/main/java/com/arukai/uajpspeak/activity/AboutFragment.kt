@@ -36,16 +36,6 @@ class AboutFragment : Fragment() {
                 return false
             }
         }, viewLifecycleOwner, Lifecycle.State.RESUMED)
-
-        val lang = com.arukai.uajpspeak.util.LocaleHelper.getSavedLanguage(MainActivity.context)
-        val aboutText = view.findViewById<android.widget.TextView>(R.id.aboutText)
-        val leftFlag = when (lang) {
-            "en" -> R.drawable.uk
-            "de" -> R.drawable.de
-            "ja" -> R.drawable.jp
-            else -> R.drawable.uk
-        }
-        aboutText.setCompoundDrawablesWithIntrinsicBounds(leftFlag, 0, R.drawable.ua, 0)
     }
 
     override fun onCreateView(
