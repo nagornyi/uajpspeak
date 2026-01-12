@@ -28,6 +28,7 @@ class AlphabetFragment : Fragment() {
                 menu.findItem(R.id.action_alphabet)?.isVisible = false
                 menu.findItem(R.id.action_about)?.isVisible = false
                 menu.findItem(R.id.action_gender_lang)?.isVisible = false
+                menu.findItem(R.id.action_language)?.isVisible = false
             }
 
             override fun onCreateMenu(menu: Menu, menuInflater: android.view.MenuInflater) {
