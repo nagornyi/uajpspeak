@@ -45,11 +45,11 @@ class MainActivity : AppCompatActivity(), FragmentDrawer.FragmentDrawerListener,
         var drawerFragment: FragmentDrawer? = null
     }
 
+    override fun attachBaseContext(newBase: Context) {
+        super.attachBaseContext(LocaleHelper.applyLocale(newBase))
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
-        // apply saved locale before inflating views
-        val base = LocaleHelper.applyLocale(this)
-        val newConfig = base.resources.configuration
-        resources.updateConfiguration(newConfig, base.resources.displayMetrics)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
