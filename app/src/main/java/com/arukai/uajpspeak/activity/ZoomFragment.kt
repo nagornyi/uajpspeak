@@ -93,6 +93,11 @@ class ZoomFragment : Fragment() {
         ukrainianView.setOnClickListener(clickListener)
         speakerIcon.setOnClickListener(clickListener)
 
+        // Load ad
+        val zoomAdView = rootView.findViewById<com.google.android.gms.ads.AdView>(R.id.zoomAdView)
+        val adRequest = com.google.android.gms.ads.AdRequest.Builder().build()
+        zoomAdView.loadAd(adRequest)
+
         return rootView
     }
 

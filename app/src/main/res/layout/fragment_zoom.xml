@@ -1,55 +1,96 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/zoom_screen"
+    xmlns:ads="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_margin="15dp"
     tools:context="com.arukai.uajpspeak.activity.ZoomFragment">
-    <TextView
-        android:id="@+id/zoomSource"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true"
-        android:textSize="26sp"
-        android:padding="8dp"
-        android:textStyle="bold"
-        tools:text="Good morning" />
-    <LinearLayout
-        android:id="@+id/centerContainer"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_centerVertical="true"
-        android:layout_alignParentStart="true"
-        android:gravity="start">
+
+    <!-- Content area with margins -->
+    <RelativeLayout
+        android:id="@+id/zoom_screen"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/zoom_ad_separator"
+        android:layout_margin="15dp">
+
         <TextView
-            android:id="@+id/zoomUkrainian"
+            android:id="@+id/zoomSource"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentStart="true"
             android:textSize="26sp"
             android:padding="8dp"
             android:textStyle="bold"
-            tools:text="ДОБРИЙ РАНОК" />
-        <TextView
-            android:id="@+id/zoomPhonetic"
+            tools:text="Good morning" />
+
+        <LinearLayout
+            android:id="@+id/centerContainer"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:padding="8dp"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            tools:text="dobryj ranok" />
-    </LinearLayout>
-    <ImageView
-        android:id="@+id/zoomSpeaker"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
+            android:orientation="vertical"
+            android:layout_centerVertical="true"
+            android:layout_alignParentStart="true"
+            android:gravity="start">
+            <TextView
+                android:id="@+id/zoomUkrainian"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="26sp"
+                android:padding="8dp"
+                android:textStyle="bold"
+                tools:text="ДОБРИЙ РАНОК" />
+            <TextView
+                android:id="@+id/zoomPhonetic"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:padding="8dp"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                tools:text="dobryj ranok" />
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/zoomSpeaker"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="20dp"
+            android:contentDescription="Speak Ukrainian"
+            android:src="@drawable/speaker"
+            android:padding="8dp" />
+    </RelativeLayout>
+
+    <!-- Separator line to visually distinguish ad from content -->
+    <View
+        android:id="@+id/zoom_ad_separator"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_above="@+id/zoom_ad_container"
+        android:background="#CCCCCC" />
+
+    <!-- Container for ad with distinctive background at the bottom -->
+    <LinearLayout
+        android:id="@+id/zoom_ad_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="60dp"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="20dp"
-        android:contentDescription="Speak Ukrainian"
-        android:src="@drawable/speaker"
-        android:padding="8dp" />
+        android:background="@drawable/ad_placeholder_background"
+        android:padding="4dp"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <com.google.android.gms.ads.AdView
+            android:id="@+id/zoomAdView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            ads:adSize="BANNER"
+            ads:adUnitId="@string/zoom_screen_ad_id">
+        </com.google.android.gms.ads.AdView>
+    </LinearLayout>
 </RelativeLayout>

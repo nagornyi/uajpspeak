@@ -14,9 +14,11 @@ android {
     buildTypes {
         debug {
             resValue "string", "main_screen_ad_id", "ca-app-pub-3940256099942544/6300978111" // Test ad ID
+            resValue "string", "zoom_screen_ad_id", "ca-app-pub-3940256099942544/6300978111" // Test ad ID
         }
         release {
-            resValue "string", "main_screen_ad_id", "ca-app-pub-5925166783691550/4426793610" // Real ad ID
+            resValue "string", "main_screen_ad_id", "ca-app-pub-5925166783691550/4426793610" // Real ad ID for the main screen
+            resValue "string", "zoom_screen_ad_id", "ca-app-pub-5925166783691550/6301419465" // Real ad ID for the zoom screen
             minifyEnabled true
             proguardFiles getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro"
         }

@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <resources>
     <string name="app_name">SayUA</string>
-    <string name="app_company">© 2016–2025 Artem Nagornyi</string>
+    <string name="app_company">© Artem Nagornyi</string>
     <string name="app_name_ua">Ukrainian Phrasebook</string>
     <string name="action_about">About this app</string>
     <string name="action_alphabet">Ukrainian Alphabet</string>

@@ -20,14 +20,16 @@
         android:layout_above="@+id/ad_container"
         android:background="#CCCCCC" />
 
-    <!-- Container for ad with distinctive background -->
+    <!-- Container for ad with distinctive background at the bottom -->
     <LinearLayout
         android:id="@+id/ad_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:minHeight="60dp"
         android:layout_alignParentBottom="true"
-        android:background="#F5F5F5"
+        android:background="@drawable/ad_placeholder_background"
         android:padding="4dp"
+        android:gravity="center"
         android:orientation="vertical">
 
         <com.google.android.gms.ads.AdView
@@ -39,5 +41,6 @@
             ads:adUnitId="@string/main_screen_ad_id">
         </com.google.android.gms.ads.AdView>
     </LinearLayout>
+
 
 </RelativeLayout>
