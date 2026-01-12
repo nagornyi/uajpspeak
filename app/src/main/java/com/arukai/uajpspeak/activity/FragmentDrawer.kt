@@ -117,10 +117,10 @@ class FragmentDrawer : Fragment() {
         val banner = layout.findViewById<android.widget.ImageView>(R.id.banner)
         val lang = com.arukai.uajpspeak.util.LocaleHelper.getSavedLanguage(requireContext())
         val sourceFlagRes = when (lang) {
-            "en" -> R.drawable.large_flag_uk
-            "de" -> R.drawable.large_flag_de
-            "ja" -> R.drawable.large_flag_jp
-            else -> R.drawable.large_flag_uk
+            "en" -> R.drawable.uk
+            "de" -> R.drawable.de
+            "ja" -> R.drawable.jp
+            else -> R.drawable.uk
         }
         banner?.setImageResource(sourceFlagRes)
 
