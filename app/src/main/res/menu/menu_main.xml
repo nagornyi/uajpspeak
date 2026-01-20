@@ -18,6 +18,14 @@
         app:showAsAction="ifRoom" />
 
     <item
+        android:id="@+id/action_favorite"
+        android:title="@string/action_favorite"
+        android:orderInCategory="150"
+        android:icon="@drawable/ic_favorite_border"
+        android:visible="false"
+        app:showAsAction="ifRoom" />
+
+    <item
         android:id="@+id/action_language"
         android:title="@string/action_language"
         android:orderInCategory="250"

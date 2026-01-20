@@ -1,10 +1,11 @@
 <?xml version='1.0' encoding='utf-8'?>
 <resources>
     <string name="app_name">SayUA</string>
-    <string name="app_company">© Artem Nagornyi</string>
+    <string name="app_company">© 2016–2026 Artem Nagornyi</string>
     <string name="app_name_ua">Ukrainian Phrasebook</string>
     <string name="action_about">About this app</string>
     <string name="action_alphabet">Ukrainian Alphabet</string>
+    <string name="action_favorite">Add to Favourites</string>
     <string name="action_buy_pro">Upgrade to Full Version</string>
     <string name="action_gender_lang">Male/Female Speech</string>
     <string name="action_language">Language</string>
@@ -17,9 +18,15 @@
     <string name="title_alphabet">Alphabet</string>
     <string name="phrases_counter">phrases</string>
 
+    <!-- Empty state for favourites -->
+    <string name="empty_favourites_icon">Empty favourites</string>
+    <string name="empty_favourites_title">No Favourites Yet</string>
+    <string name="empty_favourites_message">Tap the heart icon on any phrase to add it to your favourites list</string>
+
     <!-- navigation drawer item labels  -->
     <string-array name="nav_drawer_labels">
         <item>@string/nav_item_all</item>
+        <item>@string/nav_item_favourites</item>
         <item>@string/nav_item_greetings</item>
         <item>@string/nav_item_signs</item>
         <item>@string/nav_item_troubleshooting</item>
@@ -42,6 +49,7 @@
     </string-array>
 
     <string name="nav_item_all">All Phrases</string>
+    <string name="nav_item_favourites">Favourites</string>
     <string name="nav_item_greetings">Greetings</string>
     <string name="nav_item_signs">Signs</string>
     <string name="nav_item_troubleshooting">Troubleshooting</string>
@@ -54,10 +62,10 @@
     <string name="nav_item_weekdays">Weekdays</string>
     <string name="nav_item_months">Months</string>
     <string name="nav_item_colors">Colors</string>
-    <string name="nav_item_common_words">Most Common Words</string>
+    <string name="nav_item_common_words">Common Words</string>
     <string name="nav_item_love">Love Words</string>
     <string name="nav_item_shopping">Shopping</string>
-    <string name="nav_item_clothing">Types of Clothing</string>
+    <string name="nav_item_clothing">Clothing</string>
     <string name="nav_item_drugstore">Drugstore</string>
     <string name="nav_item_driving">Driving</string>
     <string name="nav_item_bank">Bank</string>
@@ -76,10 +84,10 @@
     <string name="title_weekdays">Weekdays</string>
     <string name="title_months">Months</string>
     <string name="title_colors">Colors</string>
-    <string name="title_common_words">Most Common Words</string>
+    <string name="title_common_words">Common Words</string>
     <string name="title_love">Love Words</string>
     <string name="title_shopping">Shopping</string>
-    <string name="title_clothing">Types of Clothing</string>
+    <string name="title_clothing">Clothing</string>
     <string name="title_drugstore">Drugstore</string>
     <string name="title_driving">Driving</string>
     <string name="title_bank">Bank</string>
@@ -201,7 +209,6 @@
         <item>n/Be careful!/Обере*жно!</item>
         <item>n/Leave me alone!/Відчепі*ться від ме*не!</item>
         <item>n/Police!/Полі*ція!</item>
-        <item>n/Help me!/Допоможі*ть мені!</item>
         <item>n/Where is the toilet?/Де туале*т?</item>
         <item>m/I\'m sick/Я захворі*в</item>
         <item>f/I\'m sick/Я захворі*ла</item>

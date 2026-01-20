@@ -126,9 +126,11 @@ class HomeFragment : Fragment() {
                 }
 
                 val jpn = v.findViewById<TextView>(R.id.textView).text.toString()
-                val ukr = v.findViewById<TextView>(R.id.textView2).text.toString()
+                // Get Ukrainian text with asterisks from dataSet, not from TextView (which has them removed)
+                val ukr = dataSet[position].mText3
                 val phonetic = v.findViewById<TextView>(R.id.textView3).text.toString()
-                val fragment = ZoomFragment.newInstance(jpn, ukr, phonetic, getAudio(ukr))
+
+                val fragment = ZoomFragment.newInstance(jpn, ukr, phonetic, getAudio(ukr.replace("*", "")))
 
                 val fragmentManager = fragmentManager
                 val fragmentTransaction = fragmentManager?.beginTransaction()

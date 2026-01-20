@@ -20,6 +20,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import com.arukai.uajpspeak.R
+import com.arukai.uajpspeak.util.FavoritesManager
 import com.arukai.uajpspeak.util.LocaleHelper
 import com.google.android.gms.ads.MobileAds
 import com.google.android.gms.common.util.ArrayUtils
@@ -43,6 +44,16 @@ class MainActivity : AppCompatActivity(), FragmentDrawer.FragmentDrawerListener,
         var isSearchOpened = false
         lateinit var all_phrases: Array<String>
         var drawerFragment: FragmentDrawer? = null
+
+        // Centralized list of all phrase array resource IDs to avoid duplication
+        val ALL_PHRASE_ARRAY_IDS = listOf(
+            R.array.greetings, R.array.signs, R.array.troubleshooting,
+            R.array.transportation, R.array.directions, R.array.hotel,
+            R.array.numbers, R.array.time, R.array.weekdays,
+            R.array.months, R.array.colors, R.array.common_words,
+            R.array.restaurant, R.array.love, R.array.shopping,
+            R.array.clothing, R.array.drugstore, R.array.driving, R.array.bank
+        )
     }
 
     override fun attachBaseContext(newBase: Context) {
@@ -61,6 +72,11 @@ class MainActivity : AppCompatActivity(), FragmentDrawer.FragmentDrawerListener,
         app_settings = getSharedPreferences(APP_SETTINGS, MODE_PRIVATE)
         all_phrases = collectAllPhrases()
 
+        // Clean up orphaned favorites (phrases that were removed in an app update)
+        val validPhrases = collectValidUkrainianPhrasesForAllLanguages()
+        val favoritesManager = FavoritesManager(this)
+        favoritesManager.cleanupOrphanedFavorites(validPhrases)
+
         val mToolbar = findViewById<Toolbar>(R.id.toolbar)
         setSupportActionBar(mToolbar)
 
@@ -78,22 +94,58 @@ class MainActivity : AppCompatActivity(), FragmentDrawer.FragmentDrawerListener,
                 val zoom = supportFragmentManager.findFragmentByTag("ZOOM") as? ZoomFragment
                 val about = supportFragmentManager.findFragmentByTag("ABOUT") as? AboutFragment
                 val alphabet = supportFragmentManager.findFragmentByTag("ALPHABET") as? AlphabetFragment
+                val favourites = supportFragmentManager.findFragmentByTag("FAVOURITES") as? FavouritesFragment
 
                 if ((zoom != null && zoom.isVisible) || (about != null && about.isVisible) ||
-                    (alphabet != null && alphabet.isVisible)) {
-                    fragment?.let {
-                        val fragmentManager = supportFragmentManager
+                    (alphabet != null && alphabet.isVisible) || (favourites != null && favourites.isVisible)) {
+                    val fragmentManager = supportFragmentManager
 
-                        if (fragmentManager.backStackEntryCount != 0) {
-                            fragmentManager.popBackStack()
-                        } else {
+                    if (fragmentManager.backStackEntryCount != 0) {
+                        fragmentManager.popBackStack()
+
+                        // After popping, check what fragment is now visible and set appropriate title
+                        fragmentManager.executePendingTransactions()
+                        val currentFavourites = supportFragmentManager.findFragmentByTag("FAVOURITES") as? FavouritesFragment
+                        val currentHome = supportFragmentManager.findFragmentByTag("HOME")
+
+                        when {
+                            currentFavourites != null && currentFavourites.isVisible -> {
+                                setActionBarTitle(getString(R.string.nav_item_favourites))
+                                drawerFragment?.setDrawerState(false)
+                                enableBackButton(true)
+                            }
+                            currentHome != null && currentHome.isVisible -> {
+                                setActionBarTitle(category)
+                                drawerFragment?.setDrawerState(true)
+                                enableBackButton(false)
+                                // Reset toolbar navigation to drawer toggle (hamburger icon)
+                                drawerFragment?.mDrawerToggle?.isDrawerIndicatorEnabled = true
+                                drawerFragment?.mDrawerToggle?.syncState()
+                            }
+                            else -> {
+                                // Default case for other fragments
+                                fragment?.let {
+                                    setActionBarTitle(category)
+                                    enableBackButton(false)
+                                    drawerFragment?.setDrawerState(true)
+                                    // Reset toolbar navigation to drawer toggle (hamburger icon)
+                                    drawerFragment?.mDrawerToggle?.isDrawerIndicatorEnabled = true
+                                    drawerFragment?.mDrawerToggle?.syncState()
+                                }
+                            }
+                        }
+                    } else {
+                        fragment?.let {
                             val fragmentTransaction = fragmentManager.beginTransaction()
                             fragmentTransaction.replace(R.id.container_body, it, "HOME")
                             fragmentTransaction.commit()
+                            setActionBarTitle(category)
+                            enableBackButton(false)
+                            drawerFragment?.setDrawerState(true)
+                            // Reset toolbar navigation to drawer toggle (hamburger icon)
+                            drawerFragment?.mDrawerToggle?.isDrawerIndicatorEnabled = true
+                            drawerFragment?.mDrawerToggle?.syncState()
                         }
-                        setActionBarTitle(category)
-                        enableBackButton(false)
-                        drawerFragment?.setDrawerState(true)
                     }
                 } else {
                     finish()
@@ -240,27 +292,47 @@ class MainActivity : AppCompatActivity(), FragmentDrawer.FragmentDrawerListener,
     }
 
     private fun collectAllPhrases(): Array<String> {
-        return ArrayUtils.concat(
-            resources.getStringArray(R.array.greetings),
-            resources.getStringArray(R.array.signs),
-            resources.getStringArray(R.array.troubleshooting),
-            resources.getStringArray(R.array.transportation),
-            resources.getStringArray(R.array.directions),
-            resources.getStringArray(R.array.hotel),
-            resources.getStringArray(R.array.numbers),
-            resources.getStringArray(R.array.time),
-            resources.getStringArray(R.array.weekdays),
-            resources.getStringArray(R.array.months),
-            resources.getStringArray(R.array.colors),
-            resources.getStringArray(R.array.common_words),
-            resources.getStringArray(R.array.restaurant),
-            resources.getStringArray(R.array.love),
-            resources.getStringArray(R.array.shopping),
-            resources.getStringArray(R.array.clothing),
-            resources.getStringArray(R.array.drugstore),
-            resources.getStringArray(R.array.driving),
-            resources.getStringArray(R.array.bank)
-        )
+        val arrays = ALL_PHRASE_ARRAY_IDS.map { resources.getStringArray(it) }.toTypedArray()
+        return ArrayUtils.concat(*arrays)
+    }
+
+    /**
+     * Collect all valid Ukrainian phrases for all supported languages.
+     * This is used to clean up orphaned favorites.
+     */
+    private fun collectValidUkrainianPhrasesForAllLanguages(): Map<String, Set<String>> {
+        val result = mutableMapOf<String, Set<String>>()
+        val languages = listOf("en", "de", "ja")
+
+        for (lang in languages) {
+            val ukrainianPhrases = mutableSetOf<String>()
+
+            // Temporarily switch to the target language to get its phrases
+            val currentConfig = resources.configuration
+            val locale = when (lang) {
+                "de" -> Locale("de")
+                "ja" -> Locale("ja")
+                else -> Locale("en")
+            }
+            val config = android.content.res.Configuration(currentConfig)
+            config.setLocale(locale)
+            val localizedContext = createConfigurationContext(config)
+
+            // Collect Ukrainian phrases for this language
+            for (arrayId in ALL_PHRASE_ARRAY_IDS) {
+                val phrases = localizedContext.resources.getStringArray(arrayId)
+                for (phrase in phrases) {
+                    val parts = phrase.split("/")
+                    if (parts.size >= 3) {
+                        ukrainianPhrases.add(parts[2]) // Ukrainian text with asterisks
+                    }
+                }
+            }
+
+            result[lang] = ukrainianPhrases
+        }
+
+        return result
     }
 
     fun hideSearchBar() {
@@ -329,18 +401,21 @@ class MainActivity : AppCompatActivity(), FragmentDrawer.FragmentDrawerListener,
     }
 
     private fun displayView(position: Int) {
-        prev_position = current_position
-        current_position = position
+        // Don't update drawer selection if navigating to Favourites (it's a secondary screen)
+        if (position != 1) {
+            prev_position = current_position
+            current_position = position
 
-        FragmentDrawer.activeData?.let { data ->
-            val unselItem = data[prev_position]
-            unselItem.isSelected = false
-            val selItem = data[current_position]
-            selItem.isSelected = true
-            data[prev_position] = unselItem
-            data[current_position] = selItem
-            FragmentDrawer.adapter?.notifyItemChanged(prev_position)
-            FragmentDrawer.adapter?.notifyItemChanged(current_position)
+            FragmentDrawer.activeData?.let { data ->
+                val unselItem = data[prev_position]
+                unselItem.isSelected = false
+                val selItem = data[current_position]
+                selItem.isSelected = true
+                data[prev_position] = unselItem
+                data[current_position] = selItem
+                FragmentDrawer.adapter?.notifyItemChanged(prev_position)
+                FragmentDrawer.adapter?.notifyItemChanged(current_position)
+            }
         }
 
         when (position) {
@@ -349,78 +424,95 @@ class MainActivity : AppCompatActivity(), FragmentDrawer.FragmentDrawerListener,
                 category = getString(R.string.title_all)
             }
             1 -> {
+                // Favourites is treated like a secondary screen (like About, Alphabet)
+                // Don't update drawer selection state
+                val favouritesFragment = FavouritesFragment.newInstance()
+                val title = getString(R.string.nav_item_favourites)
+                val fragmentManager = supportFragmentManager
+                val fragmentTransaction = fragmentManager.beginTransaction()
+                fragmentTransaction.replace(R.id.container_body, favouritesFragment, "FAVOURITES")
+                fragmentTransaction.addToBackStack(null)
+                fragmentTransaction.commit()
+
+                setActionBarTitle(title)
+                drawerFragment?.setDrawerState(false)
+                drawerFragment?.mDrawerToggle?.setToolbarNavigationClickListener { onBackPressedDispatcher.onBackPressed() }
+                enableBackButton(true)
+                return
+            }
+            2 -> {
                 fragment = HomeFragment.newInstance(R.array.greetings)
                 category = getString(R.string.title_greetings)
             }
-            2 -> {
+            3 -> {
                 fragment = HomeFragment.newInstance(R.array.signs)
                 category = getString(R.string.title_signs)
             }
-            3 -> {
+            4 -> {
                 fragment = HomeFragment.newInstance(R.array.troubleshooting)
                 category = getString(R.string.title_troubleshooting)
             }
-            4 -> {
+            5 -> {
                 fragment = HomeFragment.newInstance(R.array.transportation)
                 category = getString(R.string.title_transportation)
             }
-            5 -> {
+            6 -> {
                 fragment = HomeFragment.newInstance(R.array.directions)
                 category = getString(R.string.title_directions)
             }
-            6 -> {
+            7 -> {
                 fragment = HomeFragment.newInstance(R.array.hotel)
                 category = getString(R.string.title_hotel)
             }
-            7 -> {
+            8 -> {
                 fragment = HomeFragment.newInstance(R.array.numbers)
                 category = getString(R.string.title_numbers)
             }
-            8 -> {
+            9 -> {
                 fragment = HomeFragment.newInstance(R.array.time)
                 category = getString(R.string.title_time)
             }
-            9 -> {
+            10 -> {
                 fragment = HomeFragment.newInstance(R.array.weekdays)
                 category = getString(R.string.title_weekdays)
             }
-            10 -> {
+            11 -> {
                 fragment = HomeFragment.newInstance(R.array.months)
                 category = getString(R.string.title_months)
             }
-            11 -> {
+            12 -> {
                 fragment = HomeFragment.newInstance(R.array.colors)
                 category = getString(R.string.title_colors)
             }
-            12 -> {
+            13 -> {
                 fragment = HomeFragment.newInstance(R.array.common_words)
                 category = getString(R.string.title_common_words)
             }
-            13 -> {
+            14 -> {
                 fragment = HomeFragment.newInstance(R.array.restaurant)
                 category = getString(R.string.title_restaurant)
             }
-            14 -> {
+            15 -> {
                 fragment = HomeFragment.newInstance(R.array.love)
                 category = getString(R.string.title_love)
             }
-            15 -> {
+            16 -> {
                 fragment = HomeFragment.newInstance(R.array.shopping)
                 category = getString(R.string.title_shopping)
             }
-            16 -> {
+            17 -> {
                 fragment = HomeFragment.newInstance(R.array.clothing)
                 category = getString(R.string.title_clothing)
             }
-            17 -> {
+            18 -> {
                 fragment = HomeFragment.newInstance(R.array.drugstore)
                 category = getString(R.string.title_drugstore)
             }
-            18 -> {
+            19 -> {
                 fragment = HomeFragment.newInstance(R.array.driving)
                 category = getString(R.string.title_driving)
             }
-            19 -> {
+            20 -> {
                 fragment = HomeFragment.newInstance(R.array.bank)
                 category = getString(R.string.title_bank)
             }

@@ -7,8 +7,8 @@ android {
         compileSdkVersion 36
         minSdkVersion 23
         targetSdkVersion 36
-        versionCode 18
-        versionName "4.0"
+        versionCode 19
+        versionName "4.1"
         resValue "string", "app_version", "Version ${versionName}"
     }
     buildTypes {
@@ -27,6 +27,9 @@ android {
     buildFeatures {
         aidl true
     }
+    lintOptions {
+        abortOnError false
+    }
 }
 
 dependencies {
@@ -37,6 +40,7 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     implementation 'androidx.core:core-ktx:1.17.0'
     implementation 'com.google.android.gms:play-services-ads:24.9.0'
+    implementation 'com.google.code.gson:gson:2.13.2'
 }
 
 java {

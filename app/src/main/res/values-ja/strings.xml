@@ -1,10 +1,11 @@
 <?xml version='1.0' encoding='utf-8'?>
 <resources>
     <string name="app_name">SayUA</string>
-    <string name="app_company">© Artem Nagornyi</string>
+    <string name="app_company">© 2016–2026 Artem Nagornyi</string>
     <string name="app_name_ua">ウクライナ語会話集</string>
     <string name="action_about">このアプリについて</string>
     <string name="action_alphabet">ウクライナ語アルファベット</string>
+    <string name="action_favorite">お気に入りに追加</string>
     <string name="action_buy_pro">フルバージョンにアップグレードする</string>
     <string name="action_gender_lang">男言葉・女言葉</string>
     <string name="action_language">言語</string>
@@ -16,6 +17,11 @@
     <string name="title_about">このアプリについて</string>
     <string name="title_alphabet">アルファベット</string>
     <string name="phrases_counter">フレーズ"</string>
+
+    <!-- Empty state for favourites -->
+    <string name="empty_favourites_icon">空のお気に入り</string>
+    <string name="empty_favourites_title">お気に入りはまだありません</string>
+    <string name="empty_favourites_message">フレーズのハートアイコンをタップして、お気に入りリストに追加してください</string>
 
     <!-- navigation drawer item labels  -->
     <string-array name="nav_drawer_labels">
@@ -42,6 +48,7 @@
     </string-array>
 
     <string name="nav_item_all">すべてのフレーズ</string>
+    <string name="nav_item_favourites">お気に入り</string>
     <string name="nav_item_greetings">挨拶</string>
     <string name="nav_item_signs">標識</string>
     <string name="nav_item_troubleshooting">トラブル</string>
@@ -283,7 +290,6 @@
         <item>n/危ない/Обере*жно!</item>
         <item>n/ほっといて/Відчепі*ться від ме*не!</item>
         <item>n/警察/Полі*ція!</item>
-        <item>n/助けてください/Допоможі*ть мені!</item>
         <item>n/トイレはどこですか/Де туале*т?</item>
         <item>m/病気です/Я захворі*в</item>
         <item>f/病気です/Я захворі*ла</item>

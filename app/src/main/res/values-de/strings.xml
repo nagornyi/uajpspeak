@@ -1,10 +1,11 @@
 <?xml version='1.0' encoding='utf-8'?>
 <resources>
     <string name="app_name">SayUA</string>
-    <string name="app_company">© Artem Nagornyi</string>
+    <string name="app_company">© 2016–2026 Artem Nagornyi</string>
     <string name="app_name_ua">Ukrainischer Sprachführer</string>
     <string name="action_about">Über diese App</string>
     <string name="action_alphabet">Ukrainisches Alphabet</string>
+    <string name="action_favorite">Zu Favoriten hinzufügen</string>
     <string name="action_buy_pro">Auf Vollversion aktualisieren</string>
     <string name="action_gender_lang">Männliche/Weibliche Sprache</string>
     <string name="action_language">Sprache</string>
@@ -16,6 +17,12 @@
     <string name="title_about">Über diese App</string>
     <string name="title_alphabet">Alphabet</string>
     <string name="phrases_counter">Phrasen</string>
+
+    <!-- Empty state for favourites -->
+    <string name="empty_favourites_icon">Leere Favoriten</string>
+    <string name="empty_favourites_title">Noch keine Favoriten</string>
+    <string name="empty_favourites_message">Tippen Sie auf das Herzsymbol bei einer Phrase, um sie zu Ihren Favoriten hinzuzufügen</string>
+
     <!-- navigation drawer item labels  -->
     <string-array name="nav_drawer_labels">
         <item>@string/nav_item_all</item>
@@ -40,6 +47,7 @@
         <item>@string/nav_item_bank</item>
     </string-array>
     <string name="nav_item_all">Alle Phrasen</string>
+    <string name="nav_item_favourites">Favoriten</string>
     <string name="nav_item_greetings">Begrüßungen</string>
     <string name="nav_item_signs">Schilder</string>
     <string name="nav_item_troubleshooting">Probleme</string>
@@ -254,7 +262,6 @@
         <item>n/Vorsicht!/Обере*жно!</item>
         <item>n/Lassen Sie mich in Ruhe!/Відчепі*ться від ме*не!</item>
         <item>n/Polizei!/Полі*ція!</item>
-        <item>n/Helfen Sie mir!/Допоможі*ть мені!</item>
         <item>n/Wo ist die Toilette?/Де туале*т?</item>
         <item>m/Ich bin krank/Я захворі*в</item>
         <item>f/Ich bin krank/Я захворі*ла</item>

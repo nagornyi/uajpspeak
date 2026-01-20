@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.speech.tts.TextToSpeech
 import android.view.LayoutInflater
 import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
@@ -13,13 +14,20 @@ import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import com.arukai.uajpspeak.R
+import com.arukai.uajpspeak.util.FavoritePhrase
+import com.arukai.uajpspeak.util.FavoritesManager
 import java.util.Locale
 
 class ZoomFragment : Fragment() {
     private var t1: TextToSpeech? = null
+    private var favoritesManager: FavoritesManager? = null
+    private var favoriteMenuItem: MenuItem? = null
+    private var currentPhrase: FavoritePhrase? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        favoritesManager = FavoritesManager(requireContext())
 
         // Use modern MenuProvider instead of deprecated setHasOptionsMenu
         val menuHost: MenuHost = requireActivity()
@@ -30,13 +38,23 @@ class ZoomFragment : Fragment() {
                 menu.findItem(R.id.action_about)?.isVisible = false
                 menu.findItem(R.id.action_gender_lang)?.isVisible = false
                 menu.findItem(R.id.action_language)?.isVisible = false
+
+                // Show favorite icon
+                favoriteMenuItem = menu.findItem(R.id.action_favorite)
+                favoriteMenuItem?.isVisible = true
+                updateFavoriteIcon()
             }
 
             override fun onCreateMenu(menu: Menu, menuInflater: android.view.MenuInflater) {
-                // Menu already created by activity
+                menu.clear()
+                menuInflater.inflate(R.menu.menu_main, menu)
             }
 
             override fun onMenuItemSelected(menuItem: android.view.MenuItem): Boolean {
+                if (menuItem.itemId == R.id.action_favorite) {
+                    toggleFavorite()
+                    return true
+                }
                 return false
             }
         }, viewLifecycleOwner, Lifecycle.State.RESUMED)
@@ -60,10 +78,25 @@ class ZoomFragment : Fragment() {
         val phonetic = args?.getString("phonetic")
 
         sourceView.text = sourceText
-        ukrainianView.text = ukrainian?.uppercase()
+        // Remove asterisks for display (they're only needed for transliteration)
+        ukrainianView.text = ukrainian?.replace("*", "")?.uppercase()
         phoneticView.text = phonetic
 
-        val lang = com.arukai.uajpspeak.util.LocaleHelper.getSavedLanguage(MainActivity.context)
+        // Get current gender and language settings
+        val currentGender = when (MainActivity.app_settings.getInt("gender_lang", 0)) {
+            1 -> "f"
+            else -> "m"
+        }
+        val currentLanguage = com.arukai.uajpspeak.util.LocaleHelper.getSavedLanguage(MainActivity.context)
+
+        // Save current phrase for favorites using Ukrainian text as identifier
+        currentPhrase = FavoritePhrase(
+            ukrainian = ukrainian ?: "",
+            gender = currentGender,
+            language = currentLanguage
+        )
+
+        val lang = currentLanguage
         val sourceFlagRes = when (lang) {
             "en" -> R.drawable.uk
             "de" -> R.drawable.de
@@ -101,8 +134,34 @@ class ZoomFragment : Fragment() {
         return rootView
     }
 
+    private fun toggleFavorite() {
+        currentPhrase?.let { phrase ->
+            if (favoritesManager?.isFavorite(phrase.ukrainian, phrase.gender, phrase.language) == true) {
+                favoritesManager?.removeFavorite(phrase)
+            } else {
+                favoritesManager?.addFavorite(phrase)
+            }
+            updateFavoriteIcon()
+        }
+    }
+
+    private fun updateFavoriteIcon() {
+        currentPhrase?.let { phrase ->
+            val isFavorite = favoritesManager?.isFavorite(phrase.ukrainian, phrase.gender, phrase.language) ?: false
+            favoriteMenuItem?.setIcon(
+                if (isFavorite) R.drawable.ic_favorite_filled
+                else R.drawable.ic_favorite_border
+            )
+        }
+    }
+
     companion object {
-        fun newInstance(japanese: String, ukrainian: String, phonetic: String, audio: String?): ZoomFragment {
+        fun newInstance(
+            japanese: String,
+            ukrainian: String,
+            phonetic: String,
+            audio: String?
+        ): ZoomFragment {
             val f = ZoomFragment()
             val args = Bundle()
             args.putString("japanese", japanese)
