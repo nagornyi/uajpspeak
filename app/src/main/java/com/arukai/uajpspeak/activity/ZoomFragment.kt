@@ -23,11 +23,21 @@ class ZoomFragment : Fragment() {
     private var favoritesManager: FavoritesManager? = null
     private var favoriteMenuItem: MenuItem? = null
     private var currentPhrase: FavoritePhrase? = null
+    private var isTtsInitialized = false
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         favoritesManager = FavoritesManager(requireContext())
+
+        // Initialize TextToSpeech once
+        t1 = TextToSpeech(activity?.applicationContext) { status ->
+            if (status == TextToSpeech.SUCCESS) {
+                t1?.language = Locale.Builder().setLanguage("uk").build()
+                t1?.setSpeechRate(1.0f)
+                isTtsInitialized = true
+            }
+        }
 
         // Use modern MenuProvider instead of deprecated setHasOptionsMenu
         val menuHost: MenuHost = requireActivity()
@@ -115,12 +125,13 @@ class ZoomFragment : Fragment() {
         phoneticView.setCompoundDrawablesWithIntrinsicBounds(R.drawable.eye, 0, 0, 0)
 
         val clickListener = View.OnClickListener {
-            t1 = TextToSpeech(activity?.applicationContext) { status ->
-                if (status != TextToSpeech.ERROR) {
-                    t1?.language = Locale("uk")
-                    t1?.setSpeechRate(1.0f)
-                    t1?.speak(ukrainian, TextToSpeech.QUEUE_FLUSH, null, null)
-                }
+            if (isTtsInitialized) {
+                // Stop any ongoing speech
+                t1?.stop()
+                // Remove asterisks from Ukrainian text before speaking
+                val cleanUkrainian = ukrainian?.replace("*", "")
+                // Start speaking from the beginning (QUEUE_FLUSH clears the queue)
+                t1?.speak(cleanUkrainian, TextToSpeech.QUEUE_FLUSH, null, null)
             }
         }
         ukrainianView.setOnClickListener(clickListener)
@@ -153,6 +164,13 @@ class ZoomFragment : Fragment() {
                 else R.drawable.ic_favorite_border
             )
         }
+    }
+
+    override fun onDestroy() {
+        // Shutdown TextToSpeech to free up resources
+        t1?.stop()
+        t1?.shutdown()
+        super.onDestroy()
     }
 
     companion object {

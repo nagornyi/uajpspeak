@@ -156,7 +156,7 @@ class MainActivity : AppCompatActivity(), FragmentDrawer.FragmentDrawerListener,
 
     override fun onInit(status: Int) {
         if (status == TextToSpeech.SUCCESS) {
-            val result = textToSpeech.setLanguage(Locale("uk"))
+            val result = textToSpeech.setLanguage(Locale.Builder().setLanguage("uk").build())
             if (result == TextToSpeech.LANG_MISSING_DATA || result == TextToSpeech.LANG_NOT_SUPPORTED) {
                 Log.e("TTS", "Ukrainian language data is missing or not supported.")
             } else {
@@ -310,9 +310,9 @@ class MainActivity : AppCompatActivity(), FragmentDrawer.FragmentDrawerListener,
             // Temporarily switch to the target language to get its phrases
             val currentConfig = resources.configuration
             val locale = when (lang) {
-                "de" -> Locale("de")
-                "ja" -> Locale("ja")
-                else -> Locale("en")
+                "de" -> Locale.Builder().setLanguage("de").build()
+                "ja" -> Locale.Builder().setLanguage("ja").build()
+                else -> Locale.Builder().setLanguage("en").build()
             }
             val config = android.content.res.Configuration(currentConfig)
             config.setLocale(locale)
