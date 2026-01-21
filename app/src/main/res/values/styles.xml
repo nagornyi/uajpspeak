@@ -18,4 +18,11 @@
         <item name="colorAccent">@color/colorPrimary</item>
     </style>
 
+    <!-- Custom rounded shape for navigation drawer items -->
+    <style name="ShapeAppearance.App.LargeComponent" parent="ShapeAppearance.Material3.LargeComponent">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">8dp</item>
+    </style>
+
 </resources>
+

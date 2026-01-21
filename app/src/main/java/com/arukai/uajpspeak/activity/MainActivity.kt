@@ -10,27 +10,34 @@ import android.util.Log
 import android.view.ContextThemeWrapper
 import android.view.Menu
 import android.view.MenuItem
-import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
+import android.widget.ImageView
+import android.widget.TextView
 import androidx.activity.OnBackPressedCallback
+import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import com.arukai.uajpspeak.R
 import com.arukai.uajpspeak.util.FavoritesManager
 import com.arukai.uajpspeak.util.LocaleHelper
 import com.google.android.gms.ads.MobileAds
 import com.google.android.gms.common.util.ArrayUtils
+import com.google.android.material.navigation.NavigationView
 import java.util.Locale
 
-class MainActivity : AppCompatActivity(), FragmentDrawer.FragmentDrawerListener, TextToSpeech.OnInitListener {
+class MainActivity : AppCompatActivity(), TextToSpeech.OnInitListener, NavigationView.OnNavigationItemSelectedListener {
 
     private var mSearchAction: MenuItem? = null
     private var editSearch: EditText? = null
     private lateinit var textToSpeech: TextToSpeech
+    private lateinit var navigationView: NavigationView
+    private lateinit var drawerLayout: DrawerLayout
+    private lateinit var drawerToggle: ActionBarDrawerToggle
 
     companion object {
         lateinit var PACKAGE_NAME: String
@@ -43,7 +50,6 @@ class MainActivity : AppCompatActivity(), FragmentDrawer.FragmentDrawerListener,
         lateinit var app_settings: SharedPreferences
         var isSearchOpened = false
         lateinit var all_phrases: Array<String>
-        var drawerFragment: FragmentDrawer? = null
 
         // Centralized list of all phrase array resource IDs to avoid duplication
         val ALL_PHRASE_ARRAY_IDS = listOf(
@@ -80,11 +86,46 @@ class MainActivity : AppCompatActivity(), FragmentDrawer.FragmentDrawerListener,
         val mToolbar = findViewById<Toolbar>(R.id.toolbar)
         setSupportActionBar(mToolbar)
 
-        drawerFragment = supportFragmentManager.findFragmentById(R.id.fragment_navigation_drawer) as FragmentDrawer
-        drawerFragment?.setUp(R.id.fragment_navigation_drawer, findViewById(R.id.drawer_layout), mToolbar)
-        drawerFragment?.setDrawerListener(this)
+        // Initialize NavigationView
+        navigationView = findViewById(R.id.navigation_view)
+        drawerLayout = findViewById(R.id.drawer_layout)
 
-        displayView(0)
+        // Set up ActionBarDrawerToggle
+        drawerToggle = ActionBarDrawerToggle(
+            this,
+            drawerLayout,
+            mToolbar,
+            R.string.drawer_open,
+            R.string.drawer_close
+        )
+        drawerLayout.addDrawerListener(drawerToggle)
+        drawerToggle.syncState()
+
+        // Set navigation item selected listener
+        navigationView.setNavigationItemSelectedListener(this)
+
+        // Initialize header views
+        val headerView = navigationView.getHeaderView(0)
+        val banner = headerView.findViewById<ImageView>(R.id.banner)
+        val phrasesCount = headerView.findViewById<TextView>(R.id.phrasesCount)
+
+        // Set flag based on language
+        val lang = LocaleHelper.getSavedLanguage(this)
+        val sourceFlagRes = when (lang) {
+            "en" -> R.drawable.uk
+            "de" -> R.drawable.de
+            "ja" -> R.drawable.jp
+            else -> R.drawable.uk
+        }
+        banner.setImageResource(sourceFlagRes)
+
+        // Calculate phrases count
+        val pCounter = ALL_PHRASE_ARRAY_IDS.sumOf { resources.getStringArray(it).size }
+        phrasesCount.text = "$pCounter ${getString(R.string.phrases_counter)}"
+
+        // Restore saved position or default to 0 (All Phrases)
+        val savedPosition = app_settings.getInt("last_category_position", 0)
+        displayView(savedPosition)
 
         textToSpeech = TextToSpeech(this, this)
 
@@ -94,10 +135,9 @@ class MainActivity : AppCompatActivity(), FragmentDrawer.FragmentDrawerListener,
                 val zoom = supportFragmentManager.findFragmentByTag("ZOOM") as? ZoomFragment
                 val about = supportFragmentManager.findFragmentByTag("ABOUT") as? AboutFragment
                 val alphabet = supportFragmentManager.findFragmentByTag("ALPHABET") as? AlphabetFragment
-                val favourites = supportFragmentManager.findFragmentByTag("FAVOURITES") as? FavouritesFragment
 
                 if ((zoom != null && zoom.isVisible) || (about != null && about.isVisible) ||
-                    (alphabet != null && alphabet.isVisible) || (favourites != null && favourites.isVisible)) {
+                    (alphabet != null && alphabet.isVisible)) {
                     val fragmentManager = supportFragmentManager
 
                     if (fragmentManager.backStackEntryCount != 0) {
@@ -105,33 +145,24 @@ class MainActivity : AppCompatActivity(), FragmentDrawer.FragmentDrawerListener,
 
                         // After popping, check what fragment is now visible and set appropriate title
                         fragmentManager.executePendingTransactions()
-                        val currentFavourites = supportFragmentManager.findFragmentByTag("FAVOURITES") as? FavouritesFragment
                         val currentHome = supportFragmentManager.findFragmentByTag("HOME")
 
-                        when {
-                            currentFavourites != null && currentFavourites.isVisible -> {
-                                setActionBarTitle(getString(R.string.nav_item_favourites))
-                                drawerFragment?.setDrawerState(false)
-                                enableBackButton(true)
-                            }
-                            currentHome != null && currentHome.isVisible -> {
+                        if (currentHome != null && currentHome.isVisible) {
+                            setActionBarTitle(category)
+                            setDrawerState(true)
+                            enableBackButton(false)
+                            // Reset toolbar navigation to drawer toggle (hamburger icon)
+                            drawerToggle.isDrawerIndicatorEnabled = true
+                            drawerToggle.syncState()
+                        } else {
+                            // Default case for other fragments
+                            fragment?.let {
                                 setActionBarTitle(category)
-                                drawerFragment?.setDrawerState(true)
                                 enableBackButton(false)
+                                setDrawerState(true)
                                 // Reset toolbar navigation to drawer toggle (hamburger icon)
-                                drawerFragment?.mDrawerToggle?.isDrawerIndicatorEnabled = true
-                                drawerFragment?.mDrawerToggle?.syncState()
-                            }
-                            else -> {
-                                // Default case for other fragments
-                                fragment?.let {
-                                    setActionBarTitle(category)
-                                    enableBackButton(false)
-                                    drawerFragment?.setDrawerState(true)
-                                    // Reset toolbar navigation to drawer toggle (hamburger icon)
-                                    drawerFragment?.mDrawerToggle?.isDrawerIndicatorEnabled = true
-                                    drawerFragment?.mDrawerToggle?.syncState()
-                                }
+                                drawerToggle.isDrawerIndicatorEnabled = true
+                                drawerToggle.syncState()
                             }
                         }
                     } else {
@@ -141,10 +172,10 @@ class MainActivity : AppCompatActivity(), FragmentDrawer.FragmentDrawerListener,
                             fragmentTransaction.commit()
                             setActionBarTitle(category)
                             enableBackButton(false)
-                            drawerFragment?.setDrawerState(true)
+                            setDrawerState(true)
                             // Reset toolbar navigation to drawer toggle (hamburger icon)
-                            drawerFragment?.mDrawerToggle?.isDrawerIndicatorEnabled = true
-                            drawerFragment?.mDrawerToggle?.syncState()
+                            drawerToggle.isDrawerIndicatorEnabled = true
+                            drawerToggle.syncState()
                         }
                     }
                 } else {
@@ -193,8 +224,8 @@ class MainActivity : AppCompatActivity(), FragmentDrawer.FragmentDrawerListener,
             fragmentTransaction.commit()
 
             setActionBarTitle(title)
-            drawerFragment?.setDrawerState(false)
-            drawerFragment?.mDrawerToggle?.setToolbarNavigationClickListener { onBackPressedDispatcher.onBackPressed() }
+            setDrawerState(false)
+            drawerToggle.setToolbarNavigationClickListener { onBackPressedDispatcher.onBackPressed() }
             enableBackButton(true)
 
             return true
@@ -213,8 +244,8 @@ class MainActivity : AppCompatActivity(), FragmentDrawer.FragmentDrawerListener,
             fragmentTransaction.commit()
 
             setActionBarTitle(title)
-            drawerFragment?.setDrawerState(false)
-            drawerFragment?.mDrawerToggle?.setToolbarNavigationClickListener { onBackPressedDispatcher.onBackPressed() }
+            setDrawerState(false)
+            drawerToggle.setToolbarNavigationClickListener { onBackPressedDispatcher.onBackPressed() }
             enableBackButton(true)
 
             return true
@@ -233,8 +264,15 @@ class MainActivity : AppCompatActivity(), FragmentDrawer.FragmentDrawerListener,
             val positiveText = getString(R.string.ok)
             builder.setPositiveButton(positiveText) { _, _ ->
                 editor.apply()
+                // Refresh HomeFragment if visible
                 val home = supportFragmentManager.findFragmentByTag("HOME") as? HomeFragment
                 if (home != null && home.isVisible) {
+                    displayView(current_position)
+                }
+                // Also refresh FavouritesFragment if visible (it's also tagged as "HOME")
+                // Since Favourites uses the same tag, we need to check the fragment type
+                val currentFragment = supportFragmentManager.findFragmentByTag("HOME")
+                if (currentFragment is FavouritesFragment && currentFragment.isVisible) {
                     displayView(current_position)
                 }
             }
@@ -268,6 +306,8 @@ class MainActivity : AppCompatActivity(), FragmentDrawer.FragmentDrawerListener,
                     else -> "en"
                 }
                 LocaleHelper.setLanguage(this, code)
+                // Save current position before recreating
+                app_settings.edit().putInt("last_category_position", current_position).apply()
                 recreate()
             }
             builder.setNegativeButton(getString(R.string.cancel), null)
@@ -396,27 +436,68 @@ class MainActivity : AppCompatActivity(), FragmentDrawer.FragmentDrawerListener,
     }
 
 
-    override fun onDrawerItemSelected(view: View, position: Int) {
-        displayView(position)
+    override fun onNavigationItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.nav_all_phrases -> displayView(0)
+            R.id.nav_favourites -> displayView(1)
+            R.id.nav_greetings -> displayView(2)
+            R.id.nav_signs -> displayView(3)
+            R.id.nav_troubleshooting -> displayView(4)
+            R.id.nav_transportation -> displayView(5)
+            R.id.nav_directions -> displayView(6)
+            R.id.nav_hotel -> displayView(7)
+            R.id.nav_numbers -> displayView(8)
+            R.id.nav_time -> displayView(9)
+            R.id.nav_weekdays -> displayView(10)
+            R.id.nav_months -> displayView(11)
+            R.id.nav_colors -> displayView(12)
+            R.id.nav_common_words -> displayView(13)
+            R.id.nav_restaurant -> displayView(14)
+            R.id.nav_love -> displayView(15)
+            R.id.nav_shopping -> displayView(16)
+            R.id.nav_clothing -> displayView(17)
+            R.id.nav_drugstore -> displayView(18)
+            R.id.nav_driving -> displayView(19)
+            R.id.nav_bank -> displayView(20)
+        }
+
+        drawerLayout.closeDrawers()
+        return true
     }
 
     private fun displayView(position: Int) {
-        // Don't update drawer selection if navigating to Favourites (it's a secondary screen)
-        if (position != 1) {
-            prev_position = current_position
-            current_position = position
+        prev_position = current_position
+        current_position = position
 
-            FragmentDrawer.activeData?.let { data ->
-                val unselItem = data[prev_position]
-                unselItem.isSelected = false
-                val selItem = data[current_position]
-                selItem.isSelected = true
-                data[prev_position] = unselItem
-                data[current_position] = selItem
-                FragmentDrawer.adapter?.notifyItemChanged(prev_position)
-                FragmentDrawer.adapter?.notifyItemChanged(current_position)
-            }
+        // Save current position for restoration after language change
+        app_settings.edit().putInt("last_category_position", position).apply()
+
+        // Update NavigationView selection
+        val menuItemId = when (position) {
+            0 -> R.id.nav_all_phrases
+            1 -> R.id.nav_favourites
+            2 -> R.id.nav_greetings
+            3 -> R.id.nav_signs
+            4 -> R.id.nav_troubleshooting
+            5 -> R.id.nav_transportation
+            6 -> R.id.nav_directions
+            7 -> R.id.nav_hotel
+            8 -> R.id.nav_numbers
+            9 -> R.id.nav_time
+            10 -> R.id.nav_weekdays
+            11 -> R.id.nav_months
+            12 -> R.id.nav_colors
+            13 -> R.id.nav_common_words
+            14 -> R.id.nav_restaurant
+            15 -> R.id.nav_love
+            16 -> R.id.nav_shopping
+            17 -> R.id.nav_clothing
+            18 -> R.id.nav_drugstore
+            19 -> R.id.nav_driving
+            20 -> R.id.nav_bank
+            else -> R.id.nav_all_phrases
         }
+        navigationView.setCheckedItem(menuItemId)
 
         when (position) {
             0 -> {
@@ -424,21 +505,9 @@ class MainActivity : AppCompatActivity(), FragmentDrawer.FragmentDrawerListener,
                 category = getString(R.string.title_all)
             }
             1 -> {
-                // Favourites is treated like a secondary screen (like About, Alphabet)
-                // Don't update drawer selection state
-                val favouritesFragment = FavouritesFragment.newInstance()
-                val title = getString(R.string.nav_item_favourites)
-                val fragmentManager = supportFragmentManager
-                val fragmentTransaction = fragmentManager.beginTransaction()
-                fragmentTransaction.replace(R.id.container_body, favouritesFragment, "FAVOURITES")
-                fragmentTransaction.addToBackStack(null)
-                fragmentTransaction.commit()
-
-                setActionBarTitle(title)
-                drawerFragment?.setDrawerState(false)
-                drawerFragment?.mDrawerToggle?.setToolbarNavigationClickListener { onBackPressedDispatcher.onBackPressed() }
-                enableBackButton(true)
-                return
+                // Favourites is now treated as a regular category section
+                fragment = FavouritesFragment.newInstance()
+                category = getString(R.string.nav_item_favourites)
             }
             2 -> {
                 fragment = HomeFragment.newInstance(R.array.greetings)
@@ -534,5 +603,25 @@ class MainActivity : AppCompatActivity(), FragmentDrawer.FragmentDrawerListener,
 
     fun enableBackButton(state: Boolean) {
         supportActionBar?.setDisplayHomeAsUpEnabled(state)
+    }
+
+    fun setDrawerLocked(locked: Boolean) {
+        val lockMode = if (locked) DrawerLayout.LOCK_MODE_LOCKED_CLOSED
+        else DrawerLayout.LOCK_MODE_UNLOCKED
+        drawerLayout.setDrawerLockMode(lockMode)
+    }
+
+    fun setBackButtonEnabled() {
+        drawerToggle.isDrawerIndicatorEnabled = false
+        drawerToggle.setToolbarNavigationClickListener {
+            onBackPressedDispatcher.onBackPressed()
+        }
+    }
+
+    private fun setDrawerState(enabled: Boolean) {
+        val lockMode = if (enabled) DrawerLayout.LOCK_MODE_UNLOCKED
+        else DrawerLayout.LOCK_MODE_LOCKED_CLOSED
+        drawerLayout.setDrawerLockMode(lockMode)
+        drawerToggle.isDrawerIndicatorEnabled = enabled
     }
 }

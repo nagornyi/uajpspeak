@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.navigation.NavigationView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/navigation_view"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    app:headerLayout="@layout/nav_header"
+    app:menu="@menu/navigation_drawer_menu"
+    app:itemIconTint="@color/nav_item_icon_tint"
+    app:itemTextColor="@color/nav_item_text_color"
+    app:itemShapeFillColor="@color/nav_item_background"
+    app:itemShapeInsetStart="12dp"
+    app:itemShapeInsetEnd="12dp"
+    app:itemShapeInsetTop="4dp"
+    app:itemShapeInsetBottom="4dp"
+    app:itemShapeAppearance="@style/ShapeAppearance.Material3.Corner.Medium"
+    android:background="@color/drawerBackground" />

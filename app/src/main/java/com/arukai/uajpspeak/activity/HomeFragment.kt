@@ -138,11 +138,10 @@ class HomeFragment : Fragment() {
                 fragmentTransaction?.addToBackStack(null)
                 fragmentTransaction?.commit()
 
-                (activity as MainActivity).setActionBarTitle("")
-                MainActivity.drawerFragment?.setDrawerState(false)
-                MainActivity.drawerFragment?.mDrawerToggle?.setToolbarNavigationClickListener {
-                    (activity as? MainActivity)?.onBackPressedDispatcher?.onBackPressed()
-                }
+                val mainActivity = (activity as MainActivity)
+                mainActivity.setActionBarTitle("")
+                mainActivity.setDrawerLocked(false)
+                mainActivity.setBackButtonEnabled()
                 enableBackButton(true)
             }
         })
