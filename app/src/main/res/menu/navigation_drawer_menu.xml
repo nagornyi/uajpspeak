@@ -6,109 +6,109 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_all_phrases"
-            android:icon="@android:drawable/ic_menu_sort_alphabetically"
+            android:icon="@drawable/dictionary_24px"
             android:title="@string/nav_item_all" />
 
         <item
             android:id="@+id/nav_favourites"
-            android:icon="@drawable/ic_favorite_border"
+            android:icon="@drawable/favorite_24px"
             android:title="@string/nav_item_favourites" />
     </group>
 
     <group android:id="@+id/nav_categories_group" android:checkableBehavior="single">
         <item
             android:id="@+id/nav_greetings"
-            android:icon="@android:drawable/ic_menu_my_calendar"
+            android:icon="@drawable/emoji_people_24px"
             android:title="@string/nav_item_greetings" />
 
         <item
             android:id="@+id/nav_signs"
-            android:icon="@android:drawable/ic_dialog_info"
+            android:icon="@drawable/signpost_24px"
             android:title="@string/nav_item_signs" />
 
         <item
             android:id="@+id/nav_troubleshooting"
-            android:icon="@android:drawable/ic_menu_help"
+            android:icon="@drawable/live_help_24px"
             android:title="@string/nav_item_troubleshooting" />
 
         <item
             android:id="@+id/nav_transportation"
-            android:icon="@android:drawable/ic_menu_directions"
+            android:icon="@drawable/directions_bus_24px"
             android:title="@string/nav_item_transportation" />
 
         <item
             android:id="@+id/nav_directions"
-            android:icon="@android:drawable/ic_menu_compass"
+            android:icon="@drawable/explore_24px"
             android:title="@string/nav_item_directions" />
 
         <item
             android:id="@+id/nav_hotel"
-            android:icon="@android:drawable/ic_dialog_map"
+            android:icon="@drawable/hotel_24px"
             android:title="@string/nav_item_hotel" />
 
         <item
             android:id="@+id/nav_numbers"
-            android:icon="@android:drawable/ic_menu_sort_by_size"
+            android:icon="@drawable/counter_1_24px"
             android:title="@string/nav_item_numbers" />
 
         <item
             android:id="@+id/nav_time"
-            android:icon="@android:drawable/ic_menu_recent_history"
+            android:icon="@drawable/nest_clock_farsight_analog_24px"
             android:title="@string/nav_item_time" />
 
         <item
             android:id="@+id/nav_weekdays"
-            android:icon="@android:drawable/ic_menu_week"
+            android:icon="@drawable/view_week_24px"
             android:title="@string/nav_item_weekdays" />
 
         <item
             android:id="@+id/nav_months"
-            android:icon="@android:drawable/ic_menu_today"
+            android:icon="@drawable/calendar_month_24px"
             android:title="@string/nav_item_months" />
 
         <item
             android:id="@+id/nav_colors"
-            android:icon="@android:drawable/ic_menu_gallery"
+            android:icon="@drawable/palette_24px"
             android:title="@string/nav_item_colors" />
 
         <item
             android:id="@+id/nav_common_words"
-            android:icon="@android:drawable/ic_menu_edit"
+            android:icon="@drawable/book_6_24px"
             android:title="@string/nav_item_common_words" />
 
         <item
             android:id="@+id/nav_restaurant"
-            android:icon="@android:drawable/ic_menu_agenda"
+            android:icon="@drawable/restaurant_24px"
             android:title="@string/nav_item_restaurant" />
 
         <item
             android:id="@+id/nav_love"
-            android:icon="@drawable/ic_favorite_filled"
+            android:icon="@drawable/partner_heart_24px"
             android:title="@string/nav_item_love" />
 
         <item
             android:id="@+id/nav_shopping"
-            android:icon="@android:drawable/ic_menu_search"
+            android:icon="@drawable/shopping_cart_24px"
             android:title="@string/nav_item_shopping" />
 
         <item
             android:id="@+id/nav_clothing"
-            android:icon="@android:drawable/ic_menu_view"
+            android:icon="@drawable/apparel_24px"
             android:title="@string/nav_item_clothing" />
 
         <item
             android:id="@+id/nav_drugstore"
-            android:icon="@android:drawable/ic_menu_add"
+            android:icon="@drawable/local_pharmacy_24px"
             android:title="@string/nav_item_drugstore" />
 
         <item
             android:id="@+id/nav_driving"
-            android:icon="@android:drawable/ic_menu_rotate"
+            android:icon="@drawable/directions_car_24px"
             android:title="@string/nav_item_driving" />
 
         <item
             android:id="@+id/nav_bank"
-            android:icon="@android:drawable/ic_menu_save"
+            android:icon="@drawable/local_atm_24px"
             android:title="@string/nav_item_bank" />
     </group>
 </menu>

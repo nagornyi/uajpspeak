@@ -29,6 +29,9 @@ import com.google.android.gms.ads.MobileAds
 import com.google.android.gms.common.util.ArrayUtils
 import com.google.android.material.navigation.NavigationView
 import java.util.Locale
+import androidx.core.view.size
+import androidx.core.view.get
+import androidx.core.content.edit
 
 class MainActivity : AppCompatActivity(), TextToSpeech.OnInitListener, NavigationView.OnNavigationItemSelectedListener {
 
@@ -123,9 +126,8 @@ class MainActivity : AppCompatActivity(), TextToSpeech.OnInitListener, Navigatio
         val pCounter = ALL_PHRASE_ARRAY_IDS.sumOf { resources.getStringArray(it).size }
         phrasesCount.text = "$pCounter ${getString(R.string.phrases_counter)}"
 
-        // Restore saved position or default to 0 (All Phrases)
-        val savedPosition = app_settings.getInt("last_category_position", 0)
-        displayView(savedPosition)
+        // Always show All Phrases on startup
+        displayView(0)
 
         textToSpeech = TextToSpeech(this, this)
 
@@ -200,11 +202,43 @@ class MainActivity : AppCompatActivity(), TextToSpeech.OnInitListener, Navigatio
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.menu_main, menu)
+
+        // Enable icons in overflow menu and tint them dark
+        if (menu.javaClass.simpleName == "MenuBuilder") {
+            try {
+                val method = menu.javaClass.getDeclaredMethod("setOptionalIconsVisible", Boolean::class.javaPrimitiveType)
+                method.isAccessible = true
+                method.invoke(menu, true)
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
+
         return true
     }
 
     override fun onPrepareOptionsMenu(menu: Menu): Boolean {
         mSearchAction = menu.findItem(R.id.action_search)
+
+        // Tint only overflow menu icons (not action bar icons) to dark color
+        val darkColor = androidx.core.content.ContextCompat.getColor(this, android.R.color.black)
+        for (i in 0 until menu.size) {
+            val menuItem = menu[i]
+            // Only tint overflow menu items, not the search action
+            if (menuItem.itemId == R.id.action_language ||
+                menuItem.itemId == R.id.action_gender_lang ||
+                menuItem.itemId == R.id.action_about) {
+                menuItem.icon?.setTint(darkColor)
+            }
+        }
+
+        // Preserve cancel icon when search is open (with light color for dark toolbar)
+        if (isSearchOpened) {
+            val cancelIcon = androidx.appcompat.content.res.AppCompatResources.getDrawable(this, R.drawable.cancel_24px)
+            cancelIcon?.setTintList(null) // Remove any tint to keep original color
+            mSearchAction?.icon = cancelIcon
+        }
+
         return super.onPrepareOptionsMenu(menu)
     }
 
@@ -263,7 +297,12 @@ class MainActivity : AppCompatActivity(), TextToSpeech.OnInitListener, Navigatio
 
             val positiveText = getString(R.string.ok)
             builder.setPositiveButton(positiveText) { _, _ ->
+                // Close search box and reset icon if open
+                if (isSearchOpened) {
+                    hideSearchBar()
+                }
                 editor.apply()
+                displayView(0) // Always select All Phrases after gender change
                 // Refresh HomeFragment if visible
                 val home = supportFragmentManager.findFragmentByTag("HOME") as? HomeFragment
                 if (home != null && home.isVisible) {
@@ -300,14 +339,18 @@ class MainActivity : AppCompatActivity(), TextToSpeech.OnInitListener, Navigatio
             var selected = current
             builder.setSingleChoiceItems(langs, current) { _, which -> selected = which }
             builder.setPositiveButton(getString(R.string.ok)) { _, _ ->
+                // Close search box and reset icon if open
+                if (isSearchOpened) {
+                    hideSearchBar()
+                }
                 val code = when (selected) {
                     1 -> "de"
                     2 -> "ja"
                     else -> "en"
                 }
                 LocaleHelper.setLanguage(this, code)
-                // Save current position before recreating
-                app_settings.edit().putInt("last_category_position", current_position).apply()
+                app_settings.edit { putInt("last_category_position", current_position) }
+                displayView(0) // Always select All Phrases after language change
                 recreate()
             }
             builder.setNegativeButton(getString(R.string.cancel), null)
@@ -386,7 +429,7 @@ class MainActivity : AppCompatActivity(), TextToSpeech.OnInitListener, Navigatio
             imm.hideSoftInputFromWindow(view.windowToken, 0)
         }
 
-        mSearchAction?.setIcon(resources.getDrawable(R.drawable.ic_action_search, null))
+        mSearchAction?.setIcon(resources.getDrawable(R.drawable.search_24px, null))
 
         displayView(prev_position)
         isSearchOpened = false
@@ -425,7 +468,10 @@ class MainActivity : AppCompatActivity(), TextToSpeech.OnInitListener, Navigatio
         val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
         editSearch?.let { imm.showSoftInput(it, InputMethodManager.SHOW_IMPLICIT) }
 
-        mSearchAction?.setIcon(getDrawable(R.drawable.ic_action_close))
+        // Set cancel icon with light color for dark toolbar
+        val cancelIcon = androidx.appcompat.content.res.AppCompatResources.getDrawable(this, R.drawable.cancel_24px)
+        cancelIcon?.setTintList(null) // Remove any tint to keep original color (light)
+        mSearchAction?.icon = cancelIcon
 
         isSearchOpened = true
     }
@@ -468,9 +514,6 @@ class MainActivity : AppCompatActivity(), TextToSpeech.OnInitListener, Navigatio
     private fun displayView(position: Int) {
         prev_position = current_position
         current_position = position
-
-        // Save current position for restoration after language change
-        app_settings.edit().putInt("last_category_position", position).apply()
 
         // Update NavigationView selection
         val menuItemId = when (position) {

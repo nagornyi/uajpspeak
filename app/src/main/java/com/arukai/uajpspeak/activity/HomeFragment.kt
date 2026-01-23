@@ -57,12 +57,19 @@ class HomeFragment : Fragment() {
         val index = args?.getInt("index", 0) ?: 0
         val results = ArrayList<DataObject>()
 
-        if (phrases == null) phrases = resources.getStringArray(index)
+        // Use provided phrases if available, otherwise load from resources
+        val phraseArray = phrases ?: if (index != -1) resources.getStringArray(index) else emptyArray()
 
-        phrases?.forEach { s ->
+        // Always get current gender from settings to avoid static field issues
+        val currentGender = when (MainActivity.app_settings.getInt("gender_lang", 0)) {
+            1 -> "f"
+            else -> "m"
+        }
+
+        phraseArray.forEach { s ->
             val parts = s.split("/")
             val phraseGender = parts[0]
-            if (phraseGender == gender.toString() || phraseGender == "n") {
+            if (phraseGender == currentGender || phraseGender == "n") {
                 val obj = DataObject(parts[0], parts[1], parts[2])
                 results.add(obj)
             }
@@ -161,4 +168,3 @@ class HomeFragment : Fragment() {
         actionbar?.setDisplayHomeAsUpEnabled(state)
     }
 }
-

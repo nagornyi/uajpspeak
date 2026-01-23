@@ -92,17 +92,12 @@ class ZoomFragment : Fragment() {
         ukrainianView.text = ukrainian?.replace("*", "")?.uppercase()
         phoneticView.text = phonetic
 
-        // Get current gender and language settings
-        val currentGender = when (MainActivity.app_settings.getInt("gender_lang", 0)) {
-            1 -> "f"
-            else -> "m"
-        }
+        // Get current language settings
         val currentLanguage = com.arukai.uajpspeak.util.LocaleHelper.getSavedLanguage(MainActivity.context)
 
         // Save current phrase for favorites using Ukrainian text as identifier
-        currentPhrase = FavoritePhrase(
+        currentPhrase = com.arukai.uajpspeak.util.FavoritePhrase(
             ukrainian = ukrainian ?: "",
-            gender = currentGender,
             language = currentLanguage
         )
 
@@ -122,7 +117,7 @@ class ZoomFragment : Fragment() {
         ukrainianView.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ua, 0, 0, 0)
 
         phoneticView.compoundDrawablePadding = 10
-        phoneticView.setCompoundDrawablesWithIntrinsicBounds(R.drawable.eye, 0, 0, 0)
+        phoneticView.setCompoundDrawablesWithIntrinsicBounds(R.drawable.record_voice_over_24px, 0, 0, 0)
 
         val clickListener = View.OnClickListener {
             if (isTtsInitialized) {
@@ -147,7 +142,7 @@ class ZoomFragment : Fragment() {
 
     private fun toggleFavorite() {
         currentPhrase?.let { phrase ->
-            if (favoritesManager?.isFavorite(phrase.ukrainian, phrase.gender, phrase.language) == true) {
+            if (favoritesManager?.isFavorite(phrase.ukrainian, phrase.language) == true) {
                 favoritesManager?.removeFavorite(phrase)
             } else {
                 favoritesManager?.addFavorite(phrase)
@@ -158,10 +153,10 @@ class ZoomFragment : Fragment() {
 
     private fun updateFavoriteIcon() {
         currentPhrase?.let { phrase ->
-            val isFavorite = favoritesManager?.isFavorite(phrase.ukrainian, phrase.gender, phrase.language) ?: false
+            val isFavorite = favoritesManager?.isFavorite(phrase.ukrainian, phrase.language) ?: false
             favoriteMenuItem?.setIcon(
-                if (isFavorite) R.drawable.ic_favorite_filled
-                else R.drawable.ic_favorite_border
+                if (isFavorite) R.drawable.favorite_filled_24px
+                else R.drawable.favorite_24px
             )
         }
     }

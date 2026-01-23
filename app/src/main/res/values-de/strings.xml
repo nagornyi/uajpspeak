@@ -23,9 +23,12 @@
     <string name="empty_favourites_title">Noch keine Favoriten</string>
     <string name="empty_favourites_message">Tippen Sie auf das Herzsymbol bei einer Phrase, um sie zu Ihren Favoriten hinzuzufügen</string>
 
+    <string name="text_to_speech">Text-zu-Sprache-Umwandlung</string>
+
     <!-- navigation drawer item labels  -->
     <string-array name="nav_drawer_labels">
         <item>@string/nav_item_all</item>
+        <item>@string/nav_item_favourites</item>
         <item>@string/nav_item_greetings</item>
         <item>@string/nav_item_signs</item>
         <item>@string/nav_item_troubleshooting</item>
@@ -64,7 +67,7 @@
     <string name="nav_item_love">Liebesworte</string>
     <string name="nav_item_shopping">Einkaufen</string>
     <string name="nav_item_clothing">Kleidungsarten</string>
-    <string name="nav_item_drugstore">Drogerie</string>
+    <string name="nav_item_drugstore">Apotheke</string>
     <string name="nav_item_driving">Fahren</string>
     <string name="nav_item_bank">Bank</string>
     <!-- sections  -->
@@ -85,7 +88,7 @@
     <string name="title_love">Liebesworte</string>
     <string name="title_shopping">Einkaufen</string>
     <string name="title_clothing">Kleidungsarten</string>
-    <string name="title_drugstore">Drogerie</string>
+    <string name="title_drugstore">Apotheke</string>
     <string name="title_driving">Fahren</string>
     <string name="title_bank">Bank</string>
     <string-array name="gender_lang_selection">
@@ -251,7 +254,6 @@
         <item>n/Ausgang/ВИ*ХІД</item>
         <item>n/Drücken/ВІД СЕ*БЕ</item>
         <item>n/Ziehen/ДО СЕ*БЕ</item>
-        <item>n/Umkleide/ВБИРА*ЛЬНЯ</item>
         <item>n/Toilette/ТУАЛЕ*Т</item>
         <item>n/Männer/ЧОЛОВІ*ЧИЙ</item>
         <item>n/Frauen/ЖІНО*ЧИЙ</item>

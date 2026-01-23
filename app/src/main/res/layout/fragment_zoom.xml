@@ -59,8 +59,8 @@
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
             android:layout_marginBottom="20dp"
-            android:contentDescription="Speak Ukrainian"
-            android:src="@drawable/speaker"
+            android:contentDescription="@string/text_to_speech"
+            android:src="@drawable/text_to_speech_24px"
             android:padding="8dp" />
     </RelativeLayout>
 

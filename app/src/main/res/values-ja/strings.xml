@@ -23,9 +23,12 @@
     <string name="empty_favourites_title">お気に入りはまだありません</string>
     <string name="empty_favourites_message">フレーズのハートアイコンをタップして、お気に入りリストに追加してください</string>
 
+    <string name="text_to_speech">テキスト読み上げ</string>
+
     <!-- navigation drawer item labels  -->
     <string-array name="nav_drawer_labels">
         <item>@string/nav_item_all</item>
+        <item>@string/nav_item_favourites</item>
         <item>@string/nav_item_greetings</item>
         <item>@string/nav_item_signs</item>
         <item>@string/nav_item_troubleshooting</item>
@@ -278,7 +281,6 @@
         <item>n/出口/ВИ*ХІД</item>
         <item>n/押す/ВІД СЕ*БЕ</item>
         <item>n/引く/ДО СЕ*БЕ</item>
-        <item>n/洗面所/ВБИРА*ЛЬНЯ/</item>
         <item>n/トイレ/ТУАЛЕ*Т</item>
         <item>n/男性/ЧОЛОВІ*ЧИЙ</item>
         <item>n/女性/ЖІНО*ЧИЙ</item>

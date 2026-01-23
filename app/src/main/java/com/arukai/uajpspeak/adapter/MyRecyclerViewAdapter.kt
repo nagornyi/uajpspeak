@@ -124,9 +124,9 @@ class MyRecyclerViewAdapter(
                 val filterPattern = constraint.toString().lowercase().trim()
 
                 for (user in originalList) {
-                    val jpn = user.mText2
+                    val sourceText = user.mText2.lowercase()
                     val ukr = user.mText3.lowercase().replace("*", "")
-                    if (jpn.contains(filterPattern) || ukr.contains(filterPattern)) {
+                    if (sourceText.contains(filterPattern) || ukr.contains(filterPattern)) {
                         filteredList.add(user)
                     }
                 }

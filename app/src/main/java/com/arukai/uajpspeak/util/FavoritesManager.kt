@@ -7,7 +7,6 @@ import com.google.gson.reflect.TypeToken
 
 data class FavoritePhrase(
     val ukrainian: String,   // Ukrainian text (with asterisks) - robust identifier
-    val gender: String,      // "m" or "f"
     val language: String     // "en", "de", or "ja"
 )
 
@@ -22,10 +21,9 @@ class FavoritesManager(context: Context) {
 
     fun addFavorite(phrase: FavoritePhrase) {
         val favorites = getFavorites().toMutableList()
-        // Check if this exact combination (ukrainian + gender + language) already exists
+        // Check if this exact combination (ukrainian + language) already exists
         if (!favorites.any {
             it.ukrainian == phrase.ukrainian &&
-            it.gender == phrase.gender &&
             it.language == phrase.language
         }) {
             favorites.add(phrase)
@@ -37,23 +35,20 @@ class FavoritesManager(context: Context) {
         val favorites = getFavorites().toMutableList()
         favorites.removeAll {
             it.ukrainian == phrase.ukrainian &&
-            it.gender == phrase.gender &&
             it.language == phrase.language
         }
         saveFavorites(favorites)
     }
 
-    fun isFavorite(ukrainian: String, gender: String, language: String): Boolean {
+    fun isFavorite(ukrainian: String, language: String): Boolean {
         return getFavorites().any {
             it.ukrainian == ukrainian &&
-            it.gender == gender &&
             it.language == language
         }
     }
 
-    fun getFavoritesForCurrentSettings(gender: String, language: String): List<FavoritePhrase> {
+    fun getFavoritesForCurrentSettings(language: String): List<FavoritePhrase> {
         return getFavorites().filter {
-            it.gender == gender &&
             it.language == language
         }
     }
@@ -91,4 +86,3 @@ class FavoritesManager(context: Context) {
         }
     }
 }
-

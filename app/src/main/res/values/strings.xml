@@ -23,6 +23,8 @@
     <string name="empty_favourites_title">No Favourites Yet</string>
     <string name="empty_favourites_message">Tap the heart icon on any phrase to add it to your favourites list</string>
 
+    <string name="text_to_speech">Text to speech</string>
+
     <!-- navigation drawer item labels  -->
     <string-array name="nav_drawer_labels">
         <item>@string/nav_item_all</item>
@@ -61,12 +63,12 @@
     <string name="nav_item_time">Time</string>
     <string name="nav_item_weekdays">Weekdays</string>
     <string name="nav_item_months">Months</string>
-    <string name="nav_item_colors">Colors</string>
+    <string name="nav_item_colors">Colours</string>
     <string name="nav_item_common_words">Common Words</string>
     <string name="nav_item_love">Love Words</string>
     <string name="nav_item_shopping">Shopping</string>
     <string name="nav_item_clothing">Clothing</string>
-    <string name="nav_item_drugstore">Drugstore</string>
+    <string name="nav_item_drugstore">Pharmacy</string>
     <string name="nav_item_driving">Driving</string>
     <string name="nav_item_bank">Bank</string>
 
@@ -83,12 +85,12 @@
     <string name="title_time">Time</string>
     <string name="title_weekdays">Weekdays</string>
     <string name="title_months">Months</string>
-    <string name="title_colors">Colors</string>
+    <string name="title_colors">Colours</string>
     <string name="title_common_words">Common Words</string>
     <string name="title_love">Love Words</string>
     <string name="title_shopping">Shopping</string>
     <string name="title_clothing">Clothing</string>
-    <string name="title_drugstore">Drugstore</string>
+    <string name="title_drugstore">Pharmacy</string>
     <string name="title_driving">Driving</string>
     <string name="title_bank">Bank</string>
 
@@ -197,7 +199,6 @@
         <item>n/Exit/ВИ*ХІД</item>
         <item>n/Push/ВІД СЕ*БЕ</item>
         <item>n/Pull/ДО СЕ*БЕ</item>
-        <item>n/Restroom/ВБИРА*ЛЬНЯ/</item>
         <item>n/Toilet/ТУАЛЕ*Т</item>
         <item>n/Men/ЧОЛОВІ*ЧИЙ</item>
         <item>n/Women/ЖІНО*ЧИЙ</item>
@@ -243,7 +244,7 @@
         <item>n/Train station/вокза*л</item>
         <item>n/Bus stop/зупи*нка авто*буса</item>
         <item>n/Airport/аеропо*рт</item>
-        <item>n/City center/це*нтр мі*ста</item>
+        <item>n/City centre/це*нтр мі*ста</item>
         <item>n/Hotel/готе*ль</item>
         <item>n/Embassy/посо*льство</item>
         <item>n/Consulate/ко*нсульство</item>
@@ -383,7 +384,7 @@
     <string-array name="colors">
         <item>n/Black/чо*рний</item>
         <item>n/White/бі*лий</item>
-        <item>n/Gray/сі*рий</item>
+        <item>n/Grey/сі*рий</item>
         <item>n/Red/черво*ний</item>
         <item>n/Blue/си*ній</item>
         <item>n/Yellow/жо*втий</item>
@@ -500,7 +501,7 @@
         <item>n/Welcome/Ласка*во про*симо</item>
         <item>n/We\'d like a double room with a bath, please/На*м потрі*бен но*мер з одни*м двоспа*льним лі*жком та ва*нною кімна*тою</item>
         <item>n/We\'d like a twin room, please/На*м потрі*бен но*мер з двома* окре*мими лі*жками</item>
-        <item>n/Excuse me, where is the restroom?/Ви*бачте, де туале*т?</item>
+        <item>n/Excuse me, where is the toilet?/Ви*бачте, де туале*т?</item>
         <item>n/We have a reservation/Ми забронюва*ли но*мер</item>
         <item>n/We have a reservation under Tanaka/Ми забронюва*ли но*мер на прі*звище Тана*ка</item>
         <item>m/I did it last week/Я зроби*в це мину*лого ти*жня</item>
@@ -512,7 +513,7 @@
         <item>n/What time is check-in?/З яко*ї годи*ни засе*лення в но*мер?</item>
         <item>n/What time is check-out?/До яко*ї годи*ни ви*селення з но*меру?</item>
         <item>n/Can I pay with this credit card?/Я мо*жу оплати*ти ціє*ю креди*тною ка*рткою?</item>
-        <item>n/I\'ll pay with traveler\'s checks/Я оплачу* доро*жнім че*ком</item>
+        <item>n/I\'ll pay with traveller\'s cheques/Я оплачу* доро*жнім че*ком</item>
         <item>n/Can I have the key to my room, please?/Да*йте мені* будь-ла*ска клю*ч ві*д мого* но*меру</item>
         <item>n/Please wake me up with a call at 8 AM tomorrow/Будь-ла*ска розбуді*ть мене* дзвінко*м в но*мер за*втра о во*сьмій годи*ні ра*нку</item>
         <item>n/Can I check in now?/Вже* мо*жна заселя*тись в но*мер?</item>

@@ -19,30 +19,30 @@
 
             <TextView
                 android:id="@+id/textView"
-                android:drawableLeft="@drawable/jp"
                 android:drawablePadding="5dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textStyle="bold"
-                android:layout_alignParentTop="true"/>
+                android:layout_alignParentTop="true"
+                card_view:drawableLeftCompat="@drawable/jp" />
 
             <TextView
                 android:id="@+id/textView2"
-                android:drawableLeft="@drawable/ua"
                 android:drawablePadding="5dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
-                android:layout_below="@+id/textView"/>
+                android:layout_below="@+id/textView"
+                card_view:drawableLeftCompat="@drawable/ua" />
 
             <TextView
                 android:id="@+id/textView3"
-                android:drawableLeft="@drawable/eye"
                 android:drawablePadding="5dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
-                android:layout_below="@+id/textView2"/>
+                android:layout_below="@+id/textView2"
+                card_view:drawableLeftCompat="@drawable/record_voice_over_24px" />
         </RelativeLayout>
     </androidx.cardview.widget.CardView>
 

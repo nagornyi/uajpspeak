@@ -3,11 +3,16 @@ package com.arukai.uajpspeak.activity
 import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.TextView
+import androidx.core.view.MenuHost
+import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Lifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.arukai.uajpspeak.R
@@ -66,43 +71,49 @@ class FavouritesFragment : Fragment() {
     }
 
     private fun getDataSet(): ArrayList<DataObject> {
+        buildUkrainianToPhraseMap()
         val results = ArrayList<DataObject>()
-
-        // Get current gender and language settings
+        val currentLanguage = com.arukai.uajpspeak.util.LocaleHelper.getSavedLanguage(requireContext())
         val currentGender = when (MainActivity.app_settings.getInt("gender_lang", 0)) {
             1 -> "f"
             else -> "m"
         }
-        val currentLanguage = com.arukai.uajpspeak.util.LocaleHelper.getSavedLanguage(requireContext())
-
-        // Get favorites for current gender AND language
-        val favorites = favoritesManager.getFavoritesForCurrentSettings(currentGender, currentLanguage)
-
-        // Build results by looking up each favorite using Ukrainian text
+        // Show favorites for the current gender+language and neutral phrases
+        val favorites = favoritesManager.getFavoritesForCurrentSettings(currentLanguage)
         for (fav in favorites) {
             val fullPhrase = ukrainianToPhraseMap[fav.ukrainian]
             if (fullPhrase != null) {
                 val parts = fullPhrase.split("/")
                 if (parts.size >= 3) {
                     val gender = parts[0]
-                    val sourceText = parts[1]  // Current language text
+                    val sourceText = parts[1]
                     val ukrainian = parts[2]
-
-                    // Only show if gender matches or is neutral
-                    if (gender == "n" || gender == currentGender) {
-                        val obj = DataObject(gender, sourceText, ukrainian)
-                        results.add(obj)
+                    if (gender == currentGender || gender == "n") {
+                        results.add(DataObject(gender, sourceText, ukrainian))
                     }
                 }
             }
         }
-
         return results
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        // Favourites now shows normal menu items like other category sections
+
+        // Hide menu items in Favourites section
+        val menuHost: MenuHost = requireActivity()
+        menuHost.addMenuProvider(object : MenuProvider {
+            override fun onPrepareMenu(menu: Menu) {
+            }
+
+            override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+                // Menu is already created by MainActivity
+            }
+
+            override fun onMenuItemSelected(menuItem: android.view.MenuItem): Boolean {
+                return false
+            }
+        }, viewLifecycleOwner, Lifecycle.State.RESUMED)
     }
 
     override fun onCreateView(
@@ -209,4 +220,3 @@ class FavouritesFragment : Fragment() {
         }
     }
 }
-
