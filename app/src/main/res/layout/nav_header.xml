@@ -13,7 +13,7 @@
         android:layout_width="120dp"
         android:layout_height="80dp"
         android:layout_marginTop="16dp"
-        android:layout_marginBottom="4dp"
+        android:layout_marginBottom="16dp"
         android:contentDescription="@string/app_name"
         android:scaleType="fitCenter" />
 
@@ -25,7 +25,7 @@
         android:layout_marginTop="4dp"
         android:layout_marginBottom="0dp"
         android:textColor="#90CAF9"
-        android:textSize="13sp"
+        android:textSize="16sp"
         android:textStyle="italic"
         android:gravity="center" />
 

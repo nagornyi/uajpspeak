@@ -27,38 +27,29 @@ class HomeFragment : Fragment() {
     companion object {
         var index = -1
         var top = -1
-        var gender: Char = 'm'
         var phrases: Array<String>? = null
-
-        fun newInstance(index: Int, selectedPhrases: Array<String>?): HomeFragment {
-            val f = HomeFragment()
-            gender = when (MainActivity.app_settings.getInt("gender_lang", 0)) {
-                1 -> 'f'
-                else -> 'm'
-            }
-            val args = Bundle()
-            args.putInt("index", index)
-            phrases = selectedPhrases
-            f.arguments = args
-            return f
-        }
-
-        fun newInstance(index: Int): HomeFragment {
-            return newInstance(index, null)
-        }
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
     }
 
     private fun getDataSet(): ArrayList<DataObject> {
         val args = arguments
-        val index = args?.getInt("index", 0) ?: 0
+        val argIndex = args?.getInt("index", 0) ?: 0
         val results = ArrayList<DataObject>()
 
-        // Use provided phrases if available, otherwise load from resources
-        val phraseArray = phrases ?: if (index != -1) resources.getStringArray(index) else emptyArray()
+        // Prefer phrases passed via bundle (MainActivity puts them there). Fallback to companion or empty.
+        val phraseArray: Array<String> = args?.getStringArray("phrases")
+            ?: phrases
+            ?: run {
+                // Defensive: do not treat argIndex as a resource id; if argIndex corresponds to a drawer position
+                // we map it through MainActivity.ALL_PHRASE_ARRAY_IDS (position - 2) when appropriate.
+                if (argIndex >= 2 && argIndex - 2 < MainActivity.ALL_PHRASE_ARRAY_IDS.size) {
+                    resources.getStringArray(MainActivity.ALL_PHRASE_ARRAY_IDS[argIndex - 2])
+                } else if (argIndex == 0) {
+                    // All Phrases
+                    MainActivity.all_phrases
+                } else {
+                    emptyArray()
+                }
+            }
 
         // Always get current gender from settings to avoid static field issues
         val currentGender = when (MainActivity.app_settings.getInt("gender_lang", 0)) {
@@ -68,10 +59,12 @@ class HomeFragment : Fragment() {
 
         phraseArray.forEach { s ->
             val parts = s.split("/")
-            val phraseGender = parts[0]
-            if (phraseGender == currentGender || phraseGender == "n") {
-                val obj = DataObject(parts[0], parts[1], parts[2])
-                results.add(obj)
+            if (parts.size >= 3) {
+                val phraseGender = parts[0]
+                if (phraseGender == currentGender || phraseGender == "n") {
+                    val obj = DataObject(parts[0], parts[1], parts[2])
+                    results.add(obj)
+                }
             }
         }
         return results
@@ -108,10 +101,6 @@ class HomeFragment : Fragment() {
         return rootView
     }
 
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-    }
-
     override fun onResume() {
         super.onResume()
 
@@ -139,11 +128,11 @@ class HomeFragment : Fragment() {
 
                 val fragment = ZoomFragment.newInstance(jpn, ukr, phonetic, getAudio(ukr.replace("*", "")))
 
-                val fragmentManager = fragmentManager
-                val fragmentTransaction = fragmentManager?.beginTransaction()
-                fragmentTransaction?.replace(R.id.container_body, fragment, "ZOOM")
-                fragmentTransaction?.addToBackStack(null)
-                fragmentTransaction?.commit()
+                val fm = parentFragmentManager
+                fm.beginTransaction()
+                    .replace(R.id.container_body, fragment, "ZOOM")
+                    .addToBackStack(null)
+                    .commit()
 
                 val mainActivity = (activity as MainActivity)
                 mainActivity.setActionBarTitle("")

@@ -2,14 +2,25 @@
 <resources>
     <color name="colorPrimary">#00304e</color>
     <color name="colorPrimaryDark">#000000</color>
-    <color name="textColorPrimary">#FFFFFF</color>
-    <color name="windowBackground">#FFFFFF</color>
+    <color name="textColorPrimary">#212121</color>
+    <color name="windowBackground">#F5F5F5</color>
+    <color name="cardBackground">#FFFFFF</color>
+    <color name="card_shadow">#33000000</color>
+    <color name="card_stroke">#00000000</color>
     <color name="navigationBarColor">#000000</color>
-    <color name="colorAccent">#FFFFFF</color>
+    <color name="colorAccent">#00304e</color>
     <color name="drawerBackground">#00304e</color>
     <color name="selectedCategory">#1a4d6d</color>
     <color name="selectedCategoryText">#FFFFFF</color>
     <color name="unselectedCategory">#00304e</color>
     <color name="unselectedCategoryText">#B0BEC5</color>
     <color name="drawerDivider">#0d3a56</color>
+    <!-- Search bar colors (light theme) -->
+    <color name="search_text_color">#212121</color>
+    <color name="search_hint_color">#757575</color>
+    <color name="search_cursor_color">#212121</color>
+
+    <!-- Ad and separator colors -->
+    <color name="ad_separator">#CCCCCC</color>
+    <color name="ad_background_tint">#10000000</color>
 </resources>

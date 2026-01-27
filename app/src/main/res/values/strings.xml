@@ -9,6 +9,7 @@
     <string name="action_buy_pro">Upgrade to Full Version</string>
     <string name="action_gender_lang">Male/Female Speech</string>
     <string name="action_language">Language</string>
+    <string name="action_theme">Theme</string>
     <string name="cancel">Cancel</string>
     <string name="ok">OK</string>
     <string name="action_search">Search</string>
@@ -16,12 +17,18 @@
     <string name="drawer_close">Close</string>
     <string name="title_about">About this app</string>
     <string name="title_alphabet">Alphabet</string>
-    <string name="phrases_counter">phrases</string>
+    <string name="phrases_counter">%d phrases</string>
 
     <!-- Empty state for favourites -->
     <string name="empty_favourites_icon">Empty favourites</string>
     <string name="empty_favourites_title">No Favourites Yet</string>
     <string name="empty_favourites_message">Tap the heart icon on any phrase to add it to your favourites list</string>
+
+    <string-array name="theme_selection">
+        <item>Light</item>
+        <item>Dark</item>
+        <item>Automatic</item>
+    </string-array>
 
     <string name="text_to_speech">Text to speech</string>
 
@@ -463,7 +470,7 @@
         <item>n/You are very beautiful/Ти ду*же га*рна</item>
         <item>n/You are very handsome/Ти ду*же симпати*чний</item>
         <item>n/You look cool/Ти кла*сно вигляда*єш</item>
-        <item>n/You look especially (beautiful/handsome) today/Сього*дні ти про*сто неймові*рно вигляда*єш</item>
+        <item>n/You look especially beautiful (handsome) today/Сього*дні ти про*сто неймові*рно вигляда*єш</item>
         <item>n/You have beautiful eyes/В те*бе ду*же га*рні очі</item>
         <item>n/You are very special to me (girlfriend)/Ти ду*же особли*ва для мене</item>
         <item>n/You are very special to me (boyfriend)/Ти ду*же особли*вий для мене</item>

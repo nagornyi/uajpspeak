@@ -28,7 +28,6 @@ class FragmentDrawer : Fragment() {
     private var drawerListener: FragmentDrawerListener? = null
 
     companion object {
-        private val TAG = FragmentDrawer::class.java.simpleName
         var adapter: NavigationDrawerAdapter? = null
         var activeData: MutableList<NavDrawerItem>? = null
         private var titles: Array<String>? = null
@@ -42,10 +41,6 @@ class FragmentDrawer : Fragment() {
     interface ClickListener {
         fun onClick(view: View, position: Int)
         fun onLongClick(view: View, position: Int)
-    }
-
-    fun setDrawerListener(listener: FragmentDrawerListener) {
-        this.drawerListener = listener
     }
 
     private fun getData(): MutableList<NavDrawerItem> {
@@ -113,19 +108,23 @@ class FragmentDrawer : Fragment() {
         )
         layout.setOnClickListener(null)
 
-        // Set flags dynamically based on language
-        val banner = layout.findViewById<android.widget.ImageView>(R.id.banner)
-        val lang = com.arukai.uajpspeak.util.LocaleHelper.getSavedLanguage(requireContext())
-        val sourceFlagRes = when (lang) {
-            "en" -> R.drawable.uk
-            "de" -> R.drawable.de
-            "ja" -> R.drawable.jp
-            else -> R.drawable.uk
-        }
-        banner?.setImageResource(sourceFlagRes)
+        // Update the NavigationView header (NavigationView hosts the header layout `nav_header.xml`)
+        // Find the NavigationView via the hosting Activity and update its header banner and phrasesCount
+        val navView = activity?.findViewById<com.google.android.material.navigation.NavigationView>(R.id.navigation_view)
+        navView?.getHeaderView(0)?.let { header ->
+            val banner = header.findViewById<android.widget.ImageView>(R.id.banner)
+            val lang = com.arukai.uajpspeak.util.LocaleHelper.getSavedLanguage(requireContext())
+            val sourceFlagRes = when (lang) {
+                "en" -> R.drawable.uk
+                "de" -> R.drawable.de
+                "ja" -> R.drawable.jp
+                else -> R.drawable.uk
+            }
+            banner?.setImageResource(sourceFlagRes)
 
-        val phrasesCount = layout.findViewById<TextView>(R.id.phrasesCount)
-        phrasesCount.text = "$pCounter ${getString(R.string.phrases_counter)}"
+            val phrasesCountView = header.findViewById<TextView>(R.id.phrasesCount)
+            phrasesCountView?.text = getString(R.string.phrases_counter, pCounter)
+        }
         return layout
     }
 
@@ -172,35 +171,24 @@ class FragmentDrawer : Fragment() {
         }
     }
 
-    fun setDrawerState(enabled: Boolean) {
-        val lockMode = if (enabled) DrawerLayout.LOCK_MODE_UNLOCKED
-        else DrawerLayout.LOCK_MODE_LOCKED_CLOSED
-        mDrawerLayout.setDrawerLockMode(lockMode)
-        mDrawerToggle.isDrawerIndicatorEnabled = enabled
-    }
-
     class RecyclerTouchListener(
         context: Context,
         private val recyclerView: RecyclerView,
         private val clickListener: ClickListener
     ) : RecyclerView.OnItemTouchListener {
 
-        private val gestureDetector: GestureDetector
+        private val gestureDetector: GestureDetector = GestureDetector(context, object : GestureDetector.SimpleOnGestureListener() {
+            override fun onSingleTapUp(e: MotionEvent): Boolean {
+                return true
+            }
 
-        init {
-            gestureDetector = GestureDetector(context, object : GestureDetector.SimpleOnGestureListener() {
-                override fun onSingleTapUp(e: MotionEvent): Boolean {
-                    return true
+            override fun onLongPress(e: MotionEvent) {
+                val child = recyclerView.findChildViewUnder(e.x, e.y)
+                if (child != null) {
+                    clickListener.onLongClick(child, recyclerView.getChildAdapterPosition(child))
                 }
-
-                override fun onLongPress(e: MotionEvent) {
-                    val child = recyclerView.findChildViewUnder(e.x, e.y)
-                    if (child != null) {
-                        clickListener.onLongClick(child, recyclerView.getChildAdapterPosition(child))
-                    }
-                }
-            })
-        }
+            }
+        })
 
         override fun onInterceptTouchEvent(rv: RecyclerView, e: MotionEvent): Boolean {
             val child = rv.findChildViewUnder(e.x, e.y)
@@ -217,4 +205,3 @@ class FragmentDrawer : Fragment() {
         }
     }
 }
-

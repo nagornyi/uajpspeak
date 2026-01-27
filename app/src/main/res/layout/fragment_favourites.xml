@@ -10,6 +10,7 @@
         android:id="@+id/my_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:paddingTop="6dp"
         android:layout_above="@+id/ad_separator"
         android:scrollbars="vertical"/>
 
@@ -56,7 +57,7 @@
         android:layout_width="match_parent"
         android:layout_height="2dp"
         android:layout_above="@+id/ad_container"
-        android:background="#CCCCCC" />
+        android:background="@color/ad_separator" />
 
     <!-- Container for ad with distinctive background at the bottom -->
     <LinearLayout

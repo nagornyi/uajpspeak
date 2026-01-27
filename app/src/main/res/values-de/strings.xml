@@ -9,6 +9,7 @@
     <string name="action_buy_pro">Auf Vollversion aktualisieren</string>
     <string name="action_gender_lang">Männliche/Weibliche Sprache</string>
     <string name="action_language">Sprache</string>
+    <string name="action_theme">Thema</string>
     <string name="cancel">Abbrechen</string>
     <string name="ok">OK</string>
     <string name="action_search">Suche</string>
@@ -16,12 +17,19 @@
     <string name="drawer_close">Schließen</string>
     <string name="title_about">Über diese App</string>
     <string name="title_alphabet">Alphabet</string>
-    <string name="phrases_counter">Phrasen</string>
+    <string name="phrases_counter">%d Phrasen</string>
 
     <!-- Empty state for favourites -->
     <string name="empty_favourites_icon">Leere Favoriten</string>
     <string name="empty_favourites_title">Noch keine Favoriten</string>
     <string name="empty_favourites_message">Tippen Sie auf das Herzsymbol bei einer Phrase, um sie zu Ihren Favoriten hinzuzufügen</string>
+
+    <!-- Theme selection -->
+    <string-array name="theme_selection">
+        <item>Hell</item>
+        <item>Dunkel</item>
+        <item>Automatisch</item>
+    </string-array>
 
     <string name="text_to_speech">Text-zu-Sprache-Umwandlung</string>
 

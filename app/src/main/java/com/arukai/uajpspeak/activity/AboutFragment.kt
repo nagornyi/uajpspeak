@@ -1,6 +1,5 @@
 package com.arukai.uajpspeak.activity
 
-import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.Menu
@@ -57,8 +56,5 @@ class AboutFragment : Fragment() {
         return rootView
     }
 
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-    }
 }
 

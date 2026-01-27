@@ -38,10 +38,6 @@ class FavouritesFragment : Fragment() {
     companion object {
         var index = -1
         var top = -1
-
-        fun newInstance(): FavouritesFragment {
-            return FavouritesFragment()
-        }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -143,10 +139,6 @@ class FavouritesFragment : Fragment() {
         return rootView
     }
 
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-    }
-
     override fun onResume() {
         super.onResume()
 
@@ -193,13 +185,13 @@ class FavouritesFragment : Fragment() {
                 mainActivity.setActionBarTitle("")
                 mainActivity.setDrawerLocked(false)
                 mainActivity.setBackButtonEnabled()
-                enableBackButton(true)
+                true.enableBackButton()
             }
         })
     }
 
-    private fun enableBackButton(state: Boolean) {
-        (activity as? MainActivity)?.enableBackButton(state)
+    private fun Boolean.enableBackButton() {
+        (this@FavouritesFragment.activity as? MainActivity)?.enableBackButton(this)
     }
 
     override fun onPause() {

@@ -1,6 +1,5 @@
 package com.arukai.uajpspeak.activity
 
-import android.content.Context
 import android.os.Bundle
 import android.text.Html
 import android.view.LayoutInflater
@@ -68,8 +67,5 @@ class AlphabetFragment : Fragment() {
         return rootView
     }
 
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-    }
 }
 

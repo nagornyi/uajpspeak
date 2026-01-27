@@ -16,6 +16,7 @@ import androidx.lifecycle.Lifecycle
 import com.arukai.uajpspeak.R
 import com.arukai.uajpspeak.util.FavoritePhrase
 import com.arukai.uajpspeak.util.FavoritesManager
+import com.arukai.uajpspeak.App
 import java.util.Locale
 
 class ZoomFragment : Fragment() {
@@ -60,7 +61,7 @@ class ZoomFragment : Fragment() {
                 menuInflater.inflate(R.menu.menu_main, menu)
             }
 
-            override fun onMenuItemSelected(menuItem: android.view.MenuItem): Boolean {
+            override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
                 if (menuItem.itemId == R.id.action_favorite) {
                     toggleFavorite()
                     return true
@@ -93,16 +94,15 @@ class ZoomFragment : Fragment() {
         phoneticView.text = phonetic
 
         // Get current language settings
-        val currentLanguage = com.arukai.uajpspeak.util.LocaleHelper.getSavedLanguage(MainActivity.context)
+        val currentLanguage = com.arukai.uajpspeak.util.LocaleHelper.getSavedLanguage(App.appContext)
 
         // Save current phrase for favorites using Ukrainian text as identifier
-        currentPhrase = com.arukai.uajpspeak.util.FavoritePhrase(
+        currentPhrase = FavoritePhrase(
             ukrainian = ukrainian ?: "",
             language = currentLanguage
         )
 
-        val lang = currentLanguage
-        val sourceFlagRes = when (lang) {
+        val sourceFlagRes = when (currentLanguage) {
             "en" -> R.drawable.uk
             "de" -> R.drawable.de
             "ja" -> R.drawable.jp

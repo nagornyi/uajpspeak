@@ -47,6 +47,10 @@ object LocaleHelper {
 
     fun applyLocale(context: Context): Context {
         val lang = getSavedLanguage(context)
+        return applyLocale(context, lang)
+    }
+
+    fun applyLocale(context: Context, lang: String): Context {
         val locale = Locale(lang)
         Locale.setDefault(locale)
         val config = Configuration(context.resources.configuration)
@@ -54,4 +58,3 @@ object LocaleHelper {
         return context.createConfigurationContext(config)
     }
 }
-

@@ -1,9 +1,9 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
     <style name="MyMaterialTheme" parent="MyMaterialTheme.Base">
     </style>
 
-    <style name="MyMaterialTheme.Base" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="MyMaterialTheme.Base" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Allow edge-to-edge but handle insets programmatically -->
         <item name="android:windowTranslucentNavigation">false</item>
         <item name="android:fitsSystemWindows">true</item>
@@ -12,10 +12,25 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:windowBackground">@color/windowBackground</item>
+        <item name="android:navigationBarColor">@color/navigationBarColor</item>
+        <item name="android:statusBarColor">@color/colorPrimary</item>
+        <item name="android:windowLightStatusBar" >false</item>
+        <!-- Popup theme for action bar / toolbar (overrides popupTheme in toolbar) -->
+        <item name="actionBarPopupTheme">@style/ThemeOverlay.App.Popup.Light</item>
     </style>
 
-    <style name="AlertDialogCustom" parent="Theme.AppCompat.Light.Dialog.Alert">
+    <style name="AlertDialogCustom" parent="Theme.MaterialComponents.DayNight.Dialog.Alert">
         <item name="colorAccent">@color/colorPrimary</item>
+    </style>
+
+    <!-- Popup overlays for menus (light/dark) -->
+    <style name="ThemeOverlay.App.Popup.Light" parent="ThemeOverlay.MaterialComponents.Light">
+        <item name="android:popupBackground">@color/windowBackground</item>
+    </style>
+
+    <style name="ThemeOverlay.App.Popup.Dark" parent="ThemeOverlay.MaterialComponents.Dark">
+        <item name="android:popupBackground">@color/cardBackground</item>
     </style>
 
     <!-- Custom rounded shape for navigation drawer items -->
@@ -24,5 +39,11 @@
         <item name="cornerSize">8dp</item>
     </style>
 
-</resources>
+    <!-- Search EditText appearance -->
+    <style name="SearchEditTextStyle">
+        <item name="android:textSize">16sp</item>
+        <item name="android:padding">8dp</item>
+        <item name="android:background">@null</item>
+    </style>
 
+</resources>

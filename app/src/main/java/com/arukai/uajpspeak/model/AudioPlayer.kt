@@ -5,7 +5,7 @@ import android.media.AudioManager
 import android.media.MediaPlayer
 import android.media.SoundPool
 import android.util.Log
-import com.arukai.uajpspeak.activity.MainActivity
+import com.arukai.uajpspeak.App
 
 object AudioPlayer {
     private const val LOG_TAG = "PLAYER"
@@ -61,7 +61,7 @@ object AudioPlayer {
         soundPool = SoundPool(4, AudioManager.STREAM_MUSIC, 100)
 
         val soundId = soundPool?.load(c, rid, 1) ?: return
-        val mgr = MainActivity.context.getSystemService(Context.AUDIO_SERVICE) as AudioManager
+        val mgr = App.appContext.getSystemService(Context.AUDIO_SERVICE) as AudioManager
         val volume = mgr.getStreamMaxVolume(AudioManager.STREAM_MUSIC).toFloat()
 
         soundPool?.setOnLoadCompleteListener { _, _, _ ->
@@ -69,5 +69,3 @@ object AudioPlayer {
         }
     }
 }
-
-

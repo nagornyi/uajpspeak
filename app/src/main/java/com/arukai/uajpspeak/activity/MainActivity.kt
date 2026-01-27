@@ -2,6 +2,9 @@ package com.arukai.uajpspeak.activity
 
 import android.content.Context
 import android.content.SharedPreferences
+import android.content.res.Configuration
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.speech.tts.TextToSpeech
 import android.text.Editable
@@ -10,7 +13,7 @@ import android.util.Log
 import android.view.ContextThemeWrapper
 import android.view.Menu
 import android.view.MenuItem
-import android.view.inputmethod.EditorInfo
+import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.ImageView
@@ -19,19 +22,22 @@ import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.widget.Toolbar
+import androidx.core.content.ContextCompat
+import androidx.core.graphics.ColorUtils
+import androidx.core.view.WindowCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import com.arukai.uajpspeak.R
 import com.arukai.uajpspeak.util.FavoritesManager
 import com.arukai.uajpspeak.util.LocaleHelper
 import com.google.android.gms.ads.MobileAds
-import com.google.android.gms.common.util.ArrayUtils
 import com.google.android.material.navigation.NavigationView
 import java.util.Locale
+import androidx.core.content.edit
 import androidx.core.view.size
 import androidx.core.view.get
-import androidx.core.content.edit
 
 class MainActivity : AppCompatActivity(), TextToSpeech.OnInitListener, NavigationView.OnNavigationItemSelectedListener {
 
@@ -44,12 +50,12 @@ class MainActivity : AppCompatActivity(), TextToSpeech.OnInitListener, Navigatio
 
     companion object {
         lateinit var PACKAGE_NAME: String
-        lateinit var context: Context
-        var prev_position = 0
         var current_position = 0
         var fragment: Fragment? = null
         var category = ""
         const val APP_SETTINGS = "AppSettings"
+        const val KEY_THEME = "app_theme"
+        const val KEY_CURRENT_FRAGMENT_TAG = "current_fragment_tag"
         lateinit var app_settings: SharedPreferences
         var isSearchOpened = false
         lateinit var all_phrases: Array<String>
@@ -71,23 +77,33 @@ class MainActivity : AppCompatActivity(), TextToSpeech.OnInitListener, Navigatio
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        
+        app_settings = getSharedPreferences(APP_SETTINGS, MODE_PRIVATE)
+
         setContentView(R.layout.activity_main)
 
         MobileAds.initialize(this) {}
 
-
         PACKAGE_NAME = applicationContext.packageName
-        context = applicationContext
-        app_settings = getSharedPreferences(APP_SETTINGS, MODE_PRIVATE)
+        // Use applicationContext via App.appContext when a global context is required
+
         all_phrases = collectAllPhrases()
 
+        // Restore selected section if available (preserve across recreate)
+        if (savedInstanceState != null) {
+            current_position = savedInstanceState.getInt("current_position", current_position)
+        }
+
         // Clean up orphaned favorites (phrases that were removed in an app update)
-        val validPhrases = collectValidUkrainianPhrasesForAllLanguages()
+        val validPhrasesMap = collectValidUkrainianPhrasesMap()
         val favoritesManager = FavoritesManager(this)
-        favoritesManager.cleanupOrphanedFavorites(validPhrases)
+        favoritesManager.cleanupOrphanedFavorites(validPhrasesMap)
 
         val mToolbar = findViewById<Toolbar>(R.id.toolbar)
         setSupportActionBar(mToolbar)
+
+        // Ensure system bars match the current theme (status/navigation bar colors + icon contrast)
+        updateSystemBarColors()
 
         // Initialize NavigationView
         navigationView = findViewById(R.id.navigation_view)
@@ -124,10 +140,50 @@ class MainActivity : AppCompatActivity(), TextToSpeech.OnInitListener, Navigatio
 
         // Calculate phrases count
         val pCounter = ALL_PHRASE_ARRAY_IDS.sumOf { resources.getStringArray(it).size }
-        phrasesCount.text = "$pCounter ${getString(R.string.phrases_counter)}"
+        // Use formatted string resource with placeholder for localization
+        phrasesCount.text = getString(R.string.phrases_counter, pCounter)
 
-        // Always show All Phrases on startup
-        displayView(0)
+        // Determine if a specific fragment was visible before recreate
+        var restoredFragmentTag = savedInstanceState?.getString("current_fragment_tag")
+        if (restoredFragmentTag == null) {
+            // Fallback: read from persistent prefs if activity recreate was triggered by recreate() and
+            // onSaveInstanceState wasn't available to preserve the tag for some reason.
+            restoredFragmentTag = app_settings.getString(KEY_CURRENT_FRAGMENT_TAG, null)
+            // Clear the saved tag once read
+            if (restoredFragmentTag != null) {
+                app_settings.edit { remove(KEY_CURRENT_FRAGMENT_TAG) }
+            }
+        }
+        if (restoredFragmentTag == null || restoredFragmentTag == "HOME") {
+            // Show previously selected section (preserve user's place); default is 0
+            displayView(current_position)
+        } else {
+            // Let FragmentManager restore the fragment state. After restore we need to ensure the
+            // action bar and drawer are in correct state for the restored fragment.
+            supportFragmentManager.executePendingTransactions()
+            when (restoredFragmentTag) {
+                "ZOOM" -> {
+                    // For Zoom we don't want the drawer enabled and title empty
+                    setActionBarTitle("")
+                    setDrawerState(false)
+                    enableBackButton(true)
+                }
+                "ABOUT" -> {
+                    setActionBarTitle(getString(R.string.title_about))
+                    setDrawerState(false)
+                    enableBackButton(true)
+                }
+                "ALPHABET" -> {
+                    setActionBarTitle(getString(R.string.title_alphabet))
+                    setDrawerState(false)
+                    enableBackButton(true)
+                }
+                else -> {
+                    // If unknown tag, fallback to showing the selected section
+                    displayView(current_position)
+                }
+            }
+        }
 
         textToSpeech = TextToSpeech(this, this)
 
@@ -187,9 +243,29 @@ class MainActivity : AppCompatActivity(), TextToSpeech.OnInitListener, Navigatio
         })
     }
 
+    private fun updateSystemBarColors() {
+        val isDarkMode =
+            (resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) ==
+                    Configuration.UI_MODE_NIGHT_YES
+
+        val controller = WindowCompat.getInsetsController(window, window.decorView)
+
+        controller.isAppearanceLightStatusBars = !isDarkMode
+    }
+
+    private fun applyTheme() {
+        val theme = app_settings.getInt(KEY_THEME, 2) // Default to Automatic
+        when (theme) {
+            0 -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+            1 -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+            else -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
+        }
+    }
+
     override fun onInit(status: Int) {
         if (status == TextToSpeech.SUCCESS) {
-            val result = textToSpeech.setLanguage(Locale.Builder().setLanguage("uk").build())
+            val ukrainianLocale = Locale.forLanguageTag("uk")
+            val result = textToSpeech.setLanguage(ukrainianLocale)
             if (result == TextToSpeech.LANG_MISSING_DATA || result == TextToSpeech.LANG_NOT_SUPPORTED) {
                 Log.e("TTS", "Ukrainian language data is missing or not supported.")
             } else {
@@ -203,7 +279,7 @@ class MainActivity : AppCompatActivity(), TextToSpeech.OnInitListener, Navigatio
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.menu_main, menu)
 
-        // Enable icons in overflow menu and tint them dark
+        // Enable icons in overflow menu
         if (menu.javaClass.simpleName == "MenuBuilder") {
             try {
                 val method = menu.javaClass.getDeclaredMethod("setOptionalIconsVisible", Boolean::class.javaPrimitiveType)
@@ -220,22 +296,31 @@ class MainActivity : AppCompatActivity(), TextToSpeech.OnInitListener, Navigatio
     override fun onPrepareOptionsMenu(menu: Menu): Boolean {
         mSearchAction = menu.findItem(R.id.action_search)
 
-        // Tint only overflow menu icons (not action bar icons) to dark color
-        val darkColor = androidx.core.content.ContextCompat.getColor(this, android.R.color.black)
+        // Tint only overflow menu icons (not action bar icons) to appropriate color based on theme
+        val isDarkMode = resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK == Configuration.UI_MODE_NIGHT_YES
+        
+        val tintColor = if (isDarkMode) {
+            ContextCompat.getColor(this, android.R.color.white)
+        } else {
+            ContextCompat.getColor(this, android.R.color.black)
+        }
+
         for (i in 0 until menu.size) {
             val menuItem = menu[i]
             // Only tint overflow menu items, not the search action
             if (menuItem.itemId == R.id.action_language ||
                 menuItem.itemId == R.id.action_gender_lang ||
+                menuItem.itemId == R.id.action_theme ||
                 menuItem.itemId == R.id.action_about) {
-                menuItem.icon?.setTint(darkColor)
+                menuItem.icon?.setTint(tintColor)
             }
         }
 
-        // Preserve cancel icon when search is open (with light color for dark toolbar)
+        // Preserve cancel icon when search is open (with original color)
         if (isSearchOpened) {
+            // Force the cancel icon to white so it matches other toolbar icons and remains visible
             val cancelIcon = androidx.appcompat.content.res.AppCompatResources.getDrawable(this, R.drawable.cancel_24px)
-            cancelIcon?.setTintList(null) // Remove any tint to keep original color
+            cancelIcon?.setTint(Color.WHITE)
             mSearchAction?.icon = cancelIcon
         }
 
@@ -285,6 +370,29 @@ class MainActivity : AppCompatActivity(), TextToSpeech.OnInitListener, Navigatio
             return true
         }
 
+        if (id == R.id.action_theme) {
+            val builder = AlertDialog.Builder(ContextThemeWrapper(this, R.style.AlertDialogCustom))
+            builder.setTitle(R.string.action_theme)
+            
+            val currentTheme = app_settings.getInt(KEY_THEME, 2)
+            val items = resources.getStringArray(R.array.theme_selection)
+            
+            builder.setSingleChoiceItems(items, currentTheme) { dialog, which ->
+                app_settings.edit { putInt(KEY_THEME, which) }
+                applyTheme()
+                dialog.dismiss()
+                // Persist current fragment tag as a fallback so we can restore the exact view after recreate
+                app_settings.edit { putString(KEY_CURRENT_FRAGMENT_TAG, getCurrentFragmentTag()) }
+                recreate()
+            }
+            
+            builder.setNegativeButton(R.string.cancel, null)
+            
+            val dialog = builder.create()
+            dialog.show()
+            return true
+        }
+
         if (id == R.id.action_gender_lang) {
             val builder = AlertDialog.Builder(ContextThemeWrapper(this, R.style.AlertDialogCustom))
             builder.setTitle(R.string.action_gender_lang)
@@ -302,18 +410,8 @@ class MainActivity : AppCompatActivity(), TextToSpeech.OnInitListener, Navigatio
                     hideSearchBar()
                 }
                 editor.apply()
-                displayView(0) // Always select All Phrases after gender change
-                // Refresh HomeFragment if visible
-                val home = supportFragmentManager.findFragmentByTag("HOME") as? HomeFragment
-                if (home != null && home.isVisible) {
-                    displayView(current_position)
-                }
-                // Also refresh FavouritesFragment if visible (it's also tagged as "HOME")
-                // Since Favourites uses the same tag, we need to check the fragment type
-                val currentFragment = supportFragmentManager.findFragmentByTag("HOME")
-                if (currentFragment is FavouritesFragment && currentFragment.isVisible) {
-                    displayView(current_position)
-                }
+                // Refresh current view to apply gender change while staying in the same section
+                displayView(current_position)
             }
 
             val negativeText = getString(R.string.cancel)
@@ -336,25 +434,35 @@ class MainActivity : AppCompatActivity(), TextToSpeech.OnInitListener, Navigatio
                 "ja" -> 2
                 else -> 0
             }
-            var selected = current
-            builder.setSingleChoiceItems(langs, current) { _, which -> selected = which }
-            builder.setPositiveButton(getString(R.string.ok)) { _, _ ->
-                // Close search box and reset icon if open
-                if (isSearchOpened) {
-                    hideSearchBar()
-                }
-                val code = when (selected) {
+            builder.setSingleChoiceItems(langs, current) { dialog, which ->
+                val newLang = when (which) {
                     1 -> "de"
                     2 -> "ja"
                     else -> "en"
                 }
-                LocaleHelper.setLanguage(this, code)
-                app_settings.edit { putInt("last_category_position", current_position) }
-                displayView(0) // Always select All Phrases after language change
-                recreate()
+                if (newLang != LocaleHelper.getSavedLanguage(this)) {
+                    if (isSearchOpened) {
+                        hideSearchBar()
+                    }
+                    LocaleHelper.setLanguage(this, newLang)
+                    dialog.dismiss()
+                    // Persist fragment tag so we stay on the same fragment after language change
+                    app_settings.edit {
+                        putString(
+                            KEY_CURRENT_FRAGMENT_TAG,
+                            getCurrentFragmentTag()
+                        )
+                    }
+                    recreate()
+                }
             }
-            builder.setNegativeButton(getString(R.string.cancel), null)
-            builder.show()
+
+            val negativeText = getString(R.string.cancel)
+            builder.setNegativeButton(negativeText, null)
+
+            val dialog = builder.create()
+            dialog.show()
+
             return true
         }
 
@@ -367,304 +475,236 @@ class MainActivity : AppCompatActivity(), TextToSpeech.OnInitListener, Navigatio
     }
 
     private fun handleMenuSearch() {
+        val action = supportActionBar ?: return
         if (isSearchOpened) {
             hideSearchBar()
         } else {
-            openSearchBar()
+            action.setDisplayShowCustomEnabled(true)
+            action.setCustomView(R.layout.search_bar)
+            // Ensure the custom view fills the action bar space (so EditText can expand up to the cancel icon)
+            try {
+                val custom = action.customView
+                custom?.layoutParams = Toolbar.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+            action.setDisplayShowTitleEnabled(false)
+            editSearch = action.customView.findViewById(R.id.editSearch)
+            editSearch?.requestFocus()
+            val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+            imm.showSoftInput(editSearch, InputMethodManager.SHOW_IMPLICIT)
+
+            // Determine toolbar background color if available (fall back to resource)
+            val toolbarView = findViewById<Toolbar>(R.id.toolbar)
+            val bg = toolbarView.background
+            val toolbarColor = if (bg is ColorDrawable) bg.color else ContextCompat.getColor(this, R.color.colorPrimary)
+
+            // Decide whether to use white text/cursor based on toolbar luminance
+            val useWhite = ColorUtils.calculateLuminance(toolbarColor) < 0.5
+            val textColor = if (useWhite) Color.WHITE else Color.BLACK
+            val hintColor = if (useWhite) Color.argb(180, 255, 255, 255) else Color.argb(160, 0, 0, 0)
+
+            // Apply text and hint color
+            editSearch?.setTextColor(textColor)
+            editSearch?.setHintTextColor(hintColor)
+            editSearch?.isCursorVisible = true
+
+            editSearch?.addTextChangedListener(object : TextWatcher {
+                override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
+                override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
+                    doSearch(s.toString())
+                    // Keep cancel icon white to match toolbar icons
+                    val cancelDrawable = androidx.appcompat.content.res.AppCompatResources.getDrawable(this@MainActivity, R.drawable.cancel_24px)
+                    cancelDrawable?.setTint(Color.WHITE)
+                    mSearchAction?.icon = cancelDrawable
+                }
+
+                override fun afterTextChanged(s: Editable) {}
+            })
+
+            // Initial cancel icon tint: force white to match other toolbar icons
+            val cancelDrawable = androidx.appcompat.content.res.AppCompatResources.getDrawable(this, R.drawable.cancel_24px)
+            cancelDrawable?.setTint(Color.WHITE)
+            mSearchAction?.icon = cancelDrawable
+
+            isSearchOpened = true
         }
+     }
+
+    private fun hideSearchBar() {
+        val action = supportActionBar ?: return
+        val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.hideSoftInputFromWindow(editSearch?.windowToken, 0)
+        action.setDisplayShowCustomEnabled(false)
+        action.setDisplayShowTitleEnabled(true)
+        mSearchAction?.setIcon(R.drawable.search_24px)
+        isSearchOpened = false
+        displayView(current_position)
     }
+
+    private fun doSearch(query: String) {
+        // Normalize candidates: remove asterisks (stress markers) so Ukrainian searches succeed
+        val filtered = all_phrases.filter { raw ->
+            val candidate = raw.replace("*", "")
+            candidate.contains(query, ignoreCase = true)
+        }.toTypedArray()
+         val bundle = Bundle()
+         bundle.putStringArray("phrases", filtered)
+         bundle.putString("category", "Search Results")
+         val searchFragment = HomeFragment()
+         searchFragment.arguments = bundle
+         supportFragmentManager.beginTransaction()
+             .replace(R.id.container_body, searchFragment, "HOME")
+             .commit()
+     }
 
     private fun collectAllPhrases(): Array<String> {
-        val arrays = ALL_PHRASE_ARRAY_IDS.map { resources.getStringArray(it) }.toTypedArray()
-        return ArrayUtils.concat(*arrays)
+        return ALL_PHRASE_ARRAY_IDS.flatMap { resources.getStringArray(it).toList() }.toTypedArray()
     }
 
-    /**
-     * Collect all valid Ukrainian phrases for all supported languages.
-     * This is used to clean up orphaned favorites.
-     */
-    private fun collectValidUkrainianPhrasesForAllLanguages(): Map<String, Set<String>> {
-        val result = mutableMapOf<String, Set<String>>()
+    private fun collectValidUkrainianPhrasesMap(): Map<String, Set<String>> {
+        val map = mutableMapOf<String, Set<String>>()
         val languages = listOf("en", "de", "ja")
-
         for (lang in languages) {
-            val ukrainianPhrases = mutableSetOf<String>()
-
-            // Temporarily switch to the target language to get its phrases
-            val currentConfig = resources.configuration
-            val locale = when (lang) {
-                "de" -> Locale.Builder().setLanguage("de").build()
-                "ja" -> Locale.Builder().setLanguage("ja").build()
-                else -> Locale.Builder().setLanguage("en").build()
-            }
-            val config = android.content.res.Configuration(currentConfig)
-            config.setLocale(locale)
-            val localizedContext = createConfigurationContext(config)
-
-            // Collect Ukrainian phrases for this language
+            val phrases = mutableSetOf<String>()
+            val localizedContext = LocaleHelper.applyLocale(this, lang)
             for (arrayId in ALL_PHRASE_ARRAY_IDS) {
-                val phrases = localizedContext.resources.getStringArray(arrayId)
-                for (phrase in phrases) {
-                    val parts = phrase.split("/")
+                val array = localizedContext.resources.getStringArray(arrayId)
+                for (item in array) {
+                    val parts = item.split("/")
                     if (parts.size >= 3) {
-                        ukrainianPhrases.add(parts[2]) // Ukrainian text with asterisks
+                        phrases.add(parts[2])
                     }
                 }
             }
-
-            result[lang] = ukrainianPhrases
+            map[lang] = phrases
         }
-
-        return result
+        return map
     }
-
-    fun hideSearchBar() {
-        val action = supportActionBar
-
-        action?.setDisplayShowCustomEnabled(false)
-        action?.setDisplayShowTitleEnabled(true)
-
-        currentFocus?.let { view ->
-            val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
-            imm.hideSoftInputFromWindow(view.windowToken, 0)
-        }
-
-        mSearchAction?.setIcon(resources.getDrawable(R.drawable.search_24px, null))
-
-        displayView(prev_position)
-        isSearchOpened = false
-    }
-
-    private fun openSearchBar() {
-        displayView(0)
-
-        val action = supportActionBar
-
-        action?.setDisplayShowCustomEnabled(true)
-        action?.setCustomView(R.layout.search_bar)
-        action?.setDisplayShowTitleEnabled(false)
-
-        editSearch = action?.customView?.findViewById(R.id.editSearch)
-
-        editSearch?.setOnEditorActionListener { v, actionId, _ ->
-            if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-                doSearch(v.text.toString())
-                true
-            } else {
-                false
-            }
-        }
-
-        editSearch?.addTextChangedListener(object : TextWatcher {
-            override fun afterTextChanged(s: Editable?) {}
-            override fun beforeTextChanged(arg0: CharSequence?, arg1: Int, arg2: Int, arg3: Int) {}
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                doSearch(s.toString())
-            }
-        })
-
-        editSearch?.requestFocus()
-
-        val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
-        editSearch?.let { imm.showSoftInput(it, InputMethodManager.SHOW_IMPLICIT) }
-
-        // Set cancel icon with light color for dark toolbar
-        val cancelIcon = androidx.appcompat.content.res.AppCompatResources.getDrawable(this, R.drawable.cancel_24px)
-        cancelIcon?.setTintList(null) // Remove any tint to keep original color (light)
-        mSearchAction?.icon = cancelIcon
-
-        isSearchOpened = true
-    }
-
-    private fun doSearch(searchString: String) {
-        val home = supportFragmentManager.findFragmentByTag("HOME") as? HomeFragment
-        home?.mAdapter?.filter?.filter(searchString)
-    }
-
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            R.id.nav_all_phrases -> displayView(0)
-            R.id.nav_favourites -> displayView(1)
-            R.id.nav_greetings -> displayView(2)
-            R.id.nav_signs -> displayView(3)
-            R.id.nav_troubleshooting -> displayView(4)
-            R.id.nav_transportation -> displayView(5)
-            R.id.nav_directions -> displayView(6)
-            R.id.nav_hotel -> displayView(7)
-            R.id.nav_numbers -> displayView(8)
-            R.id.nav_time -> displayView(9)
-            R.id.nav_weekdays -> displayView(10)
-            R.id.nav_months -> displayView(11)
-            R.id.nav_colors -> displayView(12)
-            R.id.nav_common_words -> displayView(13)
-            R.id.nav_restaurant -> displayView(14)
-            R.id.nav_love -> displayView(15)
-            R.id.nav_shopping -> displayView(16)
-            R.id.nav_clothing -> displayView(17)
-            R.id.nav_drugstore -> displayView(18)
-            R.id.nav_driving -> displayView(19)
-            R.id.nav_bank -> displayView(20)
+        val position = when (item.itemId) {
+            R.id.nav_all_phrases -> 0
+            R.id.nav_favourites -> 1
+            R.id.nav_greetings -> 2
+            R.id.nav_signs -> 3
+            R.id.nav_troubleshooting -> 4
+            R.id.nav_transportation -> 5
+            R.id.nav_directions -> 6
+            R.id.nav_hotel -> 7
+            R.id.nav_numbers -> 8
+            R.id.nav_time -> 9
+            R.id.nav_weekdays -> 10
+            R.id.nav_months -> 11
+            R.id.nav_colors -> 12
+            R.id.nav_common_words -> 13
+            R.id.nav_restaurant -> 14
+            R.id.nav_love -> 15
+            R.id.nav_shopping -> 16
+            R.id.nav_clothing -> 17
+            R.id.nav_drugstore -> 18
+            R.id.nav_driving -> 19
+            R.id.nav_bank -> 20
+            else -> 0
         }
-
+        displayView(position)
         drawerLayout.closeDrawers()
         return true
     }
 
     private fun displayView(position: Int) {
-        prev_position = current_position
+        if (isSearchOpened) hideSearchBar()
         current_position = position
+        val labels = resources.getStringArray(R.array.nav_drawer_labels)
+        category = labels[position]
 
-        // Update NavigationView selection
-        val menuItemId = when (position) {
-            0 -> R.id.nav_all_phrases
-            1 -> R.id.nav_favourites
-            2 -> R.id.nav_greetings
-            3 -> R.id.nav_signs
-            4 -> R.id.nav_troubleshooting
-            5 -> R.id.nav_transportation
-            6 -> R.id.nav_directions
-            7 -> R.id.nav_hotel
-            8 -> R.id.nav_numbers
-            9 -> R.id.nav_time
-            10 -> R.id.nav_weekdays
-            11 -> R.id.nav_months
-            12 -> R.id.nav_colors
-            13 -> R.id.nav_common_words
-            14 -> R.id.nav_restaurant
-            15 -> R.id.nav_love
-            16 -> R.id.nav_shopping
-            17 -> R.id.nav_clothing
-            18 -> R.id.nav_drugstore
-            19 -> R.id.nav_driving
-            20 -> R.id.nav_bank
-            else -> R.id.nav_all_phrases
-        }
-        navigationView.setCheckedItem(menuItemId)
-
-        when (position) {
+        val bundle = Bundle()
+        fragment = when (position) {
             0 -> {
-                fragment = HomeFragment.newInstance(-1, all_phrases)
-                category = getString(R.string.title_all)
+                bundle.putStringArray("phrases", all_phrases)
+                bundle.putString("category", category)
+                HomeFragment()
             }
             1 -> {
-                // Favourites is now treated as a regular category section
-                fragment = FavouritesFragment.newInstance()
-                category = getString(R.string.nav_item_favourites)
+                bundle.putString("category", category)
+                FavouritesFragment()
             }
-            2 -> {
-                fragment = HomeFragment.newInstance(R.array.greetings)
-                category = getString(R.string.title_greetings)
-            }
-            3 -> {
-                fragment = HomeFragment.newInstance(R.array.signs)
-                category = getString(R.string.title_signs)
-            }
-            4 -> {
-                fragment = HomeFragment.newInstance(R.array.troubleshooting)
-                category = getString(R.string.title_troubleshooting)
-            }
-            5 -> {
-                fragment = HomeFragment.newInstance(R.array.transportation)
-                category = getString(R.string.title_transportation)
-            }
-            6 -> {
-                fragment = HomeFragment.newInstance(R.array.directions)
-                category = getString(R.string.title_directions)
-            }
-            7 -> {
-                fragment = HomeFragment.newInstance(R.array.hotel)
-                category = getString(R.string.title_hotel)
-            }
-            8 -> {
-                fragment = HomeFragment.newInstance(R.array.numbers)
-                category = getString(R.string.title_numbers)
-            }
-            9 -> {
-                fragment = HomeFragment.newInstance(R.array.time)
-                category = getString(R.string.title_time)
-            }
-            10 -> {
-                fragment = HomeFragment.newInstance(R.array.weekdays)
-                category = getString(R.string.title_weekdays)
-            }
-            11 -> {
-                fragment = HomeFragment.newInstance(R.array.months)
-                category = getString(R.string.title_months)
-            }
-            12 -> {
-                fragment = HomeFragment.newInstance(R.array.colors)
-                category = getString(R.string.title_colors)
-            }
-            13 -> {
-                fragment = HomeFragment.newInstance(R.array.common_words)
-                category = getString(R.string.title_common_words)
-            }
-            14 -> {
-                fragment = HomeFragment.newInstance(R.array.restaurant)
-                category = getString(R.string.title_restaurant)
-            }
-            15 -> {
-                fragment = HomeFragment.newInstance(R.array.love)
-                category = getString(R.string.title_love)
-            }
-            16 -> {
-                fragment = HomeFragment.newInstance(R.array.shopping)
-                category = getString(R.string.title_shopping)
-            }
-            17 -> {
-                fragment = HomeFragment.newInstance(R.array.clothing)
-                category = getString(R.string.title_clothing)
-            }
-            18 -> {
-                fragment = HomeFragment.newInstance(R.array.drugstore)
-                category = getString(R.string.title_drugstore)
-            }
-            19 -> {
-                fragment = HomeFragment.newInstance(R.array.driving)
-                category = getString(R.string.title_driving)
-            }
-            20 -> {
-                fragment = HomeFragment.newInstance(R.array.bank)
-                category = getString(R.string.title_bank)
+            else -> {
+                val arrayId = ALL_PHRASE_ARRAY_IDS[position - 2]
+                bundle.putStringArray("phrases", resources.getStringArray(arrayId))
+                bundle.putString("category", category)
+                HomeFragment()
             }
         }
 
         fragment?.let {
-            val fragmentManager = supportFragmentManager
-            val fragmentTransaction = fragmentManager.beginTransaction()
-            fragmentTransaction.replace(R.id.container_body, it, "HOME")
-            fragmentTransaction.commit()
-
+            it.arguments = bundle
+            supportFragmentManager.beginTransaction()
+                .replace(R.id.container_body, it, "HOME")
+                .commit()
             setActionBarTitle(category)
         }
     }
 
+    // Make public so fragments can call it (was private before)
     fun setActionBarTitle(title: String) {
         supportActionBar?.title = title
     }
 
-    fun enableBackButton(state: Boolean) {
-        supportActionBar?.setDisplayHomeAsUpEnabled(state)
-    }
-
-    fun setDrawerLocked(locked: Boolean) {
-        val lockMode = if (locked) DrawerLayout.LOCK_MODE_LOCKED_CLOSED
-        else DrawerLayout.LOCK_MODE_UNLOCKED
-        drawerLayout.setDrawerLockMode(lockMode)
-    }
-
-    fun setBackButtonEnabled() {
-        drawerToggle.isDrawerIndicatorEnabled = false
-        drawerToggle.setToolbarNavigationClickListener {
-            onBackPressedDispatcher.onBackPressed()
+    // Make public so fragments can enable/disable up button
+    fun enableBackButton(enable: Boolean) {
+        supportActionBar?.setDisplayHomeAsUpEnabled(enable)
+        if (enable) {
+            drawerToggle.setToolbarNavigationClickListener { onBackPressedDispatcher.onBackPressed() }
         }
     }
 
-    private fun setDrawerState(enabled: Boolean) {
-        val lockMode = if (enabled) DrawerLayout.LOCK_MODE_UNLOCKED
-        else DrawerLayout.LOCK_MODE_LOCKED_CLOSED
-        drawerLayout.setDrawerLockMode(lockMode)
-        drawerToggle.isDrawerIndicatorEnabled = enabled
+    // Public wrapper for drawer lock state (fragments expect setDrawerLocked)
+    fun setDrawerLocked(isEnabled: Boolean) {
+        setDrawerState(isEnabled)
+    }
+
+    // Convenience method that some callers expect
+    fun setBackButtonEnabled() {
+        enableBackButton(true)
+    }
+
+    private fun setDrawerState(isEnabled: Boolean) {
+        if (isEnabled) {
+            drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
+            drawerToggle.isDrawerIndicatorEnabled = true
+        } else {
+            drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
+            drawerToggle.isDrawerIndicatorEnabled = false
+        }
+        drawerToggle.syncState()
+    }
+
+    override fun onDestroy() {
+        if (::textToSpeech.isInitialized) {
+            textToSpeech.stop()
+            textToSpeech.shutdown()
+        }
+        super.onDestroy()
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putInt("current_position", current_position)
+
+        // Save which fragment is currently visible so we can restore it after recreate
+        val currentTag = getCurrentFragmentTag()
+        outState.putString("current_fragment_tag", currentTag)
+        // Also persist to prefs as a more durable fallback for recreate()
+        app_settings.edit { putString(KEY_CURRENT_FRAGMENT_TAG, currentTag) }
+    }
+
+    private fun getCurrentFragmentTag(): String {
+        return when {
+            supportFragmentManager.findFragmentByTag("ZOOM")?.isVisible == true -> "ZOOM"
+            supportFragmentManager.findFragmentByTag("ABOUT")?.isVisible == true -> "ABOUT"
+            supportFragmentManager.findFragmentByTag("ALPHABET")?.isVisible == true -> "ALPHABET"
+            else -> "HOME"
+        }
     }
 }

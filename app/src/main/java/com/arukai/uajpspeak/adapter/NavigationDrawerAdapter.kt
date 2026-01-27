@@ -43,7 +43,6 @@ class NavigationDrawerAdapter(
     override fun getItemCount(): Int = data.size
 
     class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val title: TextView = itemView.findViewById(R.id.title)
+        val title: TextView = itemView.findViewById(R.id.nav_item_title)
     }
 }
-

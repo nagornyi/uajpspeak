@@ -13,7 +13,7 @@
     android:background="?attr/selectableItemBackground">
 
     <TextView
-        android:id="@+id/title"
+        android:id="@+id/nav_item_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingStart="16dp"
@@ -28,4 +28,3 @@
         android:letterSpacing="0.01"
         android:lineSpacingMultiplier="1.2" />
 </RelativeLayout>
-

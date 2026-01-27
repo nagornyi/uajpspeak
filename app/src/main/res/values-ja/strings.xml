@@ -9,6 +9,7 @@
     <string name="action_buy_pro">フルバージョンにアップグレードする</string>
     <string name="action_gender_lang">男言葉・女言葉</string>
     <string name="action_language">言語</string>
+    <string name="action_theme">テーマ</string>
     <string name="cancel">キャンセル</string>
     <string name="ok">OK</string>
     <string name="action_search">サーチ</string>
@@ -16,12 +17,19 @@
     <string name="drawer_close">閉</string>
     <string name="title_about">このアプリについて</string>
     <string name="title_alphabet">アルファベット</string>
-    <string name="phrases_counter">フレーズ"</string>
+    <string name="phrases_counter">%d フレーズ</string>
 
     <!-- Empty state for favourites -->
     <string name="empty_favourites_icon">空のお気に入り</string>
     <string name="empty_favourites_title">お気に入りはまだありません</string>
     <string name="empty_favourites_message">フレーズのハートアイコンをタップして、お気に入りリストに追加してください</string>
+
+    <!-- Theme selection -->
+    <string-array name="theme_selection">
+        <item>ライト</item>
+        <item>ダーク</item>
+        <item>自動</item>
+    </string-array>
 
     <string name="text_to_speech">テキスト読み上げ</string>
 

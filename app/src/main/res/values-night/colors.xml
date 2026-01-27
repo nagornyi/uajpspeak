@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Modern dark palette (orange-accented) -->
+    <!-- Primary header is a dark orange for night theme -->
+    <color name="colorPrimary">#C85A00</color>
+    <color name="colorPrimaryDark">#8F3F00</color>
+    <color name="textColorPrimary">#E8F0FF</color>
+    <color name="windowBackground">#071022</color>
+    <!-- Slightly lighter card background so a soft shadow is visible -->
+    <color name="cardBackground">#121824</color>
+    <color name="card_stroke">#5A2E00</color>
+    <color name="navigationBarColor">#8F3F00</color>
+    <color name="colorAccent">#FFB86B</color>
+    <color name="drawerBackground">#071022</color>
+    <!-- selected category uses a subtle dark-orange tint -->
+    <color name="selectedCategory">#3E1F00</color>
+    <color name="selectedCategoryText">#FFB86B</color>
+    <color name="unselectedCategory">#071022</color>
+    <color name="unselectedCategoryText">#AFC6D8</color>
+    <color name="drawerDivider">#122433</color>
+
+    <!-- Card shadow color to emulate the light-theme card elevation in night mode -->
+    <color name="card_shadow">#00000080</color>
+
+    <!-- Search bar colors (night theme) -->
+    <color name="search_text_color">#E8F0FF</color>
+    <color name="search_hint_color">#9FB6D0</color>
+    <color name="search_cursor_color">#E8F0FF</color>
+
+    <!-- Ad and separator colors for night mode -->
+    <color name="ad_separator">#444444</color>
+    <color name="ad_background_tint">#20FFFFFF</color>
+</resources>
