@@ -18,6 +18,7 @@
     <string name="title_about">このアプリについて</string>
     <string name="title_alphabet">アルファベット</string>
     <string name="phrases_counter">%d フレーズ</string>
+    <string name="text_to_speech">テキスト読み上げ</string>
 
     <!-- Empty state for favourites -->
     <string name="empty_favourites_icon">空のお気に入り</string>
@@ -31,7 +32,11 @@
         <item>自動</item>
     </string-array>
 
-    <string name="text_to_speech">テキスト読み上げ</string>
+    <!-- Gender selection -->
+    <string-array name="gender_lang_selection">
+        <item>男言葉</item>
+        <item>女言葉</item>
+    </string-array>
 
     <!-- navigation drawer item labels  -->
     <string-array name="nav_drawer_labels">
@@ -58,6 +63,7 @@
         <item>@string/nav_item_bank</item>
     </string-array>
 
+    <!-- navigation drawer item titles  -->
     <string name="nav_item_all">すべてのフレーズ</string>
     <string name="nav_item_favourites">お気に入り</string>
     <string name="nav_item_greetings">挨拶</string>
@@ -79,33 +85,6 @@
     <string name="nav_item_drugstore">ドラッグストア</string>
     <string name="nav_item_driving">ドライブ</string>
     <string name="nav_item_bank">銀行</string>
-
-    <!-- sections  -->
-    <string name="title_all">すべてのフレーズ</string>
-    <string name="title_greetings">挨拶</string>
-    <string name="title_signs">標識</string>
-    <string name="title_troubleshooting">トラブル</string>
-    <string name="title_transportation">交通</string>
-    <string name="title_directions">道順</string>
-    <string name="title_restaurant">レストラン</string>
-    <string name="title_hotel">ホテル</string>
-    <string name="title_numbers">数字</string>
-    <string name="title_time">時間</string>
-    <string name="title_weekdays">曜日</string>
-    <string name="title_months">月の名前</string>
-    <string name="title_colors">色の名前</string>
-    <string name="title_common_words">最も一般的な単語</string>
-    <string name="title_love">ラブラブの言葉</string>
-    <string name="title_shopping">ショッピング</string>
-    <string name="title_clothing">衣類の種類</string>
-    <string name="title_drugstore">ドラッグストア</string>
-    <string name="title_driving">ドライブ</string>
-    <string name="title_bank">銀行</string>
-
-    <string-array name="gender_lang_selection">
-        <item>男言葉</item>
-        <item>女言葉</item>
-    </string-array>
 
     <string name="alphabet_html">
     <![CDATA[

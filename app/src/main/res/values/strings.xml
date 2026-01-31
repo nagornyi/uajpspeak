@@ -18,19 +18,25 @@
     <string name="title_about">About this app</string>
     <string name="title_alphabet">Alphabet</string>
     <string name="phrases_counter">%d phrases</string>
+    <string name="text_to_speech">Text to speech</string>
 
     <!-- Empty state for favourites -->
     <string name="empty_favourites_icon">Empty favourites</string>
     <string name="empty_favourites_title">No Favourites Yet</string>
     <string name="empty_favourites_message">Tap the heart icon on any phrase to add it to your favourites list</string>
 
+    <!-- Theme selection -->
     <string-array name="theme_selection">
         <item>Light</item>
         <item>Dark</item>
         <item>Automatic</item>
     </string-array>
 
-    <string name="text_to_speech">Text to speech</string>
+    <!-- Gender selection -->
+    <string-array name="gender_lang_selection">
+        <item>Male speech</item>
+        <item>Female speech</item>
+    </string-array>
 
     <!-- navigation drawer item labels  -->
     <string-array name="nav_drawer_labels">
@@ -57,6 +63,7 @@
         <item>@string/nav_item_bank</item>
     </string-array>
 
+    <!-- navigation drawer item titles  -->
     <string name="nav_item_all">All Phrases</string>
     <string name="nav_item_favourites">Favourites</string>
     <string name="nav_item_greetings">Greetings</string>
@@ -78,33 +85,6 @@
     <string name="nav_item_drugstore">Pharmacy</string>
     <string name="nav_item_driving">Driving</string>
     <string name="nav_item_bank">Bank</string>
-
-    <!-- sections  -->
-    <string name="title_all">All Phrases</string>
-    <string name="title_greetings">Greetings</string>
-    <string name="title_signs">Signs</string>
-    <string name="title_troubleshooting">Troubleshooting</string>
-    <string name="title_transportation">Transportation</string>
-    <string name="title_directions">Directions</string>
-    <string name="title_restaurant">Restaurant</string>
-    <string name="title_hotel">Hotel</string>
-    <string name="title_numbers">Numbers</string>
-    <string name="title_time">Time</string>
-    <string name="title_weekdays">Weekdays</string>
-    <string name="title_months">Months</string>
-    <string name="title_colors">Colours</string>
-    <string name="title_common_words">Common Words</string>
-    <string name="title_love">Love Words</string>
-    <string name="title_shopping">Shopping</string>
-    <string name="title_clothing">Clothing</string>
-    <string name="title_drugstore">Pharmacy</string>
-    <string name="title_driving">Driving</string>
-    <string name="title_bank">Bank</string>
-
-    <string-array name="gender_lang_selection">
-        <item>Male speech</item>
-        <item>Female speech</item>
-    </string-array>
 
     <string name="alphabet_html">
     <![CDATA[

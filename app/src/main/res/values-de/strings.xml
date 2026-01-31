@@ -18,6 +18,7 @@
     <string name="title_about">Über diese App</string>
     <string name="title_alphabet">Alphabet</string>
     <string name="phrases_counter">%d Phrasen</string>
+    <string name="text_to_speech">Text-zu-Sprache-Umwandlung</string>
 
     <!-- Empty state for favourites -->
     <string name="empty_favourites_icon">Leere Favoriten</string>
@@ -31,7 +32,11 @@
         <item>Automatisch</item>
     </string-array>
 
-    <string name="text_to_speech">Text-zu-Sprache-Umwandlung</string>
+    <!-- Gender selection -->
+    <string-array name="gender_lang_selection">
+        <item>Männliche Sprache</item>
+        <item>Weibliche Sprache</item>
+    </string-array>
 
     <!-- navigation drawer item labels  -->
     <string-array name="nav_drawer_labels">
@@ -57,6 +62,8 @@
         <item>@string/nav_item_driving</item>
         <item>@string/nav_item_bank</item>
     </string-array>
+
+    <!-- navigation drawer item titles  -->
     <string name="nav_item_all">Alle Phrasen</string>
     <string name="nav_item_favourites">Favoriten</string>
     <string name="nav_item_greetings">Begrüßungen</string>
@@ -78,31 +85,7 @@
     <string name="nav_item_drugstore">Apotheke</string>
     <string name="nav_item_driving">Fahren</string>
     <string name="nav_item_bank">Bank</string>
-    <!-- sections  -->
-    <string name="title_all">Alle Phrasen</string>
-    <string name="title_greetings">Begrüßungen</string>
-    <string name="title_signs">Schilder</string>
-    <string name="title_troubleshooting">Probleme</string>
-    <string name="title_transportation">Verkehr</string>
-    <string name="title_directions">Wegbeschreibung</string>
-    <string name="title_restaurant">Restaurant</string>
-    <string name="title_hotel">Hotel</string>
-    <string name="title_numbers">Zahlen</string>
-    <string name="title_time">Zeit</string>
-    <string name="title_weekdays">Wochentage</string>
-    <string name="title_months">Monatsnamen</string>
-    <string name="title_colors">Farben</string>
-    <string name="title_common_words">Häufige Wörter</string>
-    <string name="title_love">Liebesworte</string>
-    <string name="title_shopping">Einkaufen</string>
-    <string name="title_clothing">Kleidungsarten</string>
-    <string name="title_drugstore">Apotheke</string>
-    <string name="title_driving">Fahren</string>
-    <string name="title_bank">Bank</string>
-    <string-array name="gender_lang_selection">
-        <item>Männliche Sprache</item>
-        <item>Weibliche Sprache</item>
-    </string-array>
+
     <string name="alphabet_html">
     <![CDATA[
 <h3 id="section-1">Vokale</h3>
@@ -231,6 +214,7 @@
 <p><strong>И, У</strong> am Wortanfang, wenn sie unbetont sind und das vorhergehende Wort auf einen Vokal endet, werden sie durch /Й, В/ ersetzt.</p>
     ]]>
     </string>
+
     <!-- phrases  -->
     <string-array name="greetings">
         <item>n/Guten Tag/До*брий де*нь</item>
