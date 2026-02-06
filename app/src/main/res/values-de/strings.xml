@@ -234,10 +234,14 @@
         <item>n/Auf Wiedersehen/До поба*чення</item>
         <item>n/Ich spreche kein Ukrainisch/Я не гово*рю украї*нською</item>
         <item>n/Ich verstehe nicht/Я не розумі*ю</item>
-        <item>n/Sprechen Sie Japanisch?/Чи ви гово*рите япо*нською?</item>
         <item>n/Sprechen Sie Englisch?/Чи ви гово*рите англі*йською?</item>
-        <item>n/Spricht jemand Japanisch?/Чи хтось гово*рить япо*нською?</item>
-        <item>n/Spricht jemand Englisch?/Чи хтось гово*рить англі*йською?</item>
+        <item>n/Spricht hier jemand Englisch?/Чи хтось гово*рить англі*йською?</item>
+        <item>n/Sprechen Sie Französisch?/Чи ви гово*рите францу*зькою?</item>
+        <item>n/Spricht hier jemand Französisch?/Чи хтось гово*рить францу*зькою?</item>
+        <item>n/Sprechen Sie Deutsch?/Чи ви гово*рите німе*цькою?</item>
+        <item>n/Spricht hier jemand Deutsch?/Чи хтось гово*рить німе*цькою?</item>
+        <item>n/Sprechen Sie Japanisch?/Чи ви гово*рите япо*нською?</item>
+        <item>n/Spricht hier jemand Japanisch?/Чи хтось гово*рить япо*нською?</item>
     </string-array>
     <string-array name="signs">
         <item>n/Offen/ВІДЧИ*НЕНО</item>

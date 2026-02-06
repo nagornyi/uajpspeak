@@ -173,10 +173,14 @@
         <item>n/Goodbye/До поба*чення</item>
         <item>n/I don\'t speak Ukrainian/Я не гово*рю украї*нською</item>
         <item>n/I don\'t understand/Я не розумі*ю</item>
-        <item>n/Do you speak Japanese?/Чи ви гово*рите япо*нською?</item>
         <item>n/Do you speak English?/Чи ви гово*рите англі*йською?</item>
-        <item>n/Does anyone speak Japanese?/Чи хтось гово*рить япо*нською?</item>
         <item>n/Does anyone speak English?/Чи хтось гово*рить англі*йською?</item>
+        <item>n/Do you speak French?/Чи ви гово*рите францу*зькою?</item>
+        <item>n/Does anyone speak French?/Чи хтось гово*рить францу*зькою?</item>
+        <item>n/Do you speak German?/Чи ви гово*рите німе*цькою?</item>
+        <item>n/Does anyone speak German?/Чи хтось гово*рить німе*цькою?</item>
+        <item>n/Do you speak Japanese?/Чи ви гово*рите япо*нською?</item>
+        <item>n/Does anyone speak Japanese?/Чи хтось гово*рить япо*нською?</item>
     </string-array>
 
     <string-array name="signs">

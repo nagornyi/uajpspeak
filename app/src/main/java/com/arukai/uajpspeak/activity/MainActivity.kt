@@ -78,6 +78,9 @@ class MainActivity : AppCompatActivity(), TextToSpeech.OnInitListener, Navigatio
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         
+        // Enable modern edge-to-edge display (Android 15+ compliant)
+        WindowCompat.setDecorFitsSystemWindows(window, true)
+
         app_settings = getSharedPreferences(APP_SETTINGS, MODE_PRIVATE)
 
         setContentView(R.layout.activity_main)
@@ -133,6 +136,7 @@ class MainActivity : AppCompatActivity(), TextToSpeech.OnInitListener, Navigatio
         val sourceFlagRes = when (lang) {
             "en" -> R.drawable.uk
             "de" -> R.drawable.de
+            "fr" -> R.drawable.fr
             "ja" -> R.drawable.jp
             else -> R.drawable.uk
         }
@@ -428,16 +432,18 @@ class MainActivity : AppCompatActivity(), TextToSpeech.OnInitListener, Navigatio
         if (id == R.id.action_language) {
             val builder = AlertDialog.Builder(ContextThemeWrapper(this, R.style.AlertDialogCustom))
             builder.setTitle(R.string.action_language)
-            val langs = arrayOf("English", "Deutsch", "日本語")
+            val langs = arrayOf("English", "Deutsch", "Français", "日本語")
             val current = when (LocaleHelper.getSavedLanguage(this)) {
                 "de" -> 1
-                "ja" -> 2
+                "fr" -> 2
+                "ja" -> 3
                 else -> 0
             }
             builder.setSingleChoiceItems(langs, current) { dialog, which ->
                 val newLang = when (which) {
                     1 -> "de"
-                    2 -> "ja"
+                    2 -> "fr"
+                    3 -> "ja"
                     else -> "en"
                 }
                 if (newLang != LocaleHelper.getSavedLanguage(this)) {
@@ -564,7 +570,7 @@ class MainActivity : AppCompatActivity(), TextToSpeech.OnInitListener, Navigatio
 
     private fun collectValidUkrainianPhrasesMap(): Map<String, Set<String>> {
         val map = mutableMapOf<String, Set<String>>()
-        val languages = listOf("en", "de", "ja")
+        val languages = listOf("en", "de", "fr", "ja")
         for (lang in languages) {
             val phrases = mutableSetOf<String>()
             val localizedContext = LocaleHelper.applyLocale(this, lang)

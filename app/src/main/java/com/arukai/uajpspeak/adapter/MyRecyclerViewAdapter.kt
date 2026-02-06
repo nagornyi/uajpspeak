@@ -75,6 +75,7 @@ class MyRecyclerViewAdapter(
         val firstFlagRes = when (lang) {
             "en" -> R.drawable.uk
             "de" -> R.drawable.de
+            "fr" -> R.drawable.fr
             "ja" -> R.drawable.jp
             else -> R.drawable.uk
         }

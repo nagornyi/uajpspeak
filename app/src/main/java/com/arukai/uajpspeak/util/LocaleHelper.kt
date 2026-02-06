@@ -24,6 +24,7 @@ object LocaleHelper {
                 "en" -> "en"  // English
                 "de" -> "de"  // German
                 "ja" -> "ja"  // Japanese
+                "fr" -> "fr"  // French
                 else -> "en"  // Default to English for all other languages
             }
 

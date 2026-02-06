@@ -105,6 +105,7 @@ class ZoomFragment : Fragment() {
         val sourceFlagRes = when (currentLanguage) {
             "en" -> R.drawable.uk
             "de" -> R.drawable.de
+            "fr" -> R.drawable.fr
             "ja" -> R.drawable.jp
             else -> R.drawable.uk
         }

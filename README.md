@@ -1,11 +1,11 @@
 # SayUA - Ukrainian Phrasebook App
 
-A comprehensive Ukrainian phrasebook app designed for English, German, and Japanese speakers. This Android application helps users learn essential Ukrainian phrases with audio pronunciation, phonetic transliteration, and an intuitive categorized interface.
+A comprehensive Ukrainian phrasebook app designed for English, German, French, and Japanese speakers. This Android application helps users learn essential Ukrainian phrases with audio pronunciation, phonetic transliteration, and an intuitive categorized interface.
 
 ## Features
 
 ### 🗣️ Multi-Language Support
-- **Three source languages**: English, German (Deutsch), and Japanese (日本語)
+- **Four source languages**: English, German (Deutsch), French (Français), and Japanese (日本語)
 - Automatic language detection based on device locale on first launch
 - Easy language switching through the settings menu
 - All UI elements (menus, navigation, buttons) fully localized
@@ -40,7 +40,7 @@ A comprehensive Ukrainian phrasebook app designed for English, German, and Japan
 - **Dark Theme**: Comfortable navigation drawer with themed styling
 - **Smooth Vector Icons**: All icons (flags, alphabet, speaker, eye) are crisp vector drawables
 - **Wave Pattern Placeholders**: Professional loading states for ad banners
-- **Country Flags**: Visual indicators showing source language (🇬🇧 🇩🇪 🇯🇵) and Ukrainian (🇺🇦)
+- **Country Flags**: Visual indicators showing source language (🇬🇧 🇩🇪 🇫🇷 🇯🇵)
 
 ### 📱 Technical Features
 - **Adaptive Icons**: Modern launcher icons with Ukrainian flag colors (blue and yellow)
