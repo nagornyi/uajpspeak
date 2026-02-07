@@ -215,7 +215,7 @@
     ]]>
     </string>
 
-    <!-- phrases  -->
+    <!-- Phrases -->
     <string-array name="greetings">
         <item>n/Guten Tag/До*брий де*нь</item>
         <item>n/Guten Morgen/До*брого ра*нку</item>
@@ -240,6 +240,8 @@
         <item>n/Spricht hier jemand Französisch?/Чи хтось гово*рить францу*зькою?</item>
         <item>n/Sprechen Sie Deutsch?/Чи ви гово*рите німе*цькою?</item>
         <item>n/Spricht hier jemand Deutsch?/Чи хтось гово*рить німе*цькою?</item>
+        <item>n/Sprechen Sie Spanisch?/Чи ви гово*рите іспа*нською?</item>
+        <item>n/Spricht hier jemand Spanisch?/Чи хтось гово*рить іспа*нською?</item>
         <item>n/Sprechen Sie Japanisch?/Чи ви гово*рите япо*нською?</item>
         <item>n/Spricht hier jemand Japanisch?/Чи хтось гово*рить япо*нською?</item>
     </string-array>

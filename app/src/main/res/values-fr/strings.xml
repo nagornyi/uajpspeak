@@ -129,6 +129,7 @@
 ]]>
 </string>
 
+    <!-- Phrases -->
     <string-array name="greetings">
         <item>n/Bonjour/До*брий де*нь</item>
         <item>n/Bonjour (le matin)/До*брого ра*нку</item>
@@ -153,6 +154,8 @@
         <item>n/Est-ce que quelqu’un parle français ?/Чи хтось гово*рить францу*зькою?</item>
         <item>n/Parlez-vous allemand ?/Чи ви гово*рите німе*цькою?</item>
         <item>n/Est-ce que quelqu’un parle allemand ?/Чи хтось гово*рить німе*цькою?</item>
+        <item>n/Parlez-vous espagnol ?/Чи ви гово*рите іспа*нською?</item>
+        <item>n/Est-ce que quelqu’un parle espagnol ?/Чи хтось гово*рить іспа*нською?</item>
         <item>n/Parlez-vous japonais ?/Чи ви гово*рите япо*нською?</item>
         <item>n/Est-ce que quelqu’un parle japonais ?/Чи хтось гово*рить япо*нською?</item>
     </string-array>

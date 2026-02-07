@@ -154,7 +154,7 @@
     ]]>
     </string>
 
-    <!-- phrases  -->
+    <!-- Phrases -->
     <string-array name="greetings">
         <item>n/Hello/До*брий де*нь</item>
         <item>n/Good morning/До*брого ра*нку</item>
@@ -179,6 +179,8 @@
         <item>n/Does anyone speak French?/Чи хтось гово*рить францу*зькою?</item>
         <item>n/Do you speak German?/Чи ви гово*рите німе*цькою?</item>
         <item>n/Does anyone speak German?/Чи хтось гово*рить німе*цькою?</item>
+        <item>n/Do you speak Spanish?/Чи ви гово*рите іспа*нською?</item>
+        <item>n/Does anyone speak Spanish?/Чи хтось гово*рить іспа*нською?</item>
         <item>n/Do you speak Japanese?/Чи ви гово*рите япо*нською?</item>
         <item>n/Does anyone speak Japanese?/Чи хтось гово*рить япо*нською?</item>
     </string-array>
