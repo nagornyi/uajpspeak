@@ -136,6 +136,7 @@ class MainActivity : AppCompatActivity(), TextToSpeech.OnInitListener, Navigatio
         val sourceFlagRes = when (lang) {
             "en" -> R.drawable.uk
             "de" -> R.drawable.de
+            "es" -> R.drawable.es
             "fr" -> R.drawable.fr
             "ja" -> R.drawable.jp
             else -> R.drawable.uk
@@ -432,18 +433,20 @@ class MainActivity : AppCompatActivity(), TextToSpeech.OnInitListener, Navigatio
         if (id == R.id.action_language) {
             val builder = AlertDialog.Builder(ContextThemeWrapper(this, R.style.AlertDialogCustom))
             builder.setTitle(R.string.action_language)
-            val langs = arrayOf("English", "Deutsch", "Français", "日本語")
+            val langs = arrayOf("English", "Deutsch", "Español", "Français", "日本語")
             val current = when (LocaleHelper.getSavedLanguage(this)) {
                 "de" -> 1
-                "fr" -> 2
-                "ja" -> 3
+                "es" -> 2
+                "fr" -> 3
+                "ja" -> 4
                 else -> 0
             }
             builder.setSingleChoiceItems(langs, current) { dialog, which ->
                 val newLang = when (which) {
                     1 -> "de"
-                    2 -> "fr"
-                    3 -> "ja"
+                    2 -> "es"
+                    3 -> "fr"
+                    4 -> "ja"
                     else -> "en"
                 }
                 if (newLang != LocaleHelper.getSavedLanguage(this)) {
@@ -570,7 +573,7 @@ class MainActivity : AppCompatActivity(), TextToSpeech.OnInitListener, Navigatio
 
     private fun collectValidUkrainianPhrasesMap(): Map<String, Set<String>> {
         val map = mutableMapOf<String, Set<String>>()
-        val languages = listOf("en", "de", "fr", "ja")
+        val languages = listOf("en", "de", "es", "fr", "ja")
         for (lang in languages) {
             val phrases = mutableSetOf<String>()
             val localizedContext = LocaleHelper.applyLocale(this, lang)

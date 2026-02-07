@@ -23,8 +23,9 @@ object LocaleHelper {
             val appLang = when (systemLang) {
                 "en" -> "en"  // English
                 "de" -> "de"  // German
-                "ja" -> "ja"  // Japanese
+                "es" -> "es"  // Spanish
                 "fr" -> "fr"  // French
+                "ja" -> "ja"  // Japanese
                 else -> "en"  // Default to English for all other languages
             }
 

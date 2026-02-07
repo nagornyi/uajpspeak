@@ -60,76 +60,7 @@
     <string name="nav_item_drugstore">Pharmacie</string>
     <string name="nav_item_driving">Conduite</string>
     <string name="nav_item_bank">Banque</string>
-
-    <string name="alphabet_html">
-<![CDATA[
-<h3>Aperçu de l’alphabet ukrainien</h3>
-<p>L’alphabet ukrainien compte 33 lettres basées sur l’alphabet cyrillique.</p>
-
-<h3>Voyelles</h3>
-<p>L’ukrainien possède 10 lettres voyelles :</p>
-
-<h4>Voyelles de base (dures)</h4>
-<p><strong>А а</strong> /a/ comme le <em>a</em> dans « <strong>p<u>a</u>pa »</p>
-<p><strong>Е е</strong> /e/ comme le <em>é</em> dans « <strong>p<u>é</u>ché »</p>
-<p><strong>И и</strong> /ɪ/ comme le <em>i</em> dans « <strong>p<u>i</u>le »</p>
-<p><strong>О о</strong> /o/ comme le <em>o</em> dans « <strong>p<u>o</u>rte »</p>
-<p><strong>У у</strong> /u/ comme le <em>ou</em> dans « <strong>t<u>ou</u>t »</p>
-
-<h4>Voyelles iotées (douces)</h4>
-<p><strong>Я я</strong> /ja/ comme « <strong>ya</strong>ourt »</p>
-<p><strong>Є є</strong> /je/ comme « <strong>y</strong>eux »</p>
-<p><strong>І і</strong> /i/ comme le <em>i</em> dans « <strong>l<u>i</u>vre »</p>
-<p><strong>Ї ї</strong> /ji/ comme « <strong>y</strong>og<strong>i</strong> »</p>
-<p><strong>Ю ю</strong> /ju/ comme « <strong>yu</strong>cca »</p>
-
-<h3>Consonnes</h3>
-
-<h4>Consonnes occlusives</h4>
-<p><strong>П п</strong> /p/ comme le <em>p</em> dans « <strong>p</strong>ère »</p>
-<p><strong>Б б</strong> /b/ comme le <em>b</em> dans « <strong>b</strong>ateau »</p>
-<p><strong>Т т</strong> /t/ comme le <em>t</em> dans « <strong>t</strong>ête »</p>
-<p><strong>Д д</strong> /d/ comme le <em>d</em> dans « <strong>d</strong>os »</p>
-<p><strong>К к</strong> /k/ comme le <em>k</em> dans « <strong>k</strong>ilo »</p>
-<p><strong>Г г</strong> /ɦ/ un son proche du <em>h</em> aspiré (comme en néerlandais ou en ukrainien)</p>
-<p><strong>Ґ ґ</strong> /g/ comme le <em>g</em> dans « <strong>g</strong>are » (rare en ukrainien)</p>
-
-<h4>Consonnes fricatives</h4>
-<p><strong>Ф ф</strong> /f/ comme le <em>f</em> dans « <strong>f</strong>leur »</p>
-<p><strong>В в</strong> /v/ comme le <em>v</em> dans « <strong>v</strong>in »</p>
-<p><strong>С с</strong> /s/ comme le <em>s</em> dans « <strong>s</strong>oleil »</p>
-<p><strong>З з</strong> /z/ comme le <em>z</em> dans « <strong>z</strong>éro »</p>
-<p><strong>Ш ш</strong> /ʃ/ comme le <em>ch</em> dans « <strong>ch</strong>at »</p>
-<p><strong>Ж ж</strong> /ʒ/ comme le <em>j</em> dans « <strong>j</strong>our »</p>
-<p><strong>Х х</strong> /x/ comme le <em>j</em> espagnol dans « <strong>j</strong>amón » ou le <em>ch</em> écossais dans « lo<strong>ch</strong> »</p>
-
-<h4>Affriquées</h4>
-<p><strong>Ц ц</strong> /ts/ comme « <strong>ts</strong>ar »</p>
-<p><strong>Ч ч</strong> /tʃ/ comme le <em>tch</em> dans « <strong>tch</strong>ao »</p>
-<p><strong>Щ щ</strong> /ʃtʃ/ un son proche de « <strong>chtch</strong> » (comme dans « <strong>chtch</strong>oukine »)</p>
-
-<h4>Nasales et liquides</h4>
-<p><strong>М м</strong> /m/ comme le <em>m</em> dans « <strong>m</strong>ère »</p>
-<p><strong>Н н</strong> /n/ comme le <em>n</em> dans « <strong>n</strong>ez »</p>
-<p><strong>Л л</strong> /l/ comme le <em>l</em> dans « <strong>l</strong>une »</p>
-<p><strong>Р р</strong> /r/ un <em>r</em> roulé (comme en espagnol ou en italien)</p>
-<p><strong>Й й</strong> /j/ comme le <em>y</em> dans « <strong>y</strong>oga »</p>
-
-<h3>Caractères spéciaux</h3>
-<p><strong>ь</strong> (signe mou) : adoucit la consonne précédente (ex. : <strong>день</strong> se prononce « <strong>den’</strong> » et non « den »)</p>
-<p>L’<strong>apostrophe (’)</strong> : sépare les sons et évite les confusions (ex. : <strong>з’їсти</strong> se prononce « <strong>z’yisti</strong> » et non « <strong>zisti</strong> »)</p>
-
-<h3>Conseils pour la prononciation</h3>
-<ul>
-<li>L’accent tonique en ukrainien est <strong>mobile</strong> et peut changer le sens des mots.</li>
-<li>Les voyelles se prononcent <strong>toujours clairement</strong>, même en position inaccentuée (contrairement au français).</li>
-<li>Les consonnes peuvent être <strong>dures</strong> ou <strong>douces</strong> selon leur position et les voyelles qui les suivent.</li>
-<li>L’ukrainien est une langue <strong>phonétique</strong> : les mots s’écrivent presque comme ils se prononcent.</li>
-</ul>
-]]>
-</string>
-
-    <!-- Phrases -->
+<!-- Phrases -->
     <string-array name="greetings">
         <item>n/Bonjour/До*брий де*нь</item>
         <item>n/Bonjour (le matin)/До*брого ра*нку</item>

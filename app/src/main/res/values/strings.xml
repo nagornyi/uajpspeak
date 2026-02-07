@@ -85,76 +85,7 @@
     <string name="nav_item_drugstore">Pharmacy</string>
     <string name="nav_item_driving">Driving</string>
     <string name="nav_item_bank">Bank</string>
-
-    <string name="alphabet_html">
-    <![CDATA[
-<h3>Ukrainian Alphabet Overview</h3>
-<p>The Ukrainian alphabet consists of 33 letters based on the Cyrillic script.</p>
-
-<h3>Vowels</h3>
-<p>Ukrainian has 10 vowel letters:</p>
-
-<h4>Basic Vowels (Hard)</h4>
-<p><strong>А а</strong> /a/ like a in father</p>
-<p><strong>Е е</strong> /e/ like e in bed</p>
-<p><strong>И и</strong> /ɪ/ like i in bit</p>
-<p><strong>О о</strong> /o/ like o in more</p>
-<p><strong>У у</strong> /u/ like oo in boot</p>
-
-<h4>Iotated Vowels (Soft)</h4>
-<p><strong>Я я</strong> /ja/ like ya in yard</p>
-<p><strong>Є є</strong> /je/ like ye in yes</p>
-<p><strong>І і</strong> /i/ like ee in see</p>
-<p><strong>Ї ї</strong> /ji/ like yi in yield</p>
-<p><strong>Ю ю</strong> /ju/ like yu in yule</p>
-
-<h3>Consonants</h3>
-
-<h4>Stop Consonants</h4>
-<p><strong>П п</strong> /p/ like p in park</p>
-<p><strong>Б б</strong> /b/ like b in book</p>
-<p><strong>Т т</strong> /t/ like t in top</p>
-<p><strong>Д д</strong> /d/ like d in dog</p>
-<p><strong>К к</strong> /k/ like k in kite</p>
-<p><strong>Г г</strong> /ɦ/ voiced h sound</p>
-<p><strong>Ґ ґ</strong> /g/ like g in go (rare)</p>
-
-<h4>Fricative Consonants</h4>
-<p><strong>Ф ф</strong> /f/ like f in fish</p>
-<p><strong>В в</strong> /v/ or /w/ like v in voice</p>
-<p><strong>С с</strong> /s/ like s in sun</p>
-<p><strong>З з</strong> /z/ like z in zoo</p>
-<p><strong>Ш ш</strong> /ʃ/ like sh in show</p>
-<p><strong>Ж ж</strong> /ʒ/ like s in pleasure</p>
-<p><strong>Х х</strong> /x/ like ch in loch</p>
-
-<h4>Affricates</h4>
-<p><strong>Ц ц</strong> /ts/ like ts in bits</p>
-<p><strong>Ч ч</strong> /tʃ/ like ch in church</p>
-<p><strong>Щ щ</strong> /ʃtʃ/ like shch</p>
-
-<h4>Nasals and Liquids</h4>
-<p><strong>М м</strong> /m/ like m in man</p>
-<p><strong>Н н</strong> /n/ like n in no</p>
-<p><strong>Л л</strong> /l/ like l in love</p>
-<p><strong>Р р</strong> /r/ rolled r</p>
-<p><strong>Й й</strong> /j/ like y in yes</p>
-
-<h3>Special Characters</h3>
-<p><strong>ь</strong> (soft sign) softens consonants</p>
-<p>Apostrophe separates sounds</p>
-
-<h3>Pronunciation Tips</h3>
-<ul>
-<li>Ukrainian uses dynamic stress</li>
-<li>Vowels do not reduce in unstressed positions</li>
-<li>Most consonants can be hard or soft</li>
-<li>Words are pronounced as spelled</li>
-</ul>
-    ]]>
-    </string>
-
-    <!-- Phrases -->
+<!-- Phrases -->
     <string-array name="greetings">
         <item>n/Hello/До*брий де*нь</item>
         <item>n/Good morning/До*брого ра*нку</item>
