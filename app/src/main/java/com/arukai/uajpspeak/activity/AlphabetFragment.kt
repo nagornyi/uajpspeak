@@ -1,13 +1,13 @@
 package com.arukai.uajpspeak.activity
 
 import android.os.Bundle
-import android.text.Html
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.text.HtmlCompat
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
@@ -53,8 +53,7 @@ class AlphabetFragment : Fragment() {
 
         // Load alphabet HTML from raw resources based on current language
         val htmlContent = loadAlphabetHtml()
-        @Suppress("DEPRECATION")
-        body.text = Html.fromHtml(htmlContent)
+        body.text = HtmlCompat.fromHtml(htmlContent, HtmlCompat.FROM_HTML_MODE_LEGACY)
 
         val imageView = rootView.findViewById<ImageView>(R.id.abetkaImg)
 
@@ -79,6 +78,7 @@ class AlphabetFragment : Fragment() {
 
         // Map language codes to raw resource IDs
         val resourceId = when (lang) {
+            "en" -> R.raw.alphabet_en
             "de" -> R.raw.alphabet_de
             "es" -> R.raw.alphabet_es
             "fr" -> R.raw.alphabet_fr

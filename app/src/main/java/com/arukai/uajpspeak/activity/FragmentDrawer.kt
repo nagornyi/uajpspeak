@@ -117,6 +117,7 @@ class FragmentDrawer : Fragment() {
             val sourceFlagRes = when (lang) {
                 "en" -> R.drawable.uk
                 "de" -> R.drawable.de
+                "es" -> R.drawable.es
                 "fr" -> R.drawable.fr
                 "ja" -> R.drawable.jp
                 else -> R.drawable.uk

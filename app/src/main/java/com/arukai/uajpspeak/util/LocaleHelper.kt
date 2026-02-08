@@ -3,6 +3,7 @@ package com.arukai.uajpspeak.util
 import android.content.Context
 import android.content.res.Configuration
 import java.util.Locale
+import androidx.core.content.edit
 
 object LocaleHelper {
     private const val PREF_KEY = "app_lang"
@@ -30,10 +31,10 @@ object LocaleHelper {
             }
 
             // Save the selected language and mark first launch as complete
-            sp.edit()
-                .putString(PREF_KEY, appLang)
-                .putBoolean(FIRST_LAUNCH_KEY, false)
-                .apply()
+            sp.edit {
+                putString(PREF_KEY, appLang)
+                    .putBoolean(FIRST_LAUNCH_KEY, false)
+            }
 
             return appLang
         }
@@ -44,7 +45,7 @@ object LocaleHelper {
 
     fun setLanguage(context: Context, lang: String) {
         val sp = context.getSharedPreferences(PREFS, Context.MODE_PRIVATE)
-        sp.edit().putString(PREF_KEY, lang).apply()
+        sp.edit { putString(PREF_KEY, lang) }
     }
 
     fun applyLocale(context: Context): Context {
@@ -53,7 +54,7 @@ object LocaleHelper {
     }
 
     fun applyLocale(context: Context, lang: String): Context {
-        val locale = Locale(lang)
+        val locale = Locale.Builder().setLanguage(lang).build()
         Locale.setDefault(locale)
         val config = Configuration(context.resources.configuration)
         config.setLocale(locale)

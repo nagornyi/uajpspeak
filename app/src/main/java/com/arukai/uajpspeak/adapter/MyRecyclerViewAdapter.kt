@@ -7,12 +7,11 @@ import android.widget.Filter
 import android.widget.Filterable
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.arukai.uajpspeak.App
 import com.arukai.uajpspeak.R
-import com.arukai.uajpspeak.activity.HomeFragment
 import com.arukai.uajpspeak.model.Abecadlo
 import com.arukai.uajpspeak.model.DataObject
 import com.arukai.uajpspeak.util.LocaleHelper
-import com.arukai.uajpspeak.App
 
 class MyRecyclerViewAdapter(
     private val mDataset: ArrayList<DataObject>
@@ -75,6 +74,7 @@ class MyRecyclerViewAdapter(
         val firstFlagRes = when (lang) {
             "en" -> R.drawable.uk
             "de" -> R.drawable.de
+            "es" -> R.drawable.es
             "fr" -> R.drawable.fr
             "ja" -> R.drawable.jp
             else -> R.drawable.uk

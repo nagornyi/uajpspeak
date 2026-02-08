@@ -435,6 +435,7 @@ class MainActivity : AppCompatActivity(), TextToSpeech.OnInitListener, Navigatio
             builder.setTitle(R.string.action_language)
             val langs = arrayOf("English", "Deutsch", "Español", "Français", "日本語")
             val current = when (LocaleHelper.getSavedLanguage(this)) {
+                "en" -> 0
                 "de" -> 1
                 "es" -> 2
                 "fr" -> 3
@@ -443,6 +444,7 @@ class MainActivity : AppCompatActivity(), TextToSpeech.OnInitListener, Navigatio
             }
             builder.setSingleChoiceItems(langs, current) { dialog, which ->
                 val newLang = when (which) {
+                    0 -> "en"
                     1 -> "de"
                     2 -> "es"
                     3 -> "fr"
