@@ -1,5 +1,4 @@
 apply plugin: 'com.android.application'
-apply plugin: 'kotlin-android'
 
 android {
     defaultConfig {
@@ -26,6 +25,7 @@ android {
     namespace 'com.arukai.uajpspeak'
     buildFeatures {
         aidl true
+        resValues true
     }
     lint {
         abortOnError false
