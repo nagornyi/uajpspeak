@@ -41,7 +41,7 @@ class MyRecyclerViewAdapter(
 
         override fun onClick(v: View) {
             v.setOnClickListener(null)
-            myClickListener?.onItemClick(adapterPosition, v)
+            myClickListener?.onItemClick(bindingAdapterPosition, v)
         }
     }
 
@@ -133,9 +133,23 @@ class MyRecyclerViewAdapter(
 
         override fun publishResults(constraint: CharSequence, results: FilterResults) {
             adapter.mFilteredDataset.clear()
-            @Suppress("UNCHECKED_CAST")
-            adapter.mDataset.addAll(results.values as ArrayList<DataObject>)
-            adapter.notifyDataSetChanged()
+            val oldSize = adapter.mDataset.size
+            adapter.mDataset.clear()
+            if (oldSize > 0) {
+                adapter.notifyItemRangeRemoved(0, oldSize)
+            }
+
+            when (val values = results.values) {
+                is List<*> -> {
+                    values.filterIsInstance<DataObject>().forEach {
+                        adapter.mDataset.add(it)
+                    }
+                }
+            }
+
+            if (adapter.mDataset.isNotEmpty()) {
+                adapter.notifyItemRangeInserted(0, adapter.mDataset.size)
+            }
         }
     }
 }
