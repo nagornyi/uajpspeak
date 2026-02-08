@@ -191,53 +191,53 @@
     </string-array>
 
     <string-array name="numbers">
-        <item>n/0/ну*ль</item>
-        <item>n/1/uno/оди*н</item>
-        <item>n/2/dos/два*</item>
-        <item>n/3/tres/три*</item>
-        <item>n/4/cuatro/чоти*ри</item>
-        <item>n/5/cinco/п\'я*ть</item>
-        <item>n/6/seis/ші*сть</item>
-        <item>n/7/siete/сі*м</item>
-        <item>n/8/ocho/ві*сім</item>
-        <item>n/9/nueve/де*в\'ять</item>
-        <item>n/10/diez/де*сять</item>
-        <item>n/11/once/одина*дцять</item>
-        <item>n/12/doce/двана*дцять</item>
-        <item>n/13/trece/трина*дцять</item>
-        <item>n/14/catorce/чотирна*дцять</item>
-        <item>n/15/quince/п\'ятна*дцять</item>
-        <item>n/16/dieciséis/шістна*дцять</item>
-        <item>n/17/diecisiete/сімна*дцять</item>
-        <item>n/18/dieciocho/вісімна*дцять</item>
-        <item>n/19/diecinueve/дев\'ятна*дцять</item>
-        <item>n/20/veinte/два*дцять</item>
-        <item>n/21/veintiuno/два*дцять оди*н</item>
-        <item>n/22/veintidós/два*дцять два*</item>
-        <item>n/23/veintitrés/два*дцять три*</item>
-        <item>n/30/treinta/три*дцять</item>
-        <item>n/40/cuarenata/со*рок</item>
-        <item>n/50/cincuenta/п\'ятдеся*т</item>
-        <item>n/60/sesenta/шістдеся*т</item>
-        <item>n/70/setenta/сімдеся*т</item>
-        <item>n/80/ochenta/вісімдеся*т</item>
-        <item>n/90/noventa/дев\'яно*сто</item>
-        <item>n/100/cien/сто*</item>
-        <item>n/200/doscientos/дві*сті</item>
-        <item>n/300/trescientos/три*ста</item>
-        <item>n/400/cuatrocientos/чоти*риста</item>
-        <item>n/500/quinientos/п\'ятсо*т</item>
-        <item>n/600/seiscientos/шістсо*т</item>
-        <item>n/700/setecientos/сімсо*т</item>
-        <item>n/800/ochocientos/вісімсо*т</item>
-        <item>n/900/novecientos/дев\'ятсо*т</item>
-        <item>n/1,000/mil/ти*сяча</item>
-        <item>n/2,000/dos mil/дві* ти*сячі</item>
-        <item>n/10,000/diez mil/де*сять ти*сяч</item>
-        <item>n/1,000,000 (millón)/un millón/мільйо*н</item>
-        <item>n/100,000,000 (cien millones)/cien millones/сто* мільйо*нів</item>
-        <item>n/1,000,000,000 (mil millones)/mil millones/мілья*рд</item>
-        <item>n/1,000,000,000,000 (billón)/un billón/трильйо*н</item>
+        <item>n/0 (cero)/ну*ль</item>
+        <item>n/1 (uno)/оди*н</item>
+        <item>n/2 (dos)/два*</item>
+        <item>n/3 (tres)/три*</item>
+        <item>n/4 (cuatro)/чоти*ри</item>
+        <item>n/5 (cinco)/п\'я*ть</item>
+        <item>n/6 (seis)/ші*сть</item>
+        <item>n/7 (siete)/сі*м</item>
+        <item>n/8 (ocho)/ві*сім</item>
+        <item>n/9 (nueve)/де*в\'ять</item>
+        <item>n/10 (diez)/де*сять</item>
+        <item>n/11 (once)/одина*дцять</item>
+        <item>n/12 (doce)/двана*дцять</item>
+        <item>n/13 (trece)/трина*дцять</item>
+        <item>n/14 (catorce)/чотирна*дцять</item>
+        <item>n/15 (quince)/п\'ятна*дцять</item>
+        <item>n/16 (dieciséis)/шістна*дцять</item>
+        <item>n/17 (diecisiete)/сімна*дцять</item>
+        <item>n/18 (dieciocho)/вісімна*дцять</item>
+        <item>n/19 (diecinueve)/дев\'ятна*дцять</item>
+        <item>n/20 (veinte)/два*дцять</item>
+        <item>n/21 (veintiuno)/два*дцять оди*н</item>
+        <item>n/22 (veintidós)/два*дцять два*</item>
+        <item>n/23 (veintitrés)/два*дцять три*</item>
+        <item>n/30 (treinta)/три*дцять</item>
+        <item>n/40 (cuarenata)/со*рок</item>
+        <item>n/50 (cincuenta)/п\'ятдеся*т</item>
+        <item>n/60 (sesenta)/шістдеся*т</item>
+        <item>n/70 (setenta)/сімдеся*т</item>
+        <item>n/80 (ochenta)/вісімдеся*т</item>
+        <item>n/90 (noventa)/дев\'яно*сто</item>
+        <item>n/100 (cien)/сто*</item>
+        <item>n/200 (doscientos)/дві*сті</item>
+        <item>n/300 (trescientos)/три*ста</item>
+        <item>n/400 (cuatrocientos)/чоти*риста</item>
+        <item>n/500 (quinientos)/п\'ятсо*т</item>
+        <item>n/600 (seiscientos)/шістсо*т</item>
+        <item>n/700 (setecientos)/сімсо*т</item>
+        <item>n/800 (ochocientos)/вісімсо*т</item>
+        <item>n/900 (novecientos)/дев\'ятсо*т</item>
+        <item>n/1,000 (mil)/ти*сяча</item>
+        <item>n/2,000 (dos mil)/дві* ти*сячі</item>
+        <item>n/10,000 (diez mil)/де*сять ти*сяч</item>
+        <item>n/1,000,000 (un millón)/мільйо*н</item>
+        <item>n/100,000,000 (cien millones)/сто* мільйо*нів</item>
+        <item>n/1,000,000,000 (mil millones)/мілья*рд</item>
+        <item>n/1,000,000,000,000 (un billón)/трильйо*н</item>
         <item>n/Número (tren, autobús, etc.)/но*мер</item>
         <item>n/Mitad/полови*на</item>
         <item>n/Poco/ма*ло</item>

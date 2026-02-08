@@ -85,7 +85,8 @@
     <string name="nav_item_drugstore">ドラッグストア</string>
     <string name="nav_item_driving">ドライブ</string>
     <string name="nav_item_bank">銀行</string>
-<!-- Phrases -->
+
+    <!-- Phrases -->
     <string-array name="greetings">
         <item>n/こんにちは/До*брий де*нь</item>
         <item>n/おはようございます/До*брого ра*нку</item>
@@ -635,6 +636,7 @@
         <item>m/ローンを申し込みたいのですが。/Я хоті*в би* пода*ти зая*вку на* креди*т.</item>
         <item>f/ローンを申し込みたいのですが。/Я хоті*ла би* пода*ти зая*вку на* креди*т.</item>
     </string-array>
+
 </resources>
 
 

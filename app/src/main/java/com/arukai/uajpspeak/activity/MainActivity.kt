@@ -58,6 +58,7 @@ class MainActivity : AppCompatActivity(), TextToSpeech.OnInitListener, Navigatio
         const val KEY_CURRENT_FRAGMENT_TAG = "current_fragment_tag"
         lateinit var app_settings: SharedPreferences
         var isSearchOpened = false
+        var isShowingSearchResults = false
         lateinit var all_phrases: Array<String>
 
         // Centralized list of all phrase array resource IDs to avoid duplication
@@ -211,6 +212,15 @@ class MainActivity : AppCompatActivity(), TextToSpeech.OnInitListener, Navigatio
                         val currentHome = supportFragmentManager.findFragmentByTag("HOME")
 
                         if (currentHome != null && currentHome.isVisible) {
+                            // If search was opened, reset the view to show the full category
+                            if (isSearchOpened) {
+                                hideSearchBar()
+                            } else if (isShowingSearchResults) {
+                                // If we were showing search results (search bar closed but results still visible),
+                                // reset to show the full category
+                                isShowingSearchResults = false
+                                displayView(current_position)
+                            }
                             setActionBarTitle(category)
                             setDrawerState(true)
                             enableBackButton(false)
@@ -550,6 +560,7 @@ class MainActivity : AppCompatActivity(), TextToSpeech.OnInitListener, Navigatio
         action.setDisplayShowTitleEnabled(true)
         mSearchAction?.setIcon(R.drawable.search_24px)
         isSearchOpened = false
+        isShowingSearchResults = false
         displayView(current_position)
     }
 
@@ -567,6 +578,7 @@ class MainActivity : AppCompatActivity(), TextToSpeech.OnInitListener, Navigatio
          supportFragmentManager.beginTransaction()
              .replace(R.id.container_body, searchFragment, "HOME")
              .commit()
+         isShowingSearchResults = true
      }
 
     private fun collectAllPhrases(): Array<String> {
@@ -625,11 +637,18 @@ class MainActivity : AppCompatActivity(), TextToSpeech.OnInitListener, Navigatio
 
     private fun displayView(position: Int) {
         if (isSearchOpened) hideSearchBar()
+        isShowingSearchResults = false
+
+        // Determine if we're switching to a different category
+        val resetScroll = position != current_position
+
         current_position = position
         val labels = resources.getStringArray(R.array.nav_drawer_labels)
         category = labels[position]
 
         val bundle = Bundle()
+        bundle.putBoolean("resetScroll", resetScroll)
+
         fragment = when (position) {
             0 -> {
                 bundle.putStringArray("phrases", all_phrases)

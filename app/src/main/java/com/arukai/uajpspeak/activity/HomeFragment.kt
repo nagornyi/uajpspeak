@@ -104,7 +104,16 @@ class HomeFragment : Fragment() {
     override fun onResume() {
         super.onResume()
 
-        if (index != -1) {
+        // Check if we should reset scroll position (switching to a new category)
+        val resetScroll = arguments?.getBoolean("resetScroll", false) ?: false
+
+        if (resetScroll) {
+            // Reset to top for new category
+            mLayoutManager.scrollToPosition(0)
+            // Clear the flag so subsequent resumes (e.g., returning from Zoom) preserve scroll position
+            arguments?.putBoolean("resetScroll", false)
+        } else if (index != -1) {
+            // Restore previous scroll position
             mLayoutManager.scrollToPosition(index)
         }
 
