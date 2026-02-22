@@ -56,11 +56,27 @@
         android:layout_height="wrap_content"
         android:id="@+id/aboutPicture"
         android:src="@drawable/about_picture"
+        android:contentDescription="@string/app_name"
         android:layout_below="@+id/aboutText3"
+        android:layout_above="@+id/madeWithLoveText"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="20dp"
         android:layout_marginLeft="40dp"
         android:layout_marginRight="40dp"
-        android:layout_marginBottom="40dp" />
+        android:layout_marginBottom="20dp"
+        android:scaleType="fitCenter" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/madeWithLoveText"
+        android:textSize="16sp"
+        android:text="@string/made_with_love"
+        android:gravity="center"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="24dp"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp" />
 
 </RelativeLayout>

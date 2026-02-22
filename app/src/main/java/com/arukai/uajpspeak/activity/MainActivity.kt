@@ -13,6 +13,7 @@ import android.util.Log
 import android.view.ContextThemeWrapper
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
@@ -113,7 +114,16 @@ class MainActivity : AppCompatActivity(), TextToSpeech.OnInitListener, Navigatio
         navigationView = findViewById(R.id.navigation_view)
         drawerLayout = findViewById(R.id.drawer_layout)
 
-        // Set up ActionBarDrawerToggle
+        // Performance optimizations for smooth drawer sliding
+        val drawerContainer = findViewById<ViewGroup>(R.id.drawer_container)
+        val mainContent = findViewById<ViewGroup>(R.id.container_body).parent as ViewGroup
+
+        // Enable PERMANENT hardware acceleration for smooth sliding
+        // Keep it always on to avoid stuttering from layer type switching
+        drawerContainer.setLayerType(View.LAYER_TYPE_HARDWARE, null)
+        mainContent.setLayerType(View.LAYER_TYPE_HARDWARE, null)
+
+        // Set up ActionBarDrawerToggle with optimized settings
         drawerToggle = ActionBarDrawerToggle(
             this,
             drawerLayout,
@@ -122,15 +132,24 @@ class MainActivity : AppCompatActivity(), TextToSpeech.OnInitListener, Navigatio
             R.string.drawer_close
         )
         drawerLayout.addDrawerListener(drawerToggle)
+
+        drawerToggle.isDrawerIndicatorEnabled = true
         drawerToggle.syncState()
 
         // Set navigation item selected listener
         navigationView.setNavigationItemSelectedListener(this)
 
-        // Initialize header views
-        val headerView = navigationView.getHeaderView(0)
-        val banner = headerView.findViewById<ImageView>(R.id.banner)
-        val phrasesCount = headerView.findViewById<TextView>(R.id.phrasesCount)
+        // Find header views from the drawer container (header is now inlined)
+        val banner = drawerContainer.findViewById<ImageView>(R.id.banner)
+        val phrasesCount = drawerContainer.findViewById<TextView>(R.id.phrasesCount)
+
+        // Ensure header elements consume clicks to prevent them from triggering navigation
+        banner.setOnClickListener { /* Consume click, do nothing */ }
+        phrasesCount.setOnClickListener { /* Consume click, do nothing */ }
+
+        // Also prevent clicks on the header container itself
+        val headerContainer = banner.parent as View
+        headerContainer.setOnClickListener { /* Consume click, do nothing */ }
 
         // Set flag based on language
         val lang = LocaleHelper.getSavedLanguage(this)
@@ -149,47 +168,35 @@ class MainActivity : AppCompatActivity(), TextToSpeech.OnInitListener, Navigatio
         // Use formatted string resource with placeholder for localization
         phrasesCount.text = getString(R.string.phrases_counter, pCounter)
 
+        // Ensure drawer is fully measured and laid out to prevent first-open stuttering
+        drawerContainer.post {
+            drawerContainer.measure(
+                View.MeasureSpec.makeMeasureSpec(drawerContainer.width, View.MeasureSpec.EXACTLY),
+                View.MeasureSpec.makeMeasureSpec(drawerContainer.height, View.MeasureSpec.EXACTLY)
+            )
+        }
+
         // Determine if a specific fragment was visible before recreate
+        // Only restore fragment state for configuration changes (e.g., rotation), not for process kills
         var restoredFragmentTag = savedInstanceState?.getString("current_fragment_tag")
+
+        // Don't restore About, Alphabet, or Zoom fragments after process kill - always go to home
+        if (restoredFragmentTag == "ABOUT" || restoredFragmentTag == "ALPHABET" || restoredFragmentTag == "ZOOM") {
+            restoredFragmentTag = null
+        }
+
         if (restoredFragmentTag == null) {
             // Fallback: read from persistent prefs if activity recreate was triggered by recreate() and
             // onSaveInstanceState wasn't available to preserve the tag for some reason.
-            restoredFragmentTag = app_settings.getString(KEY_CURRENT_FRAGMENT_TAG, null)
+            val persistedTag = app_settings.getString(KEY_CURRENT_FRAGMENT_TAG, null)
             // Clear the saved tag once read
-            if (restoredFragmentTag != null) {
+            if (persistedTag != null) {
                 app_settings.edit { remove(KEY_CURRENT_FRAGMENT_TAG) }
             }
         }
-        if (restoredFragmentTag == null || restoredFragmentTag == "HOME") {
-            // Show previously selected section (preserve user's place); default is 0
-            displayView(current_position)
-        } else {
-            // Let FragmentManager restore the fragment state. After restore we need to ensure the
-            // action bar and drawer are in correct state for the restored fragment.
-            supportFragmentManager.executePendingTransactions()
-            when (restoredFragmentTag) {
-                "ZOOM" -> {
-                    // For Zoom we don't want the drawer enabled and title empty
-                    setActionBarTitle("")
-                    setDrawerState(false)
-                    enableBackButton(true)
-                }
-                "ABOUT" -> {
-                    setActionBarTitle(getString(R.string.title_about))
-                    setDrawerState(false)
-                    enableBackButton(true)
-                }
-                "ALPHABET" -> {
-                    setActionBarTitle(getString(R.string.title_alphabet))
-                    setDrawerState(false)
-                    enableBackButton(true)
-                }
-                else -> {
-                    // If unknown tag, fallback to showing the selected section
-                    displayView(current_position)
-                }
-            }
-        }
+
+        // Always show the home view (phrase list) - we filtered out About, Alphabet, and Zoom above
+        displayView(current_position)
 
         textToSpeech = TextToSpeech(this, this)
 

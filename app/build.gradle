@@ -6,8 +6,8 @@ android {
         compileSdkVersion 36
         minSdkVersion 23
         targetSdkVersion 36
-        versionCode 25
-        versionName "4.7"
+        versionCode 26
+        versionName "4.8"
         resValue "string", "app_version", "Version ${versionName}"
     }
     buildTypes {

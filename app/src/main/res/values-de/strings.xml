@@ -2,6 +2,7 @@
 <resources>
     <string name="app_name">SayUA</string>
     <string name="app_company">© 2016–2026 Artem Nagornyi</string>
+    <string name="made_with_love">Mit ❤️ für Lernende der ukrainischen Sprache und Touristen gemacht</string>
     <string name="app_name_ua">Ukrainischer Sprachführer</string>
     <string name="action_about">Über diese App</string>
     <string name="action_alphabet">Ukrainisches Alphabet</string>

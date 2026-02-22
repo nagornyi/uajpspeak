@@ -49,26 +49,17 @@ class AlphabetFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val rootView = inflater.inflate(R.layout.fragment_alphabet, container, false)
+
+        // Enable hardware acceleration for better performance
+        rootView.setLayerType(View.LAYER_TYPE_HARDWARE, null)
+
         val body = rootView.findViewById<TextView>(R.id.alphabetText)
 
         // Load alphabet HTML from raw resources based on current language
         val htmlContent = loadAlphabetHtml()
         body.text = HtmlCompat.fromHtml(htmlContent, HtmlCompat.FROM_HTML_MODE_LEGACY)
 
-        val imageView = rootView.findViewById<ImageView>(R.id.abetkaImg)
-
-        // Native Android fade-in animations
-        imageView.alpha = 0f
-        imageView.animate()
-            .alpha(1f)
-            .setDuration(700)
-            .start()
-
-        body.alpha = 0f
-        body.animate()
-            .alpha(1f)
-            .setDuration(700)
-            .start()
+        rootView.findViewById<ImageView>(R.id.abetkaImg)
 
         return rootView
     }

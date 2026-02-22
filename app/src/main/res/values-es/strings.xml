@@ -2,6 +2,7 @@
 <resources>
     <string name="app_name">SayUA</string>
     <string name="app_company">© 2016–2026 Artem Nagornyi</string>
+    <string name="made_with_love">Hecho con ❤️ para estudiantes del idioma ucraniano y turistas</string>
     <string name="app_name_ua">Libro de frases ucraniano</string>
     <string name="action_about">Acerca de esta aplicación</string>
     <string name="action_alphabet">Alfabeto ucraniano</string>

@@ -1,14 +1,17 @@
 <androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="false">
+    android:fitsSystemWindows="false"
+    tools:openDrawer="start">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:layerType="hardware">
 
         <LinearLayout
             android:id="@+id/container_toolbar"
@@ -29,32 +32,91 @@
 
     </LinearLayout>
 
-    <com.google.android.material.navigation.NavigationView
-        android:id="@+id/navigation_view"
+    <!-- Custom drawer container with manual header -->
+    <LinearLayout
+        android:id="@+id/drawer_container"
         android:layout_width="@dimen/nav_drawer_width"
         android:layout_height="match_parent"
         android:layout_gravity="start"
-        android:fitsSystemWindows="false"
-        android:paddingStart="0dp"
-        android:paddingEnd="0dp"
-        android:paddingTop="0dp"
-        android:paddingBottom="16dp"
-        android:paddingLeft="0dp"
-        android:paddingRight="0dp"
+        android:orientation="vertical"
+        android:background="@color/drawerBackground"
+        android:layerType="hardware"
         android:clipToPadding="false"
-        app:headerLayout="@layout/nav_header"
-        app:menu="@menu/navigation_drawer_menu"
-        app:itemIconTint="@color/nav_item_icon_tint"
-        app:itemTextColor="@color/nav_item_text_color"
-        app:itemShapeFillColor="@color/nav_item_background"
-        app:itemShapeInsetStart="12dp"
-        app:itemShapeInsetEnd="12dp"
-        app:itemShapeInsetTop="4dp"
-        app:itemShapeInsetBottom="4dp"
-        app:itemShapeAppearance="@style/ShapeAppearance.App.LargeComponent"
-        app:itemIconPadding="16dp"
-        app:itemHorizontalPadding="16dp"
-        app:itemVerticalPadding="12dp"
-        android:background="@color/drawerBackground" />
+        android:clipChildren="false"
+        android:animateLayoutChanges="false"
+        android:descendantFocusability="blocksDescendants"
+        android:filterTouchesWhenObscured="false"
+        android:soundEffectsEnabled="false"
+        android:splitMotionEvents="false">
+
+        <!-- Header inlined for better performance -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="140dp"
+            android:orientation="vertical"
+            android:paddingTop="24dp"
+            android:paddingBottom="0dp"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:background="@color/drawerBackground"
+            android:gravity="center_horizontal"
+            android:clickable="false"
+            android:focusable="false">
+
+            <ImageView
+                android:id="@+id/banner"
+                android:layout_width="120dp"
+                android:layout_height="80dp"
+                android:layout_marginBottom="12dp"
+                android:contentDescription="@string/app_name"
+                android:scaleType="fitCenter"
+                android:importantForAccessibility="no"
+                android:clickable="false"
+                android:focusable="false" />
+
+            <TextView
+                android:id="@+id/phrasesCount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:maxLines="1"
+                android:textColor="#90CAF9"
+                android:textSize="16sp"
+                android:textStyle="italic"
+                android:gravity="center"
+                android:clickable="false"
+                android:focusable="false" />
+        </LinearLayout>
+
+        <!-- NavigationView without header -->
+        <com.google.android.material.navigation.NavigationView
+            android:id="@+id/navigation_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fitsSystemWindows="false"
+            android:scrollbars="vertical"
+            android:fadeScrollbars="true"
+            android:scrollbarStyle="outsideOverlay"
+            android:overScrollMode="ifContentScrolls"
+            android:persistentDrawingCache="all"
+            android:animateLayoutChanges="false"
+            android:isScrollContainer="true"
+            android:nestedScrollingEnabled="false"
+            android:scrollbarDefaultDelayBeforeFade="1000"
+            android:scrollbarFadeDuration="250"
+            app:insetForeground="@null"
+            app:menu="@menu/navigation_drawer_menu"
+            app:itemIconTint="@color/nav_item_icon_tint"
+            app:itemTextColor="@color/nav_item_text_color"
+            app:itemShapeFillColor="@color/nav_item_background"
+            app:itemShapeInsetStart="8dp"
+            app:itemShapeInsetEnd="8dp"
+            app:itemShapeInsetTop="2dp"
+            app:itemShapeInsetBottom="2dp"
+            app:itemShapeAppearance="@style/ShapeAppearance.App.LargeComponent"
+            app:itemIconPadding="12dp"
+            app:itemHorizontalPadding="12dp"
+            app:itemVerticalPadding="8dp"
+            android:background="@color/drawerBackground" />
+    </LinearLayout>
 
 </androidx.drawerlayout.widget.DrawerLayout>

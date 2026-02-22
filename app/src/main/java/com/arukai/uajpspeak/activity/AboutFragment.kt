@@ -44,6 +44,10 @@ class AboutFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val rootView = inflater.inflate(R.layout.fragment_about, container, false)
+
+        // Enable hardware acceleration for better performance
+        rootView.setLayerType(View.LAYER_TYPE_HARDWARE, null)
+
         val imageView = rootView.findViewById<ImageView>(R.id.aboutPicture)
 
         // Native Android fade-in animation

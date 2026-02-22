@@ -123,6 +123,9 @@ class FavouritesFragment : Fragment() {
         mRecyclerView.setHasFixedSize(true)
         emptyStateView = rootView.findViewById(R.id.empty_state)
 
+        // Enable hardware acceleration for smooth scrolling
+        mRecyclerView.setLayerType(View.LAYER_TYPE_HARDWARE, null)
+
         mLayoutManager = LinearLayoutManager(mRecyclerView.context)
         mRecyclerView.layoutManager = mLayoutManager
         dataSet = getDataSet()

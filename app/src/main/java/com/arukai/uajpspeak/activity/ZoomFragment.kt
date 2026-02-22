@@ -83,6 +83,9 @@ class ZoomFragment : Fragment() {
         val speakerIcon = rootView.findViewById<ImageView>(R.id.zoomSpeaker)
         val phoneticView = rootView.findViewById<TextView>(R.id.zoomPhonetic)
 
+        // Enable hardware acceleration for smooth rendering and interactions
+        rootView.setLayerType(View.LAYER_TYPE_HARDWARE, null)
+
         val args = arguments
         val sourceText = args?.getString("japanese")
         val ukrainian = args?.getString("ukrainian")

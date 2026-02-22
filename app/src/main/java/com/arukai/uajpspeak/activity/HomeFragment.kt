@@ -87,6 +87,9 @@ class HomeFragment : Fragment() {
         mRecyclerView = rootView.findViewById(R.id.my_recycler_view)
         mRecyclerView.setHasFixedSize(true)
 
+        // Enable hardware acceleration for smooth scrolling and better battery efficiency
+        mRecyclerView.setLayerType(View.LAYER_TYPE_HARDWARE, null)
+
         mLayoutManager = LinearLayoutManager(mRecyclerView.context)
         mRecyclerView.layoutManager = mLayoutManager
         dataSet = getDataSet()
