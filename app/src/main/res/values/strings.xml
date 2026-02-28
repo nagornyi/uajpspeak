@@ -86,6 +86,29 @@
     <string name="nav_item_drugstore">Pharmacy</string>
     <string name="nav_item_driving">Driving</string>
     <string name="nav_item_bank">Bank</string>
+    <string name="nav_item_learn">Learn Phrases</string>
+
+    <!-- Flashcard Learning -->
+    <string name="title_learn_categories">Learn Phrases</string>
+    <string name="title_learn_flashcards">Flashcards</string>
+    <string name="learn_categories_header">Select Categories to Learn</string>
+    <string name="learn_categories_description">Choose which phrase categories you want to practice with flashcards. The app uses spaced repetition to help you remember phrases effectively.</string>
+    <string name="learn_category_stats">%1$d / %2$d learned</string>
+    <string name="learn_category_not_started">Not started yet</string>
+    <string name="overall_learning_stats">Total: %1$d learned out of %2$d phrases • %3$d due for review</string>
+    <string name="start_learning">Start Learning</string>
+    <string name="start_learning_with_count">Start Learning (%d categories)</string>
+    <string name="select_categories_prompt">Select at least one category</string>
+    <string name="select_translation">Select the correct translation:</string>
+    <string name="next_card">Next Card</string>
+    <string name="feedback_correct">Correct! Well done!</string>
+    <string name="feedback_wrong">Incorrect. The correct answer is: %s</string>
+    <string name="session_complete">Session Complete!</string>
+    <string name="session_complete_stats">You answered %1$d out of %2$d correctly\nAccuracy: %3$d%%</string>
+    <string name="continue_learning">Continue Learning</string>
+    <string name="finish_learning">Finish</string>
+    <string name="no_cards_available">No cards available</string>
+    <string name="no_cards_message">Great job! You\'ve reviewed all due cards for today.\n\nCome back tomorrow for more practice, or add more categories to learn.</string>
 
     <!-- Phrases -->
     <string-array name="greetings">

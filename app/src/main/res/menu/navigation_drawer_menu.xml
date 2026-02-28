@@ -16,6 +16,11 @@
             android:id="@+id/nav_favourites"
             android:icon="@drawable/favorite_24px"
             android:title="@string/nav_item_favourites" />
+
+        <item
+            android:id="@+id/nav_learn"
+            android:icon="@drawable/school_24px"
+            android:title="@string/nav_item_learn" />
     </group>
 
     <!-- Categories group: All phrase categories -->

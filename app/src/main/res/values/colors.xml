@@ -23,4 +23,11 @@
     <!-- Ad and separator colors -->
     <color name="ad_separator">#CCCCCC</color>
     <color name="ad_background_tint">#10000000</color>
+
+    <!-- Flashcard learning colors -->
+    <color name="correct_answer">#4CAF50</color>
+    <color name="wrong_answer">#F44336</color>
+    <color name="progress_high">#4CAF50</color>
+    <color name="progress_medium">#FF9800</color>
+    <color name="progress_low">#9E9E9E</color>
 </resources>

@@ -206,9 +206,13 @@ class MainActivity : AppCompatActivity(), TextToSpeech.OnInitListener, Navigatio
                 val zoom = supportFragmentManager.findFragmentByTag("ZOOM") as? ZoomFragment
                 val about = supportFragmentManager.findFragmentByTag("ABOUT") as? AboutFragment
                 val alphabet = supportFragmentManager.findFragmentByTag("ALPHABET") as? AlphabetFragment
+                val learnCategories = supportFragmentManager.findFragmentByTag("LEARN_CATEGORIES") as? LearnCategoriesFragment
+                val learnFlashcards = supportFragmentManager.findFragmentByTag("LEARN_FLASHCARDS") as? LearnFlashcardsFragment
 
                 if ((zoom != null && zoom.isVisible) || (about != null && about.isVisible) ||
-                    (alphabet != null && alphabet.isVisible)) {
+                    (alphabet != null && alphabet.isVisible) ||
+                    (learnCategories != null && learnCategories.isVisible) ||
+                    (learnFlashcards != null && learnFlashcards.isVisible)) {
                     val fragmentManager = supportFragmentManager
 
                     if (fragmentManager.backStackEntryCount != 0) {
@@ -216,33 +220,46 @@ class MainActivity : AppCompatActivity(), TextToSpeech.OnInitListener, Navigatio
 
                         // After popping, check what fragment is now visible and set appropriate title
                         fragmentManager.executePendingTransactions()
+                        
                         val currentHome = supportFragmentManager.findFragmentByTag("HOME")
+                        val currentLearnCategories = supportFragmentManager.findFragmentByTag("LEARN_CATEGORIES")
 
-                        if (currentHome != null && currentHome.isVisible) {
-                            // If search was opened, reset the view to show the full category
-                            if (isSearchOpened) {
-                                hideSearchBar()
-                            } else if (isShowingSearchResults) {
-                                // If we were showing search results (search bar closed but results still visible),
-                                // reset to show the full category
-                                isShowingSearchResults = false
-                                displayView(current_position)
-                            }
-                            setActionBarTitle(category)
-                            setDrawerState(true)
-                            enableBackButton(false)
-                            // Reset toolbar navigation to drawer toggle (hamburger icon)
-                            drawerToggle.isDrawerIndicatorEnabled = true
-                            drawerToggle.syncState()
-                        } else {
-                            // Default case for other fragments
-                            fragment?.let {
+                        when {
+                            currentHome != null && currentHome.isVisible -> {
+                                // If search was opened, reset the view to show the full category
+                                if (isSearchOpened) {
+                                    hideSearchBar()
+                                } else if (isShowingSearchResults) {
+                                    // If we were showing search results (search bar closed but results still visible),
+                                    // reset to show the full category
+                                    isShowingSearchResults = false
+                                    displayView(current_position)
+                                }
                                 setActionBarTitle(category)
-                                enableBackButton(false)
                                 setDrawerState(true)
+                                enableBackButton(false)
                                 // Reset toolbar navigation to drawer toggle (hamburger icon)
                                 drawerToggle.isDrawerIndicatorEnabled = true
                                 drawerToggle.syncState()
+                            }
+                            currentLearnCategories != null && currentLearnCategories.isVisible -> {
+                                // Coming back to Learn Categories from Flashcards
+                                setActionBarTitle(getString(R.string.title_learn_categories))
+                                setDrawerState(false)
+                                enableBackButton(true)
+                                drawerToggle.isDrawerIndicatorEnabled = false
+                                drawerToggle.syncState()
+                            }
+                            else -> {
+                                // Default case for other fragments
+                                fragment?.let {
+                                    setActionBarTitle(category)
+                                    enableBackButton(false)
+                                    setDrawerState(true)
+                                    // Reset toolbar navigation to drawer toggle (hamburger icon)
+                                    drawerToggle.isDrawerIndicatorEnabled = true
+                                    drawerToggle.syncState()
+                                }
                             }
                         }
                     } else {
@@ -616,6 +633,7 @@ class MainActivity : AppCompatActivity(), TextToSpeech.OnInitListener, Navigatio
         val position = when (item.itemId) {
             R.id.nav_all_phrases -> 0
             R.id.nav_favourites -> 1
+            R.id.nav_learn -> -1  // Special handling for Learn Phrases
             R.id.nav_greetings -> 2
             R.id.nav_signs -> 3
             R.id.nav_troubleshooting -> 4
@@ -637,6 +655,27 @@ class MainActivity : AppCompatActivity(), TextToSpeech.OnInitListener, Navigatio
             R.id.nav_bank -> 20
             else -> 0
         }
+
+        // Handle Learn Phrases separately
+        if (position == -1) {
+            if (isSearchOpened) hideSearchBar()
+            val fragment = LearnCategoriesFragment()
+            val title = getString(R.string.title_learn_categories)
+            val fragmentManager = supportFragmentManager
+            val fragmentTransaction = fragmentManager.beginTransaction()
+            fragmentTransaction.replace(R.id.container_body, fragment, "LEARN_CATEGORIES")
+            fragmentTransaction.addToBackStack(null)
+            fragmentTransaction.commit()
+
+            setActionBarTitle(title)
+            setDrawerState(false)
+            drawerToggle.setToolbarNavigationClickListener { onBackPressedDispatcher.onBackPressed() }
+            enableBackButton(true)
+
+            drawerLayout.closeDrawers()
+            return true
+        }
+
         displayView(position)
         drawerLayout.closeDrawers()
         return true
