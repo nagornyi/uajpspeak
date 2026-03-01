@@ -72,7 +72,7 @@
     <string name="learn_category_not_started">Pas encore commencé</string>
     <string name="overall_learning_stats">Total : %1$d apprises sur %2$d phrases • %3$d à réviser</string>
     <string name="start_learning">Commencer l\'apprentissage</string>
-    <string name="start_learning_with_count">Commencer l\'apprentissage (%d catégories)</string>
+    <string name="start_learning_with_count">Commencer l\'apprentissage\n(%d catégories)</string>
     <string name="select_categories_prompt">Sélectionnez au moins une catégorie</string>
     <string name="select_translation">Sélectionnez la traduction correcte :</string>
     <string name="next_card">Carte suivante</string>
