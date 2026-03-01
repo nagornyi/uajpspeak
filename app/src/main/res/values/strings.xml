@@ -108,7 +108,13 @@
     <string name="continue_learning">Continue Learning</string>
     <string name="finish_learning">Finish</string>
     <string name="no_cards_available">No cards available</string>
-    <string name="no_cards_message">Great job! You\'ve reviewed all due cards for today.\n\nCome back tomorrow for more practice, or add more categories to learn.</string>
+    <string name="no_cards_message">Great job! You\'ve reviewed all due cards for today.\n\nCome back tomorrow for more practice, or add more categories to learn.\n\n(Daily reset at midnight, local time)</string>
+
+    <!-- Plurals -->
+    <plurals name="cards_due_for_review">
+        <item quantity="one">%d due</item>
+        <item quantity="other">%d due</item>
+    </plurals>
 
     <!-- Phrases -->
     <string-array name="greetings">

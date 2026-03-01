@@ -6,6 +6,7 @@ import androidx.core.content.edit
 import com.arukai.uajpspeak.model.Flashcard
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import java.util.Calendar
 
 /**
  * Manages flashcard learning progress with spaced repetition (Anki-like algorithm).
@@ -168,12 +169,14 @@ class FlashcardManager(context: Context) {
      * Reset daily new cards counter if it's a new day.
      */
     private fun checkAndResetDailyCounter() {
-        val today = System.currentTimeMillis() / (24 * 60 * 60 * 1000)
+        // Use Calendar to get local date
+        val calendar = Calendar.getInstance()
+        val today = calendar.get(Calendar.YEAR) * 1000 + calendar.get(Calendar.DAY_OF_YEAR)
         val lastSessionDay = prefs.getLong(KEY_LAST_SESSION_DATE, 0)
         
-        if (today != lastSessionDay) {
+        if (today.toLong() != lastSessionDay) {
             prefs.edit {
-                putLong(KEY_LAST_SESSION_DATE, today)
+                putLong(KEY_LAST_SESSION_DATE, today.toLong())
                 putInt(KEY_NEW_CARDS_TODAY, 0)
             }
         }

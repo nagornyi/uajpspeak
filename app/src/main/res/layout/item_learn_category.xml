@@ -8,6 +8,14 @@
     android:clickable="true"
     android:focusable="true">
 
+    <!-- Left indicator bar for started categories -->
+    <View
+        android:id="@+id/categoryIndicator"
+        android:layout_width="4dp"
+        android:layout_height="match_parent"
+        android:layout_marginEnd="12dp"
+        android:background="@android:color/transparent" />
+
     <CheckBox
         android:id="@+id/categoryCheckbox"
         android:layout_width="wrap_content"
@@ -52,6 +60,8 @@
         android:text="0%"
         android:textSize="16sp"
         android:textStyle="bold"
-        android:textColor="?android:attr/textColorPrimary" />
+        android:textColor="?android:attr/textColorPrimary"
+        android:minWidth="40dp"
+        android:gravity="end" />
 
 </LinearLayout>

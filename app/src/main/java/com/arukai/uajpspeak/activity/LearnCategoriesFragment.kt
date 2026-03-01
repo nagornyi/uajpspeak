@@ -110,6 +110,7 @@ class LearnCategoriesFragment : Fragment() {
         val inflater = LayoutInflater.from(requireContext())
         val view = inflater.inflate(R.layout.item_learn_category, null)
 
+        val indicator = view.findViewById<View>(R.id.categoryIndicator)
         val checkbox = view.findViewById<CheckBox>(R.id.categoryCheckbox)
         val nameText = view.findViewById<TextView>(R.id.categoryName)
         val statsText = view.findViewById<TextView>(R.id.categoryStats)
@@ -118,30 +119,49 @@ class LearnCategoriesFragment : Fragment() {
         checkbox.isChecked = category.isSelected
         nameText.text = category.categoryName
 
-        // Show statistics
-        if (category.totalPhrases > 0) {
-            val progress = (category.learnedPhrases * 100) / category.totalPhrases
-            statsText.text = getString(
-                R.string.learn_category_stats,
-                category.learnedPhrases,
-                category.totalPhrases
-            )
-            progressText.text = "$progress%"
+        // Determine if category has been started
+        val hasStarted = category.totalPhrases > 0
 
-            // Color code the progress
+        // Show statistics
+        if (hasStarted) {
+            val progress = (category.learnedPhrases * 100) / category.totalPhrases
+
+            // Determine color based on progress
             val color = when {
                 progress >= 80 -> ContextCompat.getColor(requireContext(), R.color.progress_high)
                 progress >= 40 -> ContextCompat.getColor(requireContext(), R.color.progress_medium)
                 else -> ContextCompat.getColor(requireContext(), R.color.progress_low)
             }
-            progressText.setTextColor(color)
+
+            // Show colored indicator bar
+            indicator.setBackgroundColor(color)
+
+            // Build stats text
+            val statsBuilder = StringBuilder()
+            statsBuilder.append(getString(
+                R.string.learn_category_stats,
+                category.learnedPhrases,
+                category.totalPhrases
+            ))
 
             if (category.dueForReview > 0) {
-                statsText.append(" • ${category.dueForReview} due")
+                statsBuilder.append(" • ")
+                statsBuilder.append(resources.getQuantityString(
+                    R.plurals.cards_due_for_review,
+                    category.dueForReview,
+                    category.dueForReview
+                ))
             }
+
+            statsText.text = statsBuilder.toString()
+            progressText.text = "$progress%"
+            progressText.setTextColor(color)
         } else {
+            // Not started yet - no indicator bar
+            indicator.setBackgroundColor(ContextCompat.getColor(requireContext(), android.R.color.transparent))
             statsText.text = getString(R.string.learn_category_not_started)
-            progressText.text = "0%"
+            statsText.alpha = 0.6f
+            progressText.text = ""
         }
 
         // Toggle selection on click
@@ -222,11 +242,3 @@ class LearnCategoriesFragment : Fragment() {
         )
     }
 }
-
-
-
-
-
-
-
-

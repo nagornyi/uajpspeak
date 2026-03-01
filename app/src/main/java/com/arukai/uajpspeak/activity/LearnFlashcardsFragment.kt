@@ -397,12 +397,3 @@ class LearnFlashcardsFragment : Fragment() {
         return text.map { char -> map[char] ?: char.toString() }.joinToString("")
     }
 }
-
-
-
-
-
-
-
-
-

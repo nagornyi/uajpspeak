@@ -1,5 +1,7 @@
 package com.arukai.uajpspeak.model
 
+import java.util.Calendar
+
 /**
  * Represents a flashcard with spaced repetition data.
  * Uses SuperMemo SM-2 algorithm (similar to Anki).
@@ -43,8 +45,17 @@ data class Flashcard(
         easeFactor = (easeFactor + (0.1f - (5 - quality) * (0.08f + (5 - quality) * 0.02f)))
             .coerceAtLeast(1.3f) // Minimum ease factor
 
-        // Calculate next review date
-        nextReviewDate = System.currentTimeMillis() + (interval * 24 * 60 * 60 * 1000L)
+        // Calculate next review date - schedule for midnight of the target day
+        val calendar = Calendar.getInstance().apply {
+            // Set to midnight of today
+            set(Calendar.HOUR_OF_DAY, 0)
+            set(Calendar.MINUTE, 0)
+            set(Calendar.SECOND, 0)
+            set(Calendar.MILLISECOND, 0)
+            // Add the interval days
+            add(Calendar.DAY_OF_YEAR, interval)
+        }
+        nextReviewDate = calendar.timeInMillis
     }
 
     /**
@@ -88,4 +99,3 @@ data class LearnCategory(
     var learnedPhrases: Int = 0,
     var dueForReview: Int = 0
 )
-
