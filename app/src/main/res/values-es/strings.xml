@@ -86,6 +86,36 @@
     <string name="nav_item_drugstore">Farmacia</string>
     <string name="nav_item_driving">Conducción</string>
     <string name="nav_item_bank">Banco</string>
+    <string name="nav_item_learn">Aprender frases</string>
+
+    <!-- Flashcard Learning -->
+    <string name="title_learn_categories">Aprender frases</string>
+    <string name="title_learn_flashcards">Tarjetas de memoria</string>
+    <string name="learn_categories_header">Seleccionar categorías para aprender</string>
+    <string name="learn_categories_description">Elige qué categorías de frases quieres practicar con tarjetas de memoria. La aplicación utiliza repetición espaciada para ayudarte a recordar frases de manera efectiva.</string>
+    <string name="learn_category_stats">%1$d / %2$d aprendidas</string>
+    <string name="learn_category_not_started">Aún no iniciado</string>
+    <string name="overall_learning_stats">Total: %1$d aprendidas de %2$d frases • %3$d pendientes de revisar</string>
+    <string name="start_learning">Comenzar aprendizaje</string>
+    <string name="start_learning_with_count">Comenzar aprendizaje (%d categorías)</string>
+    <string name="select_categories_prompt">Selecciona al menos una categoría</string>
+    <string name="select_translation">Selecciona la traducción correcta:</string>
+    <string name="next_card">Siguiente tarjeta</string>
+    <string name="feedback_correct">¡Correcto! ¡Bien hecho!</string>
+    <string name="feedback_wrong">Incorrecto. La respuesta correcta es: %s</string>
+    <string name="session_complete">¡Sesión completada!</string>
+    <string name="session_complete_stats">Respondiste %1$d de %2$d correctamente\nPrecisión: %3$d%%</string>
+    <string name="continue_learning">Continuar aprendizaje</string>
+    <string name="finish_learning">Finalizar</string>
+    <string name="no_cards_available">No hay tarjetas disponibles</string>
+    <string name="no_cards_message">¡Buen trabajo! Has revisado todas las tarjetas pendientes de hoy.\n\nVuelve mañana para más práctica, o añade más categorías para aprender.\n\n(Reinicio diario a medianoche, hora local)</string>
+
+    <!-- Plurals -->
+    <plurals name="cards_due_for_review">
+        <item quantity="one">%d pendiente</item>
+        <item quantity="other">%d pendientes</item>
+    </plurals>
+
 <!-- Phrases -->
     <string-array name="greetings">
         <item>n/¡Hola!/До*брий де*нь</item>

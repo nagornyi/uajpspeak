@@ -86,6 +86,35 @@
     <string name="nav_item_drugstore">Apotheke</string>
     <string name="nav_item_driving">Fahren</string>
     <string name="nav_item_bank">Bank</string>
+    <string name="nav_item_learn">Phrasen lernen</string>
+
+    <!-- Flashcard Learning -->
+    <string name="title_learn_categories">Phrasen lernen</string>
+    <string name="title_learn_flashcards">Karteikarten</string>
+    <string name="learn_categories_header">Kategorien zum Lernen auswählen</string>
+    <string name="learn_categories_description">Wählen Sie aus, welche Phrasenkategorien Sie mit Karteikarten üben möchten. Die App verwendet verteilte Wiederholung, um Ihnen zu helfen, Phrasen effektiv zu merken.</string>
+    <string name="learn_category_stats">%1$d / %2$d gelernt</string>
+    <string name="learn_category_not_started">Noch nicht begonnen</string>
+    <string name="overall_learning_stats">Gesamt: %1$d gelernt von %2$d Phrasen • %3$d zur Wiederholung fällig</string>
+    <string name="start_learning">Lernen beginnen</string>
+    <string name="start_learning_with_count">Lernen beginnen (%d Kategorien)</string>
+    <string name="select_categories_prompt">Wählen Sie mindestens eine Kategorie aus</string>
+    <string name="select_translation">Wählen Sie die richtige Übersetzung:</string>
+    <string name="next_card">Nächste Karte</string>
+    <string name="feedback_correct">Richtig! Gut gemacht!</string>
+    <string name="feedback_wrong">Falsch. Die richtige Antwort ist: %s</string>
+    <string name="session_complete">Sitzung abgeschlossen!</string>
+    <string name="session_complete_stats">Sie haben %1$d von %2$d richtig beantwortet\nGenauigkeit: %3$d%%</string>
+    <string name="continue_learning">Lernen fortsetzen</string>
+    <string name="finish_learning">Beenden</string>
+    <string name="no_cards_available">Keine Karten verfügbar</string>
+    <string name="no_cards_message">Gut gemacht! Sie haben alle fälligen Karten für heute überprüft.\n\nKommen Sie morgen wieder für mehr Übung, oder fügen Sie mehr Kategorien zum Lernen hinzu.\n\n(Tägliche Zurücksetzung um Mitternacht, Ortszeit)</string>
+
+    <!-- Plurals -->
+    <plurals name="cards_due_for_review">
+        <item quantity="one">%d fällig</item>
+        <item quantity="other">%d fällig</item>
+    </plurals>
 
     <!-- Phrases -->
     <string-array name="greetings">
