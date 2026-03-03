@@ -108,7 +108,7 @@
     <string name="continue_learning">学習を続ける</string>
     <string name="finish_learning">終了</string>
     <string name="no_cards_available">利用可能なカードがありません</string>
-    <string name="no_cards_message">お疲れ様でした！今日の復習予定カードをすべて完了しました。\n\n明日また練習に来るか、さらにカテゴリを追加して学習してください。\n\n（毎日午前0時にリセット、現地時間）</string>
+    <string name="no_cards_message">お疲れ様でした！今日の復習予定カードをすべて完了しました。\n\n明日また練習に来るか、さらにカテゴリを追加して学習してください。</string>
 
     <!-- Plurals -->
     <plurals name="cards_due_for_review">

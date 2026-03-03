@@ -222,7 +222,9 @@ class MainActivity : AppCompatActivity(), TextToSpeech.OnInitListener, Navigatio
                         fragmentManager.executePendingTransactions()
                         
                         val currentHome = supportFragmentManager.findFragmentByTag("HOME")
+                        val currentZoom = supportFragmentManager.findFragmentByTag("ZOOM")
                         val currentLearnCategories = supportFragmentManager.findFragmentByTag("LEARN_CATEGORIES")
+                        val currentLearnFlashcards = supportFragmentManager.findFragmentByTag("LEARN_FLASHCARDS")
 
                         when {
                             currentHome != null && currentHome.isVisible -> {
@@ -242,13 +244,26 @@ class MainActivity : AppCompatActivity(), TextToSpeech.OnInitListener, Navigatio
                                 drawerToggle.isDrawerIndicatorEnabled = true
                                 drawerToggle.syncState()
                             }
-                            currentLearnCategories != null && currentLearnCategories.isVisible -> {
-                                // Coming back to Learn Categories from Flashcards
-                                setActionBarTitle(getString(R.string.title_learn_categories))
+                            currentZoom != null && currentZoom.isVisible -> {
+                                // Coming back to Zoom from About/Alphabet
+                                setActionBarTitle("")
                                 setDrawerState(false)
                                 enableBackButton(true)
-                                drawerToggle.isDrawerIndicatorEnabled = false
+                            }
+                            currentLearnCategories != null && currentLearnCategories.isVisible -> {
+                                // Coming back to Learn Categories from About/Alphabet
+                                setActionBarTitle(getString(R.string.title_learn_categories))
+                                setDrawerState(true)
+                                enableBackButton(false)
+                                // Show hamburger icon (like regular category views)
+                                drawerToggle.isDrawerIndicatorEnabled = true
                                 drawerToggle.syncState()
+                            }
+                            currentLearnFlashcards != null && currentLearnFlashcards.isVisible -> {
+                                // Coming back to Learn Flashcards from About/Alphabet
+                                setActionBarTitle(getString(R.string.title_learn_flashcards))
+                                setDrawerState(false)
+                                enableBackButton(true)
                             }
                             else -> {
                                 // Default case for other fragments
@@ -664,13 +679,14 @@ class MainActivity : AppCompatActivity(), TextToSpeech.OnInitListener, Navigatio
             val fragmentManager = supportFragmentManager
             val fragmentTransaction = fragmentManager.beginTransaction()
             fragmentTransaction.replace(R.id.container_body, fragment, "LEARN_CATEGORIES")
-            fragmentTransaction.addToBackStack(null)
             fragmentTransaction.commit()
 
             setActionBarTitle(title)
-            setDrawerState(false)
-            drawerToggle.setToolbarNavigationClickListener { onBackPressedDispatcher.onBackPressed() }
-            enableBackButton(true)
+            setDrawerState(true)
+            // Keep hamburger icon enabled (like regular category views)
+            drawerToggle.isDrawerIndicatorEnabled = true
+            drawerToggle.syncState()
+            enableBackButton(false)
 
             drawerLayout.closeDrawers()
             return true
@@ -731,8 +747,13 @@ class MainActivity : AppCompatActivity(), TextToSpeech.OnInitListener, Navigatio
     fun enableBackButton(enable: Boolean) {
         supportActionBar?.setDisplayHomeAsUpEnabled(enable)
         if (enable) {
+            drawerToggle.isDrawerIndicatorEnabled = false
             drawerToggle.setToolbarNavigationClickListener { onBackPressedDispatcher.onBackPressed() }
+        } else {
+            drawerToggle.isDrawerIndicatorEnabled = true
+            drawerToggle.setToolbarNavigationClickListener(null)
         }
+        drawerToggle.syncState()
     }
 
     // Public wrapper for drawer lock state (fragments expect setDrawerLocked)

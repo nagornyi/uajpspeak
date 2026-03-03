@@ -108,7 +108,7 @@
     <string name="continue_learning">Lernen fortsetzen</string>
     <string name="finish_learning">Beenden</string>
     <string name="no_cards_available">Keine Karten verfügbar</string>
-    <string name="no_cards_message">Gut gemacht! Sie haben alle fälligen Karten für heute überprüft.\n\nKommen Sie morgen wieder für mehr Übung, oder fügen Sie mehr Kategorien zum Lernen hinzu.\n\n(Tägliche Zurücksetzung um Mitternacht, Ortszeit)</string>
+    <string name="no_cards_message">Gut gemacht! Sie haben alle fälligen Karten für heute überprüft.\n\nKommen Sie morgen wieder für mehr Übung, oder fügen Sie mehr Kategorien zum Lernen hinzu.</string>
 
     <!-- Plurals -->
     <plurals name="cards_due_for_review">

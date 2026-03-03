@@ -45,12 +45,14 @@ class ZoomFragment : Fragment() {
         menuHost.addMenuProvider(object : MenuProvider {
             override fun onPrepareMenu(menu: Menu) {
                 menu.findItem(R.id.action_search)?.isVisible = false
-                menu.findItem(R.id.action_alphabet)?.isVisible = false
-                menu.findItem(R.id.action_about)?.isVisible = false
                 menu.findItem(R.id.action_gender_lang)?.isVisible = false
                 menu.findItem(R.id.action_language)?.isVisible = false
+                menu.findItem(R.id.action_theme)?.isVisible = false
+                menu.findItem(R.id.action_about)?.isVisible = false
 
-                // Show favorite icon
+                // Show Alphabet and Favorite icons
+                menu.findItem(R.id.action_alphabet)?.isVisible = true
+
                 favoriteMenuItem = menu.findItem(R.id.action_favorite)
                 favoriteMenuItem?.isVisible = true
                 updateFavoriteIcon()
@@ -143,6 +145,15 @@ class ZoomFragment : Fragment() {
         zoomAdView.loadAd(adRequest)
 
         return rootView
+    }
+
+    override fun onResume() {
+        super.onResume()
+        // Ensure toolbar is properly configured when returning from About/Alphabet
+        val mainActivity = activity as? MainActivity
+        mainActivity?.setActionBarTitle("")
+        mainActivity?.setDrawerLocked(false)
+        mainActivity?.enableBackButton(true)
     }
 
     private fun toggleFavorite() {

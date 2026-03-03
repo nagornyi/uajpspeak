@@ -382,8 +382,6 @@ class Abecadlo {
         roman_prh["щ"] = "shch"
         roman_prh["ь"] = ""
         roman_prh["'"] = ""
-
-        // ...existing code...
     }
 
     fun convert(str: String): String {
@@ -456,26 +454,100 @@ class Abecadlo {
 
     fun romanize(str: String): String {
         var s = str.lowercase()
+        val result = StringBuilder()
 
         // Special characters
         for ((key, value) in roman_spc) {
             s = s.replace(key, value)
         }
 
-        // Apostrophe and soft sign
-        s = s.replace("'", "")
-        s = s.replace("ь", "")
+        // Process character by character for official Ukrainian National transliteration
+        // Based on Resolution No. 55 (2010)
+        var i = 0
+        while (i < s.length) {
+            val currentChar = s[i]
+            val prevChar = if (i > 0) s[i - 1] else null
+            val nextChar = if (i < s.length - 1) s[i + 1] else null
 
-        // Consonants (before vowels for proper handling)
-        for ((key, value) in roman_prh) {
-            s = s.replace(key, value)
+            // Check if at word beginning (after space, punctuation, apostrophe, or at start)
+            val isWordStart = prevChar == null ||
+                prevChar in " -.,;:!?()[]{}\"'*/\n\t"
+
+            when (currentChar) {
+                // Special case: зг -> zgh (official exception)
+                'з' -> {
+                    if (nextChar == 'г') {
+                        result.append("zgh")
+                        i++ // Skip next 'г'
+                    } else {
+                        result.append("z")
+                    }
+                }
+
+                // Context-dependent vowels (ye/yi/yu/ya ONLY at word start, otherwise ie/i/iu/ia)
+                'є' -> {
+                    result.append(if (isWordStart) "ye" else "ie")
+                }
+                'ї' -> {
+                    result.append(if (isWordStart) "yi" else "i")
+                }
+                'ю' -> {
+                    result.append(if (isWordStart) "yu" else "iu")
+                }
+                'я' -> {
+                    result.append(if (isWordStart) "ya" else "ia")
+                }
+
+                // й is always "y" in official standard
+                'й' -> {
+                    result.append("y")
+                }
+
+                // Apostrophe and soft sign - omit in official transliteration
+                '\'' -> {
+                    // Omit apostrophe
+                }
+                'ь' -> {
+                    // Omit soft sign
+                }
+
+                // Regular consonants
+                'б' -> result.append("b")
+                'в' -> result.append("v")
+                'г' -> result.append("h")
+                'ґ' -> result.append("g")
+                'д' -> result.append("d")
+                'ж' -> result.append("zh")
+                'к' -> result.append("k")
+                'л' -> result.append("l")
+                'м' -> result.append("m")
+                'н' -> result.append("n")
+                'п' -> result.append("p")
+                'р' -> result.append("r")
+                'с' -> result.append("s")
+                'т' -> result.append("t")
+                'ф' -> result.append("f")
+                'х' -> result.append("kh")
+                'ц' -> result.append("ts")
+                'ч' -> result.append("ch")
+                'ш' -> result.append("sh")
+                'щ' -> result.append("shch")
+
+                // Regular vowels
+                'а' -> result.append("a")
+                'е' -> result.append("e")
+                'и' -> result.append("y")
+                'і' -> result.append("i")
+                'о' -> result.append("o")
+                'у' -> result.append("u")
+
+                // Any other character (numbers, punctuation, etc.)
+                else -> result.append(currentChar)
+            }
+
+            i++
         }
 
-        // Vowels
-        for ((key, value) in roman_hol) {
-            s = s.replace(key, value)
-        }
-
-        return s
+        return result.toString()
     }
 }

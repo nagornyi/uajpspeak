@@ -17,8 +17,10 @@ import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import com.arukai.uajpspeak.R
+import com.arukai.uajpspeak.model.Abecadlo
 import com.arukai.uajpspeak.model.Flashcard
 import com.arukai.uajpspeak.util.FlashcardManager
+import com.arukai.uajpspeak.util.LocaleHelper
 
 /**
  * Fragment for learning flashcards with multiple choice questions.
@@ -27,6 +29,7 @@ import com.arukai.uajpspeak.util.FlashcardManager
 class LearnFlashcardsFragment : Fragment() {
 
     private lateinit var flashcardManager: FlashcardManager
+    private lateinit var abecadlo: Abecadlo
     private var sessionCards = listOf<Flashcard>()
     private var currentCardIndex = 0
     private var correctAnswersInSession = 0
@@ -53,6 +56,7 @@ class LearnFlashcardsFragment : Fragment() {
         val rootView = inflater.inflate(R.layout.fragment_learn_flashcards, container, false)
 
         flashcardManager = FlashcardManager(requireContext())
+        abecadlo = Abecadlo()
 
         // Initialize views
         initializeViews(rootView)
@@ -74,15 +78,15 @@ class LearnFlashcardsFragment : Fragment() {
             }
 
             override fun onPrepareMenu(menu: Menu) {
-                // Hide all menu items except Alphabet and About
+                // Hide all menu items except Alphabet
                 menu.findItem(R.id.action_search)?.isVisible = false
                 menu.findItem(R.id.action_favorite)?.isVisible = false
                 menu.findItem(R.id.action_gender_lang)?.isVisible = false
                 menu.findItem(R.id.action_language)?.isVisible = false
                 menu.findItem(R.id.action_theme)?.isVisible = false
-                // Keep Alphabet and About visible
+                menu.findItem(R.id.action_about)?.isVisible = false
+                // Keep only Alphabet visible
                 menu.findItem(R.id.action_alphabet)?.isVisible = true
-                menu.findItem(R.id.action_about)?.isVisible = true
             }
 
             override fun onMenuItemSelected(item: android.view.MenuItem): Boolean {
@@ -91,6 +95,15 @@ class LearnFlashcardsFragment : Fragment() {
         }, viewLifecycleOwner, Lifecycle.State.RESUMED)
 
         return rootView
+    }
+
+    override fun onResume() {
+        super.onResume()
+        // Ensure toolbar is properly configured when returning from About/Alphabet
+        val mainActivity = activity as? MainActivity
+        mainActivity?.setActionBarTitle(getString(R.string.title_learn_flashcards))
+        mainActivity?.setDrawerLocked(false)
+        mainActivity?.enableBackButton(true)
     }
 
     private fun initializeViews(rootView: View) {
@@ -191,16 +204,20 @@ class LearnFlashcardsFragment : Fragment() {
     private fun generateOptions(correctCard: Flashcard) {
         optionsContainer.removeAllViews()
 
-        // Get wrong answers from other flashcards
+        // Get wrong answers from other flashcards, excluding the correct answer
         val allFlashcards = sessionCards.filter { it != correctCard }
         val wrongAnswers = allFlashcards
             .map { it.translation }
-            .distinct()
+            .filter { it != correctCard.translation } // Exclude correct answer from wrong answers
+            .distinct() // Remove duplicates
             .shuffled()
             .take(3)
 
-        // Combine with correct answer
-        val options = (wrongAnswers + correctCard.translation).shuffled()
+        // Combine with correct answer and ensure no duplicates
+        val options = (wrongAnswers + correctCard.translation).distinct().shuffled()
+
+        // If we don't have enough options (less than 4), we still show what we have
+        // This can happen if there aren't enough unique translations in the session
 
         // Create option buttons
         options.forEach { option ->
@@ -374,26 +391,18 @@ class LearnFlashcardsFragment : Fragment() {
     }
 
     /**
-     * Simple Ukrainian to Latin transliteration for pronunciation help.
+     * Transliterate Ukrainian text using the existing Abecadlo system.
+     * For Japanese users, shows katakana. For others, shows romanization.
      */
     private fun transliterateUkrainian(text: String): String {
-        val map = mapOf(
-            'а' to "a", 'б' to "b", 'в' to "v", 'г' to "h", 'ґ' to "g",
-            'д' to "d", 'е' to "e", 'є' to "ye", 'ж' to "zh", 'з' to "z",
-            'и' to "y", 'і' to "i", 'ї' to "yi", 'й' to "y", 'к' to "k",
-            'л' to "l", 'м' to "m", 'н' to "n", 'о' to "o", 'п' to "p",
-            'р' to "r", 'с' to "s", 'т' to "t", 'у' to "u", 'ф' to "f",
-            'х' to "kh", 'ц' to "ts", 'ч' to "ch", 'ш' to "sh", 'щ' to "shch",
-            'ь' to "'", 'ю' to "yu", 'я' to "ya",
-            'А' to "A", 'Б' to "B", 'В' to "V", 'Г' to "H", 'Ґ' to "G",
-            'Д' to "D", 'Е' to "E", 'Є' to "Ye", 'Ж' to "Zh", 'З' to "Z",
-            'И' to "Y", 'І' to "I", 'Ї' to "Yi", 'Й' to "Y", 'К' to "K",
-            'Л' to "L", 'М' to "M", 'Н' to "N", 'О' to "O", 'П' to "P",
-            'Р' to "R", 'С' to "S", 'Т' to "T", 'У' to "U", 'Ф' to "F",
-            'Х' to "Kh", 'Ц' to "Ts", 'Ч' to "Ch", 'Ш' to "Sh", 'Щ' to "Shch",
-            'Ь' to "'", 'Ю' to "Yu", 'Я' to "Ya"
-        )
+        val currentLang = LocaleHelper.getSavedLanguage(requireContext())
 
-        return text.map { char -> map[char] ?: char.toString() }.joinToString("")
+        return if (currentLang == "ja") {
+            // Use Japanese katakana conversion for Japanese users
+            abecadlo.convert(text)
+        } else {
+            // Use romanization for all other languages
+            abecadlo.romanize(text)
+        }
     }
 }

@@ -83,7 +83,7 @@
     <string name="continue_learning">Continuer l\'apprentissage</string>
     <string name="finish_learning">Terminer</string>
     <string name="no_cards_available">Aucune carte disponible</string>
-    <string name="no_cards_message">Excellent travail ! Vous avez révisé toutes les cartes dues aujourd\'hui.\n\nRevenez demain pour plus de pratique, ou ajoutez plus de catégories à apprendre.\n\n(Réinitialisation quotidienne à minuit, heure locale)</string>
+    <string name="no_cards_message">Excellent travail ! Vous avez révisé toutes les cartes dues aujourd\'hui.\n\nRevenez demain pour plus de pratique, ou ajoutez plus de catégories à apprendre.</string>
 
     <!-- Plurals -->
     <plurals name="cards_due_for_review">

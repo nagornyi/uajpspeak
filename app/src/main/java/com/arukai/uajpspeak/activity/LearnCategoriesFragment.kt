@@ -52,15 +52,15 @@ class LearnCategoriesFragment : Fragment() {
             }
 
             override fun onPrepareMenu(menu: Menu) {
-                // Hide all menu items except Alphabet and About
+                // Hide all menu items except Alphabet
                 menu.findItem(R.id.action_search)?.isVisible = false
                 menu.findItem(R.id.action_favorite)?.isVisible = false
                 menu.findItem(R.id.action_gender_lang)?.isVisible = false
                 menu.findItem(R.id.action_language)?.isVisible = false
                 menu.findItem(R.id.action_theme)?.isVisible = false
-                // Keep Alphabet and About visible
+                menu.findItem(R.id.action_about)?.isVisible = false
+                // Keep only Alphabet visible
                 menu.findItem(R.id.action_alphabet)?.isVisible = true
-                menu.findItem(R.id.action_about)?.isVisible = true
             }
 
             override fun onMenuItemSelected(item: android.view.MenuItem): Boolean {
@@ -71,10 +71,18 @@ class LearnCategoriesFragment : Fragment() {
         return rootView
     }
 
+    override fun onResume() {
+        super.onResume()
+        // Ensure toolbar is properly configured when returning from flashcards
+        val mainActivity = activity as? MainActivity
+        mainActivity?.setActionBarTitle(getString(R.string.title_learn_categories))
+        mainActivity?.setDrawerLocked(true)
+        mainActivity?.enableBackButton(false)
+    }
+
     private fun initializeCategories() {
         categories.clear()
 
-        val selectedIds = flashcardManager.getSelectedCategories()
         val categoryNames = resources.getStringArray(R.array.nav_drawer_labels)
 
         // Skip "All Phrases" (0) and "Favourites" (1), start from actual categories (2+)
@@ -82,12 +90,17 @@ class LearnCategoriesFragment : Fragment() {
             val position = index + 2 // Offset to match MainActivity position
             val stats = flashcardManager.getCategoryStats(arrayId)
 
+            // Auto-select categories that have been started (learned > 0) AND have phrases due for review
+            val hasStarted = stats.second > 0  // learnedPhrases > 0
+            val hasDueCards = stats.third > 0  // dueForReview > 0
+            val shouldAutoSelect = hasStarted && hasDueCards
+
             categories.add(
                 LearnCategory(
                     categoryId = position,
                     categoryName = categoryNames[position],
                     arrayResourceId = arrayId,
-                    isSelected = selectedIds.contains(arrayId),
+                    isSelected = shouldAutoSelect,
                     totalPhrases = stats.first,
                     learnedPhrases = stats.second,
                     dueForReview = stats.third
@@ -192,10 +205,6 @@ class LearnCategoriesFragment : Fragment() {
                 return@setOnClickListener
             }
 
-            // Save selected categories
-            val selectedIds = selectedCategories.map { it.arrayResourceId }.toSet()
-            flashcardManager.saveSelectedCategories(selectedIds)
-
             // Navigate to learning screen
             val fragment = LearnFlashcardsFragment()
             val bundle = Bundle()
@@ -208,10 +217,11 @@ class LearnCategoriesFragment : Fragment() {
             fragmentTransaction.addToBackStack(null)
             fragmentTransaction.commit()
 
-            // Update toolbar
-            (activity as? MainActivity)?.setActionBarTitle(getString(R.string.title_learn_flashcards))
-            (activity as? MainActivity)?.enableBackButton(true)
-            (activity as? MainActivity)?.setDrawerLocked(false)
+            // Update toolbar - show back button for flashcards screen (like Zoom)
+            val mainActivity = activity as? MainActivity
+            mainActivity?.setActionBarTitle(getString(R.string.title_learn_flashcards))
+            mainActivity?.setDrawerLocked(false)
+            mainActivity?.setBackButtonEnabled()
         }
 
         // Update stats on resume

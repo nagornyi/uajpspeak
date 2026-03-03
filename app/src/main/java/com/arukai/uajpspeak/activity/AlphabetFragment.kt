@@ -26,11 +26,14 @@ class AlphabetFragment : Fragment() {
         val menuHost: MenuHost = requireActivity()
         menuHost.addMenuProvider(object : MenuProvider {
             override fun onPrepareMenu(menu: Menu) {
+                // Hide all menu items in Alphabet view
                 menu.findItem(R.id.action_search)?.isVisible = false
                 menu.findItem(R.id.action_alphabet)?.isVisible = false
                 menu.findItem(R.id.action_about)?.isVisible = false
+                menu.findItem(R.id.action_favorite)?.isVisible = false
                 menu.findItem(R.id.action_gender_lang)?.isVisible = false
                 menu.findItem(R.id.action_language)?.isVisible = false
+                menu.findItem(R.id.action_theme)?.isVisible = false
             }
 
             override fun onCreateMenu(menu: Menu, menuInflater: android.view.MenuInflater) {
