@@ -78,9 +78,11 @@ class FlashcardManager(context: Context) {
 
     /**
      * Get flashcards that are due for review.
+     * Only cards that have been reviewed at least once can be "due" – brand-new cards
+     * (totalReviews == 0) are handled separately as new cards to avoid duplicates.
      */
     fun getDueFlashcards(categoryIds: List<Int>): List<Flashcard> {
-        return getFlashcardsForCategories(categoryIds).filter { it.isDue() }
+        return getFlashcardsForCategories(categoryIds).filter { it.totalReviews > 0 && it.isDue() }
     }
 
     /**
@@ -155,14 +157,35 @@ class FlashcardManager(context: Context) {
     }
 
     /**
-     * Get statistics for a category.
+     * Statistics returned by [getCategoryStats].
+     *
+     * @param total      Total stored (initialized) flashcards for the category
+     * @param learned    Fully-learned flashcards
+     * @param due        Reviewed cards that are now due for re-review
+     * @param hasStarted True only when at least one card has been reviewed at least once
      */
-    fun getCategoryStats(categoryId: Int): Triple<Int, Int, Int> {
+    data class CategoryStatsResult(
+        val total: Int,
+        val learned: Int,
+        val due: Int,
+        val hasStarted: Boolean
+    )
+
+    /**
+     * Get statistics for a category.
+     *
+     * Only cards with totalReviews > 0 contribute to [CategoryStatsResult.due] and
+     * [CategoryStatsResult.hasStarted], so freshly-initialised but never-answered
+     * cards do NOT appear as "due for review" or cause the category to look "started".
+     */
+    fun getCategoryStats(categoryId: Int): CategoryStatsResult {
         val flashcards = getFlashcardsForCategories(listOf(categoryId))
         val total = flashcards.size
         val learned = flashcards.count { it.isLearned() }
-        val due = flashcards.count { it.isDue() }
-        return Triple(total, learned, due)
+        // Only count a card as "due" when the user has reviewed it at least once
+        val due = flashcards.count { it.totalReviews > 0 && it.isDue() }
+        val hasStarted = flashcards.any { it.totalReviews > 0 }
+        return CategoryStatsResult(total, learned, due, hasStarted)
     }
 
     /**
@@ -202,7 +225,8 @@ class FlashcardManager(context: Context) {
 
     /**
      * Build a learning session with prioritized flashcards.
-     * Priority: 1) Due cards, 2) New cards (limited), 3) Recent cards
+     * Priority: 1) Due cards (previously reviewed, scheduled for re-review),
+     *           2) New cards (never reviewed), limited to [maxNewCards] per session.
      */
     fun buildLearningSession(
         context: Context,
@@ -216,16 +240,12 @@ class FlashcardManager(context: Context) {
 
         val dueCards = getDueFlashcards(categoryIds).shuffled()
         val newCards = getNewFlashcards(categoryIds).shuffled()
-        val newCardsToday = getNewCardsToday()
 
-        // Limit new cards based on daily limit
-        val newCardsAllowed = (maxNewCards - newCardsToday).coerceAtLeast(0)
-        val newCardsToShow = newCards.take(newCardsAllowed)
+        // Limit new cards per session (no cross-session global tracking)
+        val newCardsToShow = newCards.take(maxNewCards)
 
         // Combine due and new cards
-        val sessionCards = (dueCards + newCardsToShow).take(maxCards)
-
-        return sessionCards
+        return (dueCards + newCardsToShow).take(maxCards)
     }
 
     /**
@@ -239,13 +259,15 @@ class FlashcardManager(context: Context) {
 
     /**
      * Get overall statistics.
+     * "due" only counts cards that have been reviewed at least once and are
+     * now scheduled for re-review; brand-new cards are reported under "new".
      */
     fun getOverallStats(): Map<String, Int> {
         val all = getAllFlashcards()
         return mapOf(
             "total" to all.size,
             "learned" to all.count { it.isLearned() },
-            "due" to all.count { it.isDue() },
+            "due" to all.count { it.totalReviews > 0 && it.isDue() },
             "new" to all.count { it.totalReviews == 0 }
         )
     }

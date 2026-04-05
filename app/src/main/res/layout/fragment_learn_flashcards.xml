@@ -18,11 +18,13 @@
 
             <!-- Progress Bar -->
             <LinearLayout
+                android:id="@+id/progressSection"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:gravity="center_vertical"
-                android:paddingBottom="12dp">
+                android:paddingBottom="12dp"
+                android:visibility="gone">
 
                 <ProgressBar
                     android:id="@+id/sessionProgressBar"
@@ -46,6 +48,7 @@
 
             <!-- Ukrainian Phrase Card -->
             <androidx.cardview.widget.CardView
+                android:id="@+id/phraseCard"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"

@@ -34,8 +34,16 @@ class LearnFlashcardsFragment : Fragment() {
     private var currentCardIndex = 0
     private var correctAnswersInSession = 0
 
+    // Persisted answer state – survives onDestroyView/onCreateView cycles (e.g. Alphabet overlay)
+    private var currentCardOptions: List<String> = emptyList()
+    private var isCurrentCardAnswered = false
+    private var currentCardAnswerCorrect = false
+    private var currentCardSelectedAnswer = ""
+
     private lateinit var progressBar: ProgressBar
     private lateinit var progressText: TextView
+    private lateinit var progressSection: View      // parent row; single toggle for bar+text
+    private lateinit var phraseCard: CardView        // blue Ukrainian phrase card
     private lateinit var ukrainianText: TextView
     private lateinit var transliterationText: TextView
     private lateinit var questionText: TextView
@@ -61,14 +69,19 @@ class LearnFlashcardsFragment : Fragment() {
         // Initialize views
         initializeViews(rootView)
 
-        // Load session
-        loadLearningSession()
+        // Load session only if we don't have one yet.
+        // The fragment instance survives on the back stack, so instance variables
+        // (sessionCards, currentCardIndex, answer state) are still valid when
+        // returning from Alphabet or other overlays.
+        if (sessionCards.isEmpty()) {
+            loadLearningSession()
+        }
 
-        // Show first card
-        if (sessionCards.isNotEmpty()) {
-            showCard(currentCardIndex)
-        } else {
-            showNoCardsMessage()
+        // Restore or show current state
+        when {
+            sessionCards.isEmpty() -> showNoCardsMessage()
+            currentCardIndex >= sessionCards.size -> showSessionComplete()
+            else -> showCard(currentCardIndex)   // handles answered-state restoration internally
         }
 
         // Set up menu to hide unwanted items
@@ -107,8 +120,10 @@ class LearnFlashcardsFragment : Fragment() {
     }
 
     private fun initializeViews(rootView: View) {
+        progressSection = rootView.findViewById(R.id.progressSection)
         progressBar = rootView.findViewById(R.id.sessionProgressBar)
         progressText = rootView.findViewById(R.id.sessionProgressText)
+        phraseCard = rootView.findViewById(R.id.phraseCard)
         ukrainianText = rootView.findViewById(R.id.ukrainianPhrase)
         transliterationText = rootView.findViewById(R.id.transliteration)
         questionText = rootView.findViewById(R.id.questionText)
@@ -143,6 +158,12 @@ class LearnFlashcardsFragment : Fragment() {
     private fun loadLearningSession() {
         val categoryIds = arguments?.getIntArray("categoryIds")?.toList() ?: return
 
+        // Reset per-card answer state for the new session
+        isCurrentCardAnswered = false
+        currentCardAnswerCorrect = false
+        currentCardSelectedAnswer = ""
+        currentCardOptions = emptyList()
+
         // Build phrase map for initialization
         val phrasesMap = mutableMapOf<Int, Array<String>>()
         categoryIds.forEach { categoryId ->
@@ -160,10 +181,6 @@ class LearnFlashcardsFragment : Fragment() {
 
         currentCardIndex = 0
         correctAnswersInSession = 0
-
-        // Update progress
-        progressBar.max = sessionCards.size
-        progressBar.progress = 0
     }
 
     private fun showCard(index: Int) {
@@ -175,16 +192,15 @@ class LearnFlashcardsFragment : Fragment() {
         val card = sessionCards[index]
 
         // Make sure all UI elements are visible
-        ukrainianText.visibility = View.VISIBLE
-        transliterationText.visibility = View.VISIBLE
+        progressSection.visibility = View.VISIBLE
+        phraseCard.visibility = View.VISIBLE
         questionText.visibility = View.VISIBLE
         optionsContainer.visibility = View.VISIBLE
-        progressBar.visibility = View.VISIBLE
-        progressText.visibility = View.VISIBLE
         completionCard.visibility = View.GONE
 
-        // Update progress
-        progressBar.progress = index
+        // Update progress – use index+1 so bar and "x / y" counter always match
+        progressBar.max = sessionCards.size
+        progressBar.progress = index + 1
         progressText.text = "${index + 1} / ${sessionCards.size}"
 
         // Show Ukrainian phrase
@@ -194,30 +210,74 @@ class LearnFlashcardsFragment : Fragment() {
         // Show transliteration if available (simplified)
         transliterationText.text = transliterateUkrainian(ukrainianClean)
 
-        // Hide feedback
-        feedbackCard.visibility = View.GONE
+        if (isCurrentCardAnswered && currentCardOptions.isNotEmpty()) {
+            // ── Restore answered state (returning from Alphabet overlay) ──────────
+            generateOptions(card, existingOptions = currentCardOptions)
 
-        // Generate multiple choice options
-        generateOptions(card)
+            feedbackCard.visibility = View.VISIBLE
+            feedbackText.text = if (currentCardAnswerCorrect) {
+                getString(R.string.feedback_correct)
+            } else {
+                getString(R.string.feedback_wrong, card.translation)
+            }
+            feedbackCard.setCardBackgroundColor(
+                ContextCompat.getColor(
+                    requireContext(),
+                    if (currentCardAnswerCorrect) R.color.correct_answer else R.color.wrong_answer
+                )
+            )
+
+            // Re-apply button highlight/disable
+            for (i in 0 until optionsContainer.childCount) {
+                val btn = optionsContainer.getChildAt(i) as? Button ?: continue
+                btn.isEnabled = false
+                when {
+                    btn.text == currentCardSelectedAnswer && currentCardAnswerCorrect -> {
+                        btn.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.correct_answer))
+                        btn.setTextColor(ContextCompat.getColor(requireContext(), android.R.color.white))
+                    }
+                    btn.text == currentCardSelectedAnswer && !currentCardAnswerCorrect -> {
+                        btn.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.wrong_answer))
+                        btn.setTextColor(ContextCompat.getColor(requireContext(), android.R.color.white))
+                    }
+                    btn.text == card.translation && !currentCardAnswerCorrect -> {
+                        // Highlight the correct answer when the user picked wrong
+                        btn.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.correct_answer))
+                        btn.setTextColor(ContextCompat.getColor(requireContext(), android.R.color.white))
+                    }
+                }
+            }
+        } else {
+            // ── Fresh card ────────────────────────────────────────────────────────
+            feedbackCard.visibility = View.GONE
+            generateOptions(card)
+        }
     }
 
-    private fun generateOptions(correctCard: Flashcard) {
+    private fun generateOptions(correctCard: Flashcard, existingOptions: List<String>? = null) {
         optionsContainer.removeAllViews()
 
-        // Get wrong answers from other flashcards, excluding the correct answer
-        val allFlashcards = sessionCards.filter { it != correctCard }
-        val wrongAnswers = allFlashcards
-            .map { it.translation }
-            .filter { it != correctCard.translation } // Exclude correct answer from wrong answers
-            .distinct() // Remove duplicates
-            .shuffled()
-            .take(3)
+        val options: List<String>
+        if (existingOptions != null) {
+            // Restore previously generated order (returning from overlay)
+            options = existingOptions
+        } else {
+            // Draw wrong answers from ALL stored flashcards so that small sessions
+            // (few cards) still produce enough distinct choices.
+            val allFlashcards = flashcardManager.getAllFlashcards()
+            val wrongAnswers = allFlashcards
+                .map { it.translation }
+                .filter { it != correctCard.translation } // exclude correct answer
+                .distinct()
+                .shuffled()
+                .take(3)
 
-        // Combine with correct answer and ensure no duplicates
-        val options = (wrongAnswers + correctCard.translation).distinct().shuffled()
+            // Combine with correct answer and ensure no duplicates
+            options = (wrongAnswers + correctCard.translation).distinct().shuffled()
+        }
 
-        // If we don't have enough options (less than 4), we still show what we have
-        // This can happen if there aren't enough unique translations in the session
+        // Always save the current option order so it can be restored after an overlay
+        currentCardOptions = options
 
         // Create option buttons
         options.forEach { option ->
@@ -250,6 +310,11 @@ class LearnFlashcardsFragment : Fragment() {
     }
 
     private fun handleAnswer(isCorrect: Boolean, card: Flashcard, selectedButton: Button) {
+        // Save answer state so it can be restored if the user opens Alphabet mid-card
+        isCurrentCardAnswered = true
+        currentCardAnswerCorrect = isCorrect
+        currentCardSelectedAnswer = selectedButton.text.toString()
+
         // Disable all option buttons
         for (i in 0 until optionsContainer.childCount) {
             val child = optionsContainer.getChildAt(i)
@@ -269,11 +334,6 @@ class LearnFlashcardsFragment : Fragment() {
 
         card.updateAfterReview(quality)
         flashcardManager.updateFlashcard(card)
-
-        // Increment new cards counter if this was a new card
-        if (card.totalReviews == 1) {
-            flashcardManager.incrementNewCardsToday()
-        }
 
         // Update session stats
         if (isCorrect) {
@@ -332,6 +392,12 @@ class LearnFlashcardsFragment : Fragment() {
     }
 
     private fun showNextCard() {
+        // Reset answer state for the next card
+        isCurrentCardAnswered = false
+        currentCardAnswerCorrect = false
+        currentCardSelectedAnswer = ""
+        currentCardOptions = emptyList()
+
         currentCardIndex++
 
         if (currentCardIndex < sessionCards.size) {
@@ -343,13 +409,11 @@ class LearnFlashcardsFragment : Fragment() {
 
     private fun showSessionComplete() {
         // Hide flashcard UI
-        ukrainianText.visibility = View.GONE
-        transliterationText.visibility = View.GONE
+        progressSection.visibility = View.GONE
+        phraseCard.visibility = View.GONE
         questionText.visibility = View.GONE
         optionsContainer.visibility = View.GONE
         feedbackCard.visibility = View.GONE
-        progressBar.visibility = View.GONE
-        progressText.visibility = View.GONE
 
         // Show completion card
         completionCard.visibility = View.VISIBLE
@@ -367,24 +431,23 @@ class LearnFlashcardsFragment : Fragment() {
             accuracy
         )
 
-        // Check if more cards are available
-        val stats = flashcardManager.getOverallStats()
-        val hasMoreCards = (stats["due"] ?: 0) > 0 ||
-                          ((stats["new"] ?: 0) > 0 && flashcardManager.getNewCardsToday() < 10)
+        // Check if more cards are available for the selected categories specifically
+        val categoryIds = arguments?.getIntArray("categoryIds")?.toList() ?: emptyList()
+        val hasMoreCards = flashcardManager.getDueFlashcards(categoryIds).isNotEmpty() ||
+                           flashcardManager.getNewFlashcards(categoryIds).isNotEmpty()
 
         continueButton.visibility = if (hasMoreCards) View.VISIBLE else View.GONE
     }
 
     private fun showNoCardsMessage() {
-        ukrainianText.text = getString(R.string.no_cards_available)
-        transliterationText.visibility = View.GONE
+        // Hide all flashcard UI (same as session complete)
+        progressSection.visibility = View.GONE
+        phraseCard.visibility = View.GONE
         questionText.visibility = View.GONE
         optionsContainer.visibility = View.GONE
-        progressBar.visibility = View.GONE
-        progressText.visibility = View.GONE
         feedbackCard.visibility = View.GONE
 
-        // Show finish button
+        // Show completion card with "no cards" message
         completionCard.visibility = View.VISIBLE
         completionStats.text = getString(R.string.no_cards_message)
         continueButton.visibility = View.GONE
