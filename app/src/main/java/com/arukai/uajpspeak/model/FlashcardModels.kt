@@ -10,6 +10,7 @@ data class Flashcard(
     val ukrainian: String,      // Ukrainian phrase (with stress markers)
     val translation: String,    // Translation in user's language
     val categoryId: Int,        // Array resource ID for the category
+    val gender: String? = null, // "m", "f", "n", or null for legacy cards (treated as "n")
     var easeFactor: Float = 2.5f,   // Ease factor (difficulty multiplier)
     var interval: Int = 0,          // Days until next review
     var repetitions: Int = 0,       // Number of successful reviews in a row

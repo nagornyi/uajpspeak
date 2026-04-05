@@ -80,6 +80,12 @@ class LearnCategoriesFragment : Fragment() {
         mainActivity?.enableBackButton(false)
     }
 
+    private fun currentGender(): String =
+        when (MainActivity.app_settings.getInt("gender_lang", 0)) {
+            1 -> "f"
+            else -> "m"
+        }
+
     private fun initializeCategories() {
         categories.clear()
 
@@ -88,7 +94,7 @@ class LearnCategoriesFragment : Fragment() {
         // Skip "All Phrases" (0) and "Favourites" (1), start from actual categories (2+)
         MainActivity.ALL_PHRASE_ARRAY_IDS.forEachIndexed { index, arrayId ->
             val position = index + 2 // Offset to match MainActivity position
-            val stats = flashcardManager.getCategoryStats(arrayId)
+            val stats = flashcardManager.getCategoryStats(arrayId, currentGender())
 
             // Auto-select categories that have been started (learned > 0) AND have phrases due for review
             val hasStarted = stats.second > 0  // learnedPhrases > 0
@@ -243,7 +249,7 @@ class LearnCategoriesFragment : Fragment() {
     }
 
     private fun updateOverallStats(statsText: TextView) {
-        val stats = flashcardManager.getOverallStats()
+        val stats = flashcardManager.getOverallStats(currentGender())
         statsText.text = getString(
             R.string.overall_learning_stats,
             stats["learned"] ?: 0,

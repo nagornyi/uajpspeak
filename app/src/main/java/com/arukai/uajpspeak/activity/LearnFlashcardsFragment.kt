@@ -155,6 +155,12 @@ class LearnFlashcardsFragment : Fragment() {
         }
     }
 
+    private fun currentGender(): String =
+        when (MainActivity.app_settings.getInt("gender_lang", 0)) {
+            1 -> "f"
+            else -> "m"
+        }
+
     private fun loadLearningSession() {
         val categoryIds = arguments?.getIntArray("categoryIds")?.toList() ?: return
 
@@ -175,6 +181,7 @@ class LearnFlashcardsFragment : Fragment() {
             requireContext(),
             categoryIds,
             phrasesMap,
+            currentGender = currentGender(),
             maxCards = 20,
             maxNewCards = 10
         )
@@ -262,9 +269,12 @@ class LearnFlashcardsFragment : Fragment() {
             // Restore previously generated order (returning from overlay)
             options = existingOptions
         } else {
-            // Draw wrong answers from ALL stored flashcards so that small sessions
-            // (few cards) still produce enough distinct choices.
+            // Draw wrong answers from ALL stored flashcards that match the current gender,
+            // so that small sessions still produce enough distinct choices and distractors
+            // are always appropriate for the user's gender.
+            val gender = currentGender()
             val allFlashcards = flashcardManager.getAllFlashcards()
+                .filter { (it.gender ?: "n") == "n" || (it.gender ?: "n") == gender }
             val wrongAnswers = allFlashcards
                 .map { it.translation }
                 .filter { it != correctCard.translation } // exclude correct answer
@@ -433,8 +443,9 @@ class LearnFlashcardsFragment : Fragment() {
 
         // Check if more cards are available for the selected categories specifically
         val categoryIds = arguments?.getIntArray("categoryIds")?.toList() ?: emptyList()
-        val hasMoreCards = flashcardManager.getDueFlashcards(categoryIds).isNotEmpty() ||
-                           flashcardManager.getNewFlashcards(categoryIds).isNotEmpty()
+        val gender = currentGender()
+        val hasMoreCards = flashcardManager.getDueFlashcards(categoryIds, gender).isNotEmpty() ||
+                           flashcardManager.getNewFlashcards(categoryIds, gender).isNotEmpty()
 
         continueButton.visibility = if (hasMoreCards) View.VISIBLE else View.GONE
     }

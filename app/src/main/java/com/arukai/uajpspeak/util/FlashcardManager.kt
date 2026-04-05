@@ -70,10 +70,19 @@ class FlashcardManager(context: Context) {
     }
 
     /**
-     * Get flashcards for specific categories.
+     * Returns true if [card] should be shown to a user with [currentGender] ("m" or "f").
+     * Neutral phrases ("n") and legacy cards with no gender stored (null) are always shown.
      */
-    fun getFlashcardsForCategories(categoryIds: List<Int>): List<Flashcard> {
-        return getAllFlashcards().filter { it.categoryId in categoryIds }
+    private fun matchesGender(card: Flashcard, currentGender: String): Boolean {
+        val g = card.gender ?: "n"   // null = legacy card → treat as neutral
+        return g == "n" || g == currentGender
+    }
+
+    /**
+     * Get flashcards for specific categories, filtered by gender.
+     */
+    fun getFlashcardsForCategories(categoryIds: List<Int>, currentGender: String = "m"): List<Flashcard> {
+        return getAllFlashcards().filter { it.categoryId in categoryIds && matchesGender(it, currentGender) }
     }
 
     /**
@@ -81,22 +90,22 @@ class FlashcardManager(context: Context) {
      * Only cards that have been reviewed at least once can be "due" – brand-new cards
      * (totalReviews == 0) are handled separately as new cards to avoid duplicates.
      */
-    fun getDueFlashcards(categoryIds: List<Int>): List<Flashcard> {
-        return getFlashcardsForCategories(categoryIds).filter { it.totalReviews > 0 && it.isDue() }
+    fun getDueFlashcards(categoryIds: List<Int>, currentGender: String = "m"): List<Flashcard> {
+        return getFlashcardsForCategories(categoryIds, currentGender).filter { it.totalReviews > 0 && it.isDue() }
     }
 
     /**
      * Get flashcards that haven't been reviewed yet.
      */
-    fun getNewFlashcards(categoryIds: List<Int>): List<Flashcard> {
-        return getFlashcardsForCategories(categoryIds).filter { it.totalReviews == 0 }
+    fun getNewFlashcards(categoryIds: List<Int>, currentGender: String = "m"): List<Flashcard> {
+        return getFlashcardsForCategories(categoryIds, currentGender).filter { it.totalReviews == 0 }
     }
 
     /**
      * Get learned (mastered) flashcards.
      */
-    fun getLearnedFlashcards(categoryIds: List<Int>): List<Flashcard> {
-        return getFlashcardsForCategories(categoryIds).filter { it.isLearned() }
+    fun getLearnedFlashcards(categoryIds: List<Int>, currentGender: String = "m"): List<Flashcard> {
+        return getFlashcardsForCategories(categoryIds, currentGender).filter { it.isLearned() }
     }
 
     /**
@@ -116,16 +125,17 @@ class FlashcardManager(context: Context) {
             phrases.forEach { phrase ->
                 val parts = phrase.split("/")
                 if (parts.size >= 3) {
+                    val phraseGender = parts[0]  // "m", "f", or "n"
                     val ukrainian = parts[2]
                     val translation = parts[1]
                     
-                    // Check if flashcard already exists
-                    val exists = existingFlashcards.any { 
+                    // Check if flashcard already exists (keyed by ukrainian + categoryId + gender)
+                    val exists = existingFlashcards.any {
                         it.ukrainian == ukrainian && it.categoryId == categoryId 
                     }
                     
                     if (!exists) {
-                        newFlashcards.add(Flashcard(ukrainian, translation, categoryId))
+                        newFlashcards.add(Flashcard(ukrainian, translation, categoryId, phraseGender))
                     }
                 }
             }
@@ -157,35 +167,15 @@ class FlashcardManager(context: Context) {
     }
 
     /**
-     * Statistics returned by [getCategoryStats].
-     *
-     * @param total      Total stored (initialized) flashcards for the category
-     * @param learned    Fully-learned flashcards
-     * @param due        Reviewed cards that are now due for re-review
-     * @param hasStarted True only when at least one card has been reviewed at least once
+     * Get statistics for a category, filtered by the user's gender setting.
+     * Returns Triple(total, learned, due).
      */
-    data class CategoryStatsResult(
-        val total: Int,
-        val learned: Int,
-        val due: Int,
-        val hasStarted: Boolean
-    )
-
-    /**
-     * Get statistics for a category.
-     *
-     * Only cards with totalReviews > 0 contribute to [CategoryStatsResult.due] and
-     * [CategoryStatsResult.hasStarted], so freshly-initialised but never-answered
-     * cards do NOT appear as "due for review" or cause the category to look "started".
-     */
-    fun getCategoryStats(categoryId: Int): CategoryStatsResult {
-        val flashcards = getFlashcardsForCategories(listOf(categoryId))
+    fun getCategoryStats(categoryId: Int, currentGender: String = "m"): Triple<Int, Int, Int> {
+        val flashcards = getFlashcardsForCategories(listOf(categoryId), currentGender)
         val total = flashcards.size
         val learned = flashcards.count { it.isLearned() }
-        // Only count a card as "due" when the user has reviewed it at least once
         val due = flashcards.count { it.totalReviews > 0 && it.isDue() }
-        val hasStarted = flashcards.any { it.totalReviews > 0 }
-        return CategoryStatsResult(total, learned, due, hasStarted)
+        return Triple(total, learned, due)
     }
 
     /**
@@ -224,7 +214,7 @@ class FlashcardManager(context: Context) {
     }
 
     /**
-     * Build a learning session with prioritized flashcards.
+     * Build a learning session with prioritized flashcards, filtered by gender.
      * Priority: 1) Due cards (previously reviewed, scheduled for re-review),
      *           2) New cards (never reviewed), limited to [maxNewCards] per session.
      */
@@ -232,14 +222,15 @@ class FlashcardManager(context: Context) {
         context: Context,
         categoryIds: List<Int>,
         allPhrases: Map<Int, Array<String>>,
+        currentGender: String = "m",
         maxCards: Int = 20,
         maxNewCards: Int = 10
     ): List<Flashcard> {
         // Initialize flashcards for selected categories if needed
         initializeFlashcardsForCategories(context, categoryIds, allPhrases)
 
-        val dueCards = getDueFlashcards(categoryIds).shuffled()
-        val newCards = getNewFlashcards(categoryIds).shuffled()
+        val dueCards = getDueFlashcards(categoryIds, currentGender).shuffled()
+        val newCards = getNewFlashcards(categoryIds, currentGender).shuffled()
 
         // Limit new cards per session (no cross-session global tracking)
         val newCardsToShow = newCards.take(maxNewCards)
@@ -258,12 +249,10 @@ class FlashcardManager(context: Context) {
     }
 
     /**
-     * Get overall statistics.
-     * "due" only counts cards that have been reviewed at least once and are
-     * now scheduled for re-review; brand-new cards are reported under "new".
+     * Get overall statistics, filtered by gender.
      */
-    fun getOverallStats(): Map<String, Int> {
-        val all = getAllFlashcards()
+    fun getOverallStats(currentGender: String = "m"): Map<String, Int> {
+        val all = getAllFlashcards().filter { matchesGender(it, currentGender) }
         return mapOf(
             "total" to all.size,
             "learned" to all.count { it.isLearned() },
