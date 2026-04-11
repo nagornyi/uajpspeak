@@ -21,6 +21,7 @@ class FlashcardManager(context: Context) {
         private const val KEY_SELECTED_CATEGORIES = "selected_categories"
         private const val KEY_LAST_SESSION_DATE = "last_session_date"
         private const val KEY_NEW_CARDS_TODAY = "new_cards_today"
+        private const val KEY_LAST_SYNCED_VERSION = "last_synced_version"
     }
 
     /**
@@ -237,6 +238,107 @@ class FlashcardManager(context: Context) {
 
         // Combine due and new cards
         return (dueCards + newCardsToShow).take(maxCards)
+    }
+
+    /**
+     * Run [syncWithCurrentPhrases] only when the app version has changed since the last sync.
+     * Because strings.xml is compiled into the APK, it can only change between installs,
+     * so there is no need to sync on every launch or view open.
+     */
+    fun syncIfVersionChanged(context: Context, allPhrases: Map<Int, Array<String>>) {
+        val currentVersion = try {
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.P) {
+                context.packageManager.getPackageInfo(context.packageName, 0).longVersionCode
+            } else {
+                @Suppress("DEPRECATION")
+                context.packageManager.getPackageInfo(context.packageName, 0).versionCode.toLong()
+            }
+        } catch (e: Exception) {
+            -1L
+        }
+
+        val lastSynced = prefs.getLong(KEY_LAST_SYNCED_VERSION, -1L)
+        if (currentVersion == lastSynced) return  // same version – nothing to sync
+
+        syncWithCurrentPhrases(allPhrases)
+        prefs.edit { putLong(KEY_LAST_SYNCED_VERSION, currentVersion) }
+    }
+
+    /**
+     * Sync stored flashcards against the current [allPhrases] from strings.xml.
+     *
+     * Only categories that have already been started (have ≥1 stored card) are touched.
+     * For those categories:
+     *  - Cards whose combined key (gender/translation/ukrainian) no longer exists in the
+     *    current resource strings are removed (phrase changed, deleted, or category dropped).
+     *  - Phrases present in strings.xml but missing from stored cards are added as new cards
+     *    (totalReviews = 0, so they appear as "new" in the next session).
+     *
+     * Should be called when the user opens the categories view so that the displayed
+     * stats always reflect the up-to-date phrase list.
+     *
+     * @param allPhrases  Map of array-resource-id → raw phrase strings
+     *                    (format: "gender/translation/ukrainian")
+     */
+    fun syncWithCurrentPhrases(allPhrases: Map<Int, Array<String>>) {
+        val flashcards = getAllFlashcards().toMutableList()
+        if (flashcards.isEmpty()) return
+
+        // Categories that have at least one stored card
+        val startedCategories = flashcards.map { it.categoryId }.toSet()
+
+        // Build a set of valid combined keys per started category from the live strings.xml data
+        val validKeysPerCategory = mutableMapOf<Int, Set<String>>()
+        startedCategories.forEach { categoryId ->
+            val phrases = allPhrases[categoryId]
+            if (phrases != null) {
+                validKeysPerCategory[categoryId] = phrases.mapNotNull { phrase ->
+                    val parts = phrase.split("/")
+                    if (parts.size >= 3) "${parts[0]}/${parts[1]}/${parts[2]}" else null
+                }.toSet()
+            }
+            // If allPhrases has no entry for this categoryId the category was removed from the app
+            // → validKeysPerCategory has no entry → all its cards will be treated as stale below
+        }
+
+        var changed = false
+
+        // ── Remove stale cards ────────────────────────────────────────────────────
+        val removed = flashcards.removeAll { card ->
+            val validKeys = validKeysPerCategory[card.categoryId]
+                ?: return@removeAll true  // category no longer in the app → remove
+            val cardKey = "${card.gender ?: "n"}/${card.translation}/${card.ukrainian}"
+            cardKey !in validKeys
+        }
+        if (removed) changed = true
+
+        // ── Add new cards for phrases not yet represented in started categories ──
+        startedCategories.forEach { categoryId ->
+            val phrases = allPhrases[categoryId] ?: return@forEach
+            // Rebuild existing-key set from the (possibly pruned) list
+            val existingKeys = flashcards
+                .filter { it.categoryId == categoryId }
+                .map { "${it.gender ?: "n"}/${it.translation}/${it.ukrainian}" }
+                .toSet()
+
+            phrases.forEach { phrase ->
+                val parts = phrase.split("/")
+                if (parts.size >= 3) {
+                    val key = "${parts[0]}/${parts[1]}/${parts[2]}"
+                    if (key !in existingKeys) {
+                        flashcards.add(Flashcard(
+                            ukrainian    = parts[2],
+                            translation  = parts[1],
+                            categoryId   = categoryId,
+                            gender       = parts[0]
+                        ))
+                        changed = true
+                    }
+                }
+            }
+        }
+
+        if (changed) saveFlashcards(flashcards)
     }
 
     /**

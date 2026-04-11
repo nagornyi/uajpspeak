@@ -38,6 +38,13 @@ class LearnCategoriesFragment : Fragment() {
 
         flashcardManager = FlashcardManager(requireContext())
 
+        // Sync stored flashcards with the current strings.xml before reading stats.
+        // Builds the full phrase map for all categories and passes it to the sync.
+        val allPhrases = MainActivity.ALL_PHRASE_ARRAY_IDS.associateWith { arrayId ->
+            resources.getStringArray(arrayId)
+        }
+        flashcardManager.syncIfVersionChanged(requireContext(), allPhrases)
+
         // Initialize categories
         initializeCategories()
 
