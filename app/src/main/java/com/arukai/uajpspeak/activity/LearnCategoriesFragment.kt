@@ -96,10 +96,9 @@ class LearnCategoriesFragment : Fragment() {
             val position = index + 2 // Offset to match MainActivity position
             val stats = flashcardManager.getCategoryStats(arrayId, currentGender())
 
-            // Auto-select categories that have been started (learned > 0) AND have phrases due for review
-            val hasStarted = stats.second > 0  // learnedPhrases > 0
+            // Auto-select categories that have due phrases for review
             val hasDueCards = stats.third > 0  // dueForReview > 0
-            val shouldAutoSelect = hasStarted && hasDueCards
+            val shouldAutoSelect = hasDueCards
 
             categories.add(
                 LearnCategory(
