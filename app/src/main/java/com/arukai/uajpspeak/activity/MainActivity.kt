@@ -99,10 +99,11 @@ class MainActivity : AppCompatActivity(), TextToSpeech.OnInitListener, Navigatio
             current_position = savedInstanceState.getInt("current_position", current_position)
         }
 
-        // Clean up orphaned favorites (phrases that were removed in an app update)
-        val validPhrasesMap = collectValidUkrainianPhrasesMap()
+        // Clean up orphaned favorites only when the app version has changed.
+        // The map of valid phrases is built lazily – only if cleanup is actually needed,
+        // avoiding 95 resource array loads on every normal launch.
         val favoritesManager = FavoritesManager(this)
-        favoritesManager.cleanupOrphanedFavorites(validPhrasesMap)
+        favoritesManager.cleanupIfVersionChanged(this) { collectValidUkrainianPhrasesMap() }
 
         val mToolbar = findViewById<Toolbar>(R.id.toolbar)
         setSupportActionBar(mToolbar)

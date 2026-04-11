@@ -2,6 +2,7 @@ package com.arukai.uajpspeak.util
 
 import android.content.Context
 import android.content.SharedPreferences
+import androidx.core.content.edit
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 
@@ -17,6 +18,7 @@ class FavoritesManager(context: Context) {
     companion object {
         private const val PREFS_NAME = "favorites_prefs"
         private const val KEY_FAVORITES = "favorites_list"
+        private const val KEY_LAST_SYNCED_VERSION = "last_synced_version"
     }
 
     fun addFavorite(phrase: FavoritePhrase) {
@@ -61,7 +63,34 @@ class FavoritesManager(context: Context) {
 
     private fun saveFavorites(favorites: List<FavoritePhrase>) {
         val json = gson.toJson(favorites)
-        prefs.edit().putString(KEY_FAVORITES, json).apply()
+        prefs.edit { putString(KEY_FAVORITES, json) }
+    }
+
+    /**
+     * Run [cleanupOrphanedFavorites] only when the app version has changed since the last run.
+     * The [validPhrasesProvider] lambda is **only invoked** when the version has actually changed,
+     * so the expensive multi-language resource loading is skipped on every normal launch.
+     */
+    fun cleanupIfVersionChanged(
+        context: Context,
+        validPhrasesProvider: () -> Map<String, Set<String>>
+    ) {
+        val currentVersion = try {
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.P) {
+                context.packageManager.getPackageInfo(context.packageName, 0).longVersionCode
+            } else {
+                @Suppress("DEPRECATION")
+                context.packageManager.getPackageInfo(context.packageName, 0).versionCode.toLong()
+            }
+        } catch (_: Exception) {
+            -1L
+        }
+
+        val lastSynced = prefs.getLong(KEY_LAST_SYNCED_VERSION, -1L)
+        if (currentVersion == lastSynced) return  // same version – nothing to clean up
+
+        cleanupOrphanedFavorites(validPhrasesProvider())
+        prefs.edit { putLong(KEY_LAST_SYNCED_VERSION, currentVersion) }
     }
 
     /**
