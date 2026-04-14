@@ -10,13 +10,22 @@ import java.util.Calendar
 
 /**
  * Manages flashcard learning progress with spaced repetition (Anki-like algorithm).
+ *
+ * Progress is stored in a **language-specific** SharedPreferences file so that
+ * each UI language has its own completely independent set of flashcards and review history.
+ * File names follow the pattern "flashcard_prefs_<lang>" (e.g. "flashcard_prefs_en").
  */
 class FlashcardManager(context: Context) {
-    private val prefs: SharedPreferences = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
+    // Derive the prefs file name from the currently active UI language so that
+    // every language gets its own isolated storage.
+    private val prefs: SharedPreferences = run {
+        val lang = LocaleHelper.getSavedLanguage(context)
+        context.getSharedPreferences("${PREFS_BASE}_$lang", Context.MODE_PRIVATE)
+    }
     private val gson = Gson()
 
     companion object {
-        private const val PREFS_NAME = "flashcard_prefs"
+        private const val PREFS_BASE = "flashcard_prefs"
         private const val KEY_FLASHCARDS = "flashcards"
         private const val KEY_SELECTED_CATEGORIES = "selected_categories"
         private const val KEY_LAST_SESSION_DATE = "last_session_date"
