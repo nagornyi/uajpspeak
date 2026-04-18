@@ -22,6 +22,7 @@ import com.arukai.uajpspeak.model.Flashcard
 import com.arukai.uajpspeak.util.FlashcardManager
 import com.arukai.uajpspeak.util.LocaleHelper
 import com.arukai.uajpspeak.util.UkrainianTtsHelper
+import com.arukai.uajpspeak.util.formatStress
 
 /**
  * Fragment for learning flashcards with multiple choice questions.
@@ -224,13 +225,12 @@ class LearnFlashcardsFragment : Fragment() {
         progressBar.progress = index + 1
         progressText.text = "${index + 1} / ${sessionCards.size}"
 
-        // Show Ukrainian phrase
-        val ukrainianClean = card.ukrainian.replace("*", "")
-        currentCardUkrainian = ukrainianClean
-        ukrainianText.text = ukrainianClean.uppercase()
+        // Show Ukrainian phrase — bold the stressed letter, uppercase the rest
+        currentCardUkrainian = card.ukrainian.replace("*", "")
+        ukrainianText.text = formatStress(card.ukrainian.uppercase())
 
         // Show transliteration if available (simplified)
-        transliterationText.text = transliterateUkrainian(ukrainianClean)
+        transliterationText.text = transliterateUkrainian(currentCardUkrainian)
 
         if (isCurrentCardAnswered && currentCardOptions.isNotEmpty()) {
             // ── Restore answered state (returning from Alphabet overlay) ──────────

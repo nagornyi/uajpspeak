@@ -17,6 +17,7 @@ import com.arukai.uajpspeak.util.FavoritePhrase
 import com.arukai.uajpspeak.util.FavoritesManager
 import com.arukai.uajpspeak.util.UkrainianTtsHelper
 import com.arukai.uajpspeak.App
+import com.arukai.uajpspeak.util.formatStress
 
 class ZoomFragment : Fragment() {
     private var tts: UkrainianTtsHelper? = null
@@ -84,8 +85,8 @@ class ZoomFragment : Fragment() {
         val phonetic = args?.getString("phonetic")
 
         sourceView.text = sourceText
-        // Remove asterisks for display (they're only needed for transliteration)
-        ukrainianView.text = ukrainian?.replace("*", "")?.uppercase()
+        // Bold the stressed letter (before *) and uppercase the whole phrase
+        ukrainianView.text = ukrainian?.let { formatStress(it.uppercase()) }
         phoneticView.text = phonetic
 
         // Get current language settings

@@ -8,6 +8,7 @@ import android.widget.Filterable
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.arukai.uajpspeak.App
+import com.arukai.uajpspeak.util.formatStress
 import com.arukai.uajpspeak.R
 import com.arukai.uajpspeak.model.Abecadlo
 import com.arukai.uajpspeak.model.DataObject
@@ -63,7 +64,7 @@ class MyRecyclerViewAdapter(
         // The dataset is already filtered by HomeFragment according to current gender.
         // Bind values directly.
         val firstLine = part2
-        val ukr = part3.replace("*", "")
+        val ukr = formatStress(part3)
         val lang = LocaleHelper.getSavedLanguage(App.appContext)
         val phonetic = if (lang == "ja") abc.convert(part3) else abc.romanize(part3)
 
