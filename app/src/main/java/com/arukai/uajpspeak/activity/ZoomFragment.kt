@@ -1,7 +1,6 @@
 package com.arukai.uajpspeak.activity
 
 import android.os.Bundle
-import android.speech.tts.TextToSpeech
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuItem
@@ -16,29 +15,20 @@ import androidx.lifecycle.Lifecycle
 import com.arukai.uajpspeak.R
 import com.arukai.uajpspeak.util.FavoritePhrase
 import com.arukai.uajpspeak.util.FavoritesManager
+import com.arukai.uajpspeak.util.UkrainianTtsHelper
 import com.arukai.uajpspeak.App
-import java.util.Locale
 
 class ZoomFragment : Fragment() {
-    private var t1: TextToSpeech? = null
+    private var tts: UkrainianTtsHelper? = null
     private var favoritesManager: FavoritesManager? = null
     private var favoriteMenuItem: MenuItem? = null
     private var currentPhrase: FavoritePhrase? = null
-    private var isTtsInitialized = false
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         favoritesManager = FavoritesManager(requireContext())
-
-        // Initialize TextToSpeech once
-        t1 = TextToSpeech(activity?.applicationContext) { status ->
-            if (status == TextToSpeech.SUCCESS) {
-                t1?.language = Locale.Builder().setLanguage("uk").build()
-                t1?.setSpeechRate(1.0f)
-                isTtsInitialized = true
-            }
-        }
+        tts = UkrainianTtsHelper(requireContext())
 
         // Use modern MenuProvider instead of deprecated setHasOptionsMenu
         val menuHost: MenuHost = requireActivity()
@@ -127,14 +117,7 @@ class ZoomFragment : Fragment() {
         phoneticView.setCompoundDrawablesWithIntrinsicBounds(R.drawable.record_voice_over_24px, 0, 0, 0)
 
         val clickListener = View.OnClickListener {
-            if (isTtsInitialized) {
-                // Stop any ongoing speech
-                t1?.stop()
-                // Remove asterisks from Ukrainian text before speaking
-                val cleanUkrainian = ukrainian?.replace("*", "")
-                // Start speaking from the beginning (QUEUE_FLUSH clears the queue)
-                t1?.speak(cleanUkrainian, TextToSpeech.QUEUE_FLUSH, null, null)
-            }
+            tts?.speak(ukrainian ?: "")
         }
         ukrainianView.setOnClickListener(clickListener)
         speakerIcon.setOnClickListener(clickListener)
@@ -178,9 +161,7 @@ class ZoomFragment : Fragment() {
     }
 
     override fun onDestroy() {
-        // Shutdown TextToSpeech to free up resources
-        t1?.stop()
-        t1?.shutdown()
+        tts?.shutdown()
         super.onDestroy()
     }
 

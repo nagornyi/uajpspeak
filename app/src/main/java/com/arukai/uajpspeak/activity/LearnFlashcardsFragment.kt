@@ -21,6 +21,7 @@ import com.arukai.uajpspeak.model.Abecadlo
 import com.arukai.uajpspeak.model.Flashcard
 import com.arukai.uajpspeak.util.FlashcardManager
 import com.arukai.uajpspeak.util.LocaleHelper
+import com.arukai.uajpspeak.util.UkrainianTtsHelper
 
 /**
  * Fragment for learning flashcards with multiple choice questions.
@@ -30,6 +31,7 @@ class LearnFlashcardsFragment : Fragment() {
 
     private lateinit var flashcardManager: FlashcardManager
     private lateinit var abecadlo: Abecadlo
+    private var tts: UkrainianTtsHelper? = null
     private var sessionCards = listOf<Flashcard>()
     private var currentCardIndex = 0
     private var correctAnswersInSession = 0
@@ -39,6 +41,7 @@ class LearnFlashcardsFragment : Fragment() {
     private var isCurrentCardAnswered = false
     private var currentCardAnswerCorrect = false
     private var currentCardSelectedAnswer = ""
+    private var currentCardUkrainian = ""  // original (non-uppercased) Ukrainian text for TTS
 
     private lateinit var progressBar: ProgressBar
     private lateinit var progressText: TextView
@@ -65,6 +68,7 @@ class LearnFlashcardsFragment : Fragment() {
 
         flashcardManager = FlashcardManager(requireContext())
         abecadlo = Abecadlo()
+        tts = UkrainianTtsHelper(requireContext())
 
         // Initialize views
         initializeViews(rootView)
@@ -110,6 +114,11 @@ class LearnFlashcardsFragment : Fragment() {
         return rootView
     }
 
+    override fun onDestroy() {
+        tts?.shutdown()
+        super.onDestroy()
+    }
+
     override fun onResume() {
         super.onResume()
         // Ensure toolbar is properly configured when returning from About/Alphabet
@@ -152,6 +161,11 @@ class LearnFlashcardsFragment : Fragment() {
 
         finishButton.setOnClickListener {
             parentFragmentManager.popBackStack()
+        }
+
+        // Tap the phrase card to hear it spoken
+        phraseCard.setOnClickListener {
+            tts?.speak(currentCardUkrainian)
         }
     }
 
@@ -212,7 +226,8 @@ class LearnFlashcardsFragment : Fragment() {
 
         // Show Ukrainian phrase
         val ukrainianClean = card.ukrainian.replace("*", "")
-        ukrainianText.text = ukrainianClean
+        currentCardUkrainian = ukrainianClean
+        ukrainianText.text = ukrainianClean.uppercase()
 
         // Show transliteration if available (simplified)
         transliterationText.text = transliterateUkrainian(ukrainianClean)

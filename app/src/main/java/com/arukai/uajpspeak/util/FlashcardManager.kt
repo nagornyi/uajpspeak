@@ -53,21 +53,15 @@ class FlashcardManager(context: Context) {
     }
 
     /**
-     * Get or create a flashcard for a phrase.
-     */
-    fun getOrCreateFlashcard(ukrainian: String, translation: String, categoryId: Int): Flashcard {
-        val flashcards = getAllFlashcards()
-        return flashcards.find { it.ukrainian == ukrainian && it.categoryId == categoryId }
-            ?: Flashcard(ukrainian, translation, categoryId)
-    }
-
-    /**
      * Update flashcard after review.
      */
     fun updateFlashcard(flashcard: Flashcard) {
         val flashcards = getAllFlashcards().toMutableList()
         val index = flashcards.indexOfFirst {
-            it.ukrainian == flashcard.ukrainian && it.categoryId == flashcard.categoryId
+            it.ukrainian == flashcard.ukrainian &&
+            it.categoryId == flashcard.categoryId &&
+            (it.gender ?: "n") == (flashcard.gender ?: "n") &&
+            it.translation == flashcard.translation
         }
 
         if (index >= 0) {
@@ -119,42 +113,55 @@ class FlashcardManager(context: Context) {
     }
 
     /**
-     * Create flashcards for all phrases in selected categories if they don't exist.
+     * Create flashcards for all phrases in selected categories if they don't exist,
+     * and remove any stale cards whose phrase no longer matches strings.xml.
+     * This ensures phrase edits (translation, gender, Ukrainian text) are reflected
+     * immediately, even when the app versionCode hasn't changed (e.g. during development).
      */
     fun initializeFlashcardsForCategories(
         context: Context,
         categoryIds: List<Int>,
         allPhrases: Map<Int, Array<String>>
     ) {
-        val existingFlashcards = getAllFlashcards()
-        val newFlashcards = mutableListOf<Flashcard>()
-        
+        val allCards = getAllFlashcards().toMutableList()
+        var changed = false
+
         categoryIds.forEach { categoryId ->
             val phrases = allPhrases[categoryId] ?: return@forEach
-            
+
+            // Build the set of valid keys for this category from the current strings.xml
+            val validKeys = phrases.mapNotNull { phrase ->
+                val parts = phrase.split("/")
+                if (parts.size >= 3) "${parts[0]}/${parts[1]}/${parts[2]}" else null
+            }.toSet()
+
+            // Remove stale cards for this category (phrase was edited or deleted)
+            val staleRemoved = allCards.removeAll { card ->
+                if (card.categoryId != categoryId) return@removeAll false
+                val cardKey = "${card.gender ?: "n"}/${card.translation}/${card.ukrainian}"
+                cardKey !in validKeys
+            }
+            if (staleRemoved) changed = true
+
+            // Add cards for phrases not yet stored
+            val existingKeys = allCards
+                .filter { it.categoryId == categoryId }
+                .map { "${it.gender ?: "n"}/${it.translation}/${it.ukrainian}" }
+                .toSet()
+
             phrases.forEach { phrase ->
                 val parts = phrase.split("/")
                 if (parts.size >= 3) {
-                    val phraseGender = parts[0]  // "m", "f", or "n"
-                    val ukrainian = parts[2]
-                    val translation = parts[1]
-                    
-                    // Check if flashcard already exists (keyed by ukrainian + categoryId + gender)
-                    val exists = existingFlashcards.any {
-                        it.ukrainian == ukrainian && it.categoryId == categoryId 
-                    }
-                    
-                    if (!exists) {
-                        newFlashcards.add(Flashcard(ukrainian, translation, categoryId, phraseGender))
+                    val key = "${parts[0]}/${parts[1]}/${parts[2]}"
+                    if (key !in existingKeys) {
+                        allCards.add(Flashcard(parts[2], parts[1], categoryId, parts[0]))
+                        changed = true
                     }
                 }
             }
         }
-        
-        if (newFlashcards.isNotEmpty()) {
-            val allCards = existingFlashcards + newFlashcards
-            saveFlashcards(allCards)
-        }
+
+        if (changed) saveFlashcards(allCards)
     }
 
     /**
@@ -250,27 +257,16 @@ class FlashcardManager(context: Context) {
     }
 
     /**
-     * Run [syncWithCurrentPhrases] only when the app version has changed since the last sync.
-     * Because strings.xml is compiled into the APK, it can only change between installs,
-     * so there is no need to sync on every launch or view open.
+     * Runs [syncWithCurrentPhrases] when needed:
+     * - Always in debug builds (strings.xml may change without a versionCode bump).
+     * - In release builds, only when the app versionCode has changed since the last sync.
      */
     fun syncIfVersionChanged(context: Context, allPhrases: Map<Int, Array<String>>) {
-        val currentVersion = try {
-            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.P) {
-                context.packageManager.getPackageInfo(context.packageName, 0).longVersionCode
-            } else {
-                @Suppress("DEPRECATION")
-                context.packageManager.getPackageInfo(context.packageName, 0).versionCode.toLong()
-            }
-        } catch (e: Exception) {
-            -1L
+        val isDebug = AppVersionHelper.isDebugBuild(context)
+        if (isDebug || AppVersionHelper.hasVersionChanged(context, prefs, KEY_LAST_SYNCED_VERSION)) {
+            syncWithCurrentPhrases(allPhrases)
+            if (!isDebug) AppVersionHelper.saveCurrentVersion(context, prefs, KEY_LAST_SYNCED_VERSION)
         }
-
-        val lastSynced = prefs.getLong(KEY_LAST_SYNCED_VERSION, -1L)
-        if (currentVersion == lastSynced) return  // same version – nothing to sync
-
-        syncWithCurrentPhrases(allPhrases)
-        prefs.edit { putLong(KEY_LAST_SYNCED_VERSION, currentVersion) }
     }
 
     /**

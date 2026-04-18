@@ -67,30 +67,20 @@ class FavoritesManager(context: Context) {
     }
 
     /**
-     * Run [cleanupOrphanedFavorites] only when the app version has changed since the last run.
-     * The [validPhrasesProvider] lambda is **only invoked** when the version has actually changed,
-     * so the expensive multi-language resource loading is skipped on every normal launch.
+     * Runs [cleanupOrphanedFavorites] when needed:
+     * - Always in debug builds (strings.xml may change without a versionCode bump).
+     * - In release builds, only when the app versionCode has changed since the last run,
+     *   so the expensive multi-language resource loading is skipped on every normal launch.
      */
     fun cleanupIfVersionChanged(
         context: Context,
         validPhrasesProvider: () -> Map<String, Set<String>>
     ) {
-        val currentVersion = try {
-            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.P) {
-                context.packageManager.getPackageInfo(context.packageName, 0).longVersionCode
-            } else {
-                @Suppress("DEPRECATION")
-                context.packageManager.getPackageInfo(context.packageName, 0).versionCode.toLong()
-            }
-        } catch (_: Exception) {
-            -1L
+        val isDebug = AppVersionHelper.isDebugBuild(context)
+        if (isDebug || AppVersionHelper.hasVersionChanged(context, prefs, KEY_LAST_SYNCED_VERSION)) {
+            cleanupOrphanedFavorites(validPhrasesProvider())
+            if (!isDebug) AppVersionHelper.saveCurrentVersion(context, prefs, KEY_LAST_SYNCED_VERSION)
         }
-
-        val lastSynced = prefs.getLong(KEY_LAST_SYNCED_VERSION, -1L)
-        if (currentVersion == lastSynced) return  // same version – nothing to clean up
-
-        cleanupOrphanedFavorites(validPhrasesProvider())
-        prefs.edit { putLong(KEY_LAST_SYNCED_VERSION, currentVersion) }
     }
 
     /**
