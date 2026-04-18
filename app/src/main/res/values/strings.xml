@@ -3,9 +3,11 @@
     <string name="app_name">SayUA</string>
     <string name="app_company">© 2016–2026 Artem Nagornyi</string>
     <string name="made_with_love">Made with ❤️ for Ukrainian language learners and tourists</string>
+    <string name="action_toc">Table of Contents</string>
+    <string name="rate_this_app">Rate this app on Google Play</string>
     <string name="app_name_ua">Ukrainian Phrasebook</string>
     <string name="action_about">About this app</string>
-    <string name="action_alphabet">Ukrainian Alphabet</string>
+    <string name="action_alphabet">Ukrainian Grammar</string>
     <string name="action_favorite">Add to Favourites</string>
     <string name="action_buy_pro">Upgrade to Full Version</string>
     <string name="action_gender_lang">Male/Female Speech</string>
@@ -17,7 +19,7 @@
     <string name="drawer_open">Open</string>
     <string name="drawer_close">Close</string>
     <string name="title_about">About this app</string>
-    <string name="title_alphabet">Alphabet</string>
+    <string name="title_alphabet">Ukrainian Grammar</string>
     <string name="phrases_counter">%d phrases</string>
     <string name="text_to_speech">Text to speech</string>
 

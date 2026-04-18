@@ -3,9 +3,11 @@
     <string name="app_name">SayUA</string>
     <string name="app_company">© 2016–2026 Artem Nagornyi</string>
     <string name="made_with_love">ウクライナ語学習者と旅行者のために❤️を込めて作られました</string>
+    <string name="action_toc">目次</string>
+    <string name="rate_this_app">Google Playでレビューする</string>
     <string name="app_name_ua">ウクライナ語会話集</string>
     <string name="action_about">このアプリについて</string>
-    <string name="action_alphabet">ウクライナ語アルファベット</string>
+    <string name="action_alphabet">ウクライナ語文法</string>
     <string name="action_favorite">お気に入りに追加</string>
     <string name="action_buy_pro">フルバージョンにアップグレードする</string>
     <string name="action_gender_lang">男言葉・女言葉</string>
@@ -17,7 +19,7 @@
     <string name="drawer_open">開</string>
     <string name="drawer_close">閉</string>
     <string name="title_about">このアプリについて</string>
-    <string name="title_alphabet">アルファベット</string>
+    <string name="title_alphabet">ウクライナ語文法</string>
     <string name="phrases_counter">%d フレーズ</string>
     <string name="text_to_speech">テキスト読み上げ</string>
 

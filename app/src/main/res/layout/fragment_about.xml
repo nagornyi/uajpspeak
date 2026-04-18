@@ -66,6 +66,17 @@
         android:layout_marginBottom="20dp"
         android:scaleType="fitCenter" />
 
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/rateButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/rate_this_app"
+        android:layout_above="@+id/madeWithLoveText"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="20dp"
+        app:icon="@drawable/star_rate_24px"
+        app:iconGravity="textStart" />
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

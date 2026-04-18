@@ -33,6 +33,7 @@ import androidx.fragment.app.Fragment
 import com.arukai.uajpspeak.R
 import com.arukai.uajpspeak.util.FavoritesManager
 import com.arukai.uajpspeak.util.LocaleHelper
+import com.arukai.uajpspeak.util.RatingPromptManager
 import com.google.android.gms.ads.MobileAds
 import com.google.android.material.navigation.NavigationView
 import java.util.Locale
@@ -776,6 +777,11 @@ class MainActivity : AppCompatActivity(), TextToSpeech.OnInitListener, Navigatio
             drawerToggle.isDrawerIndicatorEnabled = false
         }
         drawerToggle.syncState()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        RatingPromptManager.onAppLaunched(this)
     }
 
     override fun onDestroy() {

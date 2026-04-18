@@ -32,7 +32,7 @@
     </string-array>
 
     <string-array name="signs">
-        <item>n/Open door/ВІДЧИ*НЕНО</item>
+        <item>n/Open/ВІДЧИ*НЕНО</item>
         <item>n/Closed/ЗАЧИ*НЕНО</item>
         <item>n/Entrance/ВХІД</item>
         <item>n/Exit/ВИ*ХІД</item>
@@ -126,7 +126,7 @@
         <item>n/17 (seventeen)/сімна*дцять</item>
         <item>n/18 (eighteen)/вісімна*дцять</item>
         <item>n/19 (nineteen)/дев\'ятна*дцять</item>
-        <item>n/20 (twelve)/два*дцять</item>
+        <item>n/20 (twenty)/два*дцять</item>
         <item>n/21 (twenty-one)/два*дцять оди*н</item>
         <item>n/22 (twenty-two)/два*дцять два*</item>
         <item>n/23 (twenty-three)/два*дцять три*</item>
@@ -217,7 +217,7 @@
         <item>n/October/жо*втень</item>
         <item>n/November/листопа*д</item>
         <item>n/December/гру*день</item>
-        <item>n/Tuesday, March 24, 2005/вівто*рок, два*дцять четве*рте бе*резня дві* ти*сячі п\'я*того ро*ку</item>
+        <item>n/Thursday, March 24, 2005/четве*р, два*дцять четве*рте бе*резня дві* ти*сячі п\'я*того ро*ку</item>
     </string-array>
 
     <string-array name="colors">

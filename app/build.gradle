@@ -6,8 +6,8 @@ android {
         compileSdkVersion 36
         minSdkVersion 23
         targetSdkVersion 36
-        versionCode 26
-        versionName "4.8"
+        versionCode 27
+        versionName "4.9"
         resValue "string", "app_version", "Version ${versionName}"
     }
     buildTypes {
@@ -38,10 +38,12 @@ dependencies {
     implementation 'androidx.recyclerview:recyclerview:1.4.0'
     implementation 'androidx.cardview:cardview:1.0.0'
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-    implementation 'androidx.core:core-ktx:1.17.0'
-    implementation 'com.google.android.gms:play-services-ads:24.9.0'
+    implementation 'androidx.core:core-ktx:1.18.0'
+    implementation 'com.google.android.gms:play-services-ads:25.2.0'
     implementation 'com.google.code.gson:gson:2.13.2'
     implementation 'com.google.android.material:material:1.13.0'
+    implementation 'com.google.android.play:review:2.0.2'
+    implementation 'com.google.android.play:review-ktx:2.0.2'
 }
 
 java {

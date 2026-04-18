@@ -5,41 +5,17 @@
     android:layout_height="match_parent"
     tools:context="com.arukai.uajpspeak.activity.AlphabetFragment">
 
-    <ScrollView
-        android:id="@+id/alphabetScroller"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:scrollbars="vertical"
-        android:fillViewport="true">
+    <WebView
+        android:id="@+id/alphabetWebView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="invisible" />
 
-        <RelativeLayout
-            android:id="@+id/abetkaLayout"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/abetkaImg"
-                android:src="@drawable/abetka"
-                android:layout_alignParentTop="true"
-                android:layout_margin="10dp"
-                android:adjustViewBounds="true"
-                android:layout_centerHorizontal="true" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/alphabetText"
-                android:textSize="14sp"
-                android:layout_centerHorizontal="true"
-                android:layout_below="@+id/abetkaImg"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:layout_marginBottom="10dp" />
-
-        </RelativeLayout>
-    </ScrollView>
+    <ProgressBar
+        android:id="@+id/alphabetProgress"
+        style="@android:style/Widget.ProgressBar.Large"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:layout_centerInParent="true" />
 
 </RelativeLayout>

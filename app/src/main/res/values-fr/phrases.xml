@@ -31,7 +31,7 @@
     </string-array>
 
     <string-array name="signs">
-        <item>n/Porte ouverte/ВІДЧИ*НЕНО</item>
+        <item>n/Ouvert/ВІДЧИ*НЕНО</item>
         <item>n/Fermé/ЗАЧИ*НЕНО</item>
         <item>n/Entrée/ВХІД</item>
         <item>n/Sortie/ВИ*ХІД</item>
@@ -216,7 +216,7 @@
         <item>n/Octobre/жо*втень</item>
         <item>n/Novembre/листопа*д</item>
         <item>n/Décembre/гру*день</item>
-        <item>n/Mardi 24 mars 2005/вівто*рок, два*дцять четве*рте бе*резня дві* ти*сячі п\'я*того ро*ку</item>
+        <item>n/Jeudi 24 mars 2005/четве*р, два*дцять четве*рте бе*резня дві* ти*сячі п\'я*того ро*ку</item>
     </string-array>
 
     <string-array name="colors">

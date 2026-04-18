@@ -11,10 +11,18 @@
         app:showAsAction="ifRoom" />
 
     <item
+        android:id="@+id/action_toc"
+        android:title="@string/action_toc"
+        android:orderInCategory="210"
+        android:icon="@drawable/density_medium_24px"
+        android:visible="false"
+        app:showAsAction="ifRoom" />
+
+    <item
         android:id="@+id/action_alphabet"
         android:title="@string/action_alphabet"
         android:orderInCategory="200"
-        android:icon="@drawable/help_24px"
+        android:icon="@drawable/book_3_24px"
         app:showAsAction="ifRoom" />
 
     <item
