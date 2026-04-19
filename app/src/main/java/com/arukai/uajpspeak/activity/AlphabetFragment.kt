@@ -14,6 +14,7 @@ import android.widget.ArrayAdapter
 import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
+import androidx.core.text.HtmlCompat
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
@@ -21,6 +22,8 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import com.arukai.uajpspeak.R
 import com.arukai.uajpspeak.util.LocaleHelper
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.AdView
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -78,6 +81,9 @@ class AlphabetFragment : Fragment() {
 
         val webView  = rootView.findViewById<WebView>(R.id.alphabetWebView)
         val progress = rootView.findViewById<ProgressBar>(R.id.alphabetProgress)
+
+        // Load ad
+        rootView.findViewById<AdView>(R.id.adView).loadAd(AdRequest.Builder().build())
         webViewRef = webView
 
         webView.setLayerType(View.LAYER_TYPE_HARDWARE, null)
@@ -138,7 +144,10 @@ class AlphabetFragment : Fragment() {
         )
         textRegex.findAll(rawHtml).forEach { m ->
             val level   = m.groupValues[1].lowercase()
-            val rawText = m.groupValues[2].replace(Regex("<[^>]+>"), "").trim()
+            val rawText = HtmlCompat.fromHtml(
+                m.groupValues[2].replace(Regex("<[^>]+>"), ""),
+                HtmlCompat.FROM_HTML_MODE_LEGACY
+            ).toString().trim()
             if (rawText.isNotEmpty()) {
                 items.add(TocItem("section-${counter++}", level, rawText))
             }
@@ -160,21 +169,24 @@ class AlphabetFragment : Fragment() {
         if (tocItems.isEmpty()) return
         val ctx = requireContext()
 
-        val ta = ctx.obtainStyledAttributes(
-            intArrayOf(android.R.attr.textColorPrimary, android.R.attr.textColorSecondary)
-        )
-        val colorPrimary   = ta.getColor(0, android.graphics.Color.BLACK)
-        val colorSecondary = ta.getColor(1, android.graphics.Color.GRAY)
-        ta.recycle()
+        fun resolveColor(attr: Int, fallback: Int): Int {
+            val tv = TypedValue()
+            return if (ctx.theme.resolveAttribute(attr, tv, true)) {
+                if (tv.resourceId != 0) ctx.resources.getColor(tv.resourceId, ctx.theme) else tv.data
+            } else fallback
+        }
 
-        // Resolve divider colour from theme
-        val divTa = ctx.obtainStyledAttributes(intArrayOf(android.R.attr.listDivider))
-        val dividerDrawable = divTa.getDrawable(0)
-        divTa.recycle()
+        val colorPrimary   = resolveColor(android.R.attr.textColorPrimary,   android.graphics.Color.BLACK)
+        val colorSecondary = resolveColor(android.R.attr.textColorSecondary, android.graphics.Color.GRAY)
+
+        // Resolve divider drawable from theme
+        val divTv = TypedValue()
+        val dividerDrawable = if (ctx.theme.resolveAttribute(android.R.attr.listDivider, divTv, true) && divTv.resourceId != 0)
+            androidx.core.content.res.ResourcesCompat.getDrawable(ctx.resources, divTv.resourceId, ctx.theme) else null
 
         // Prepend a sentinel divider item so the list has clear separation from the title
-        val DIVIDER_ID = "__divider__"
-        val displayItems = listOf(TocItem(DIVIDER_ID, "divider", "")) + tocItems
+        val dividerId = "__divider__"
+        val displayItems = listOf(TocItem(dividerId, "divider", "")) + tocItems
 
         val adapter = object : ArrayAdapter<TocItem>(ctx, 0, displayItems) {
 
@@ -202,7 +214,7 @@ class AlphabetFragment : Fragment() {
                         ViewGroup.LayoutParams.MATCH_PARENT, (1 * dp).toInt().coerceAtLeast(1)
                     )
                     dividerDrawable?.let { v.background = it }
-                        ?: v.setBackgroundColor(colorSecondary and 0x40FFFFFF.toInt())
+                        ?: v.setBackgroundColor(colorSecondary and 0x40FFFFFF)
                     return v
                 }
 
@@ -284,3 +296,4 @@ class AlphabetFragment : Fragment() {
         }
     }
 }
+

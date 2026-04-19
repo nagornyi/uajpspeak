@@ -23,6 +23,8 @@ import com.arukai.uajpspeak.util.FlashcardManager
 import com.arukai.uajpspeak.util.LocaleHelper
 import com.arukai.uajpspeak.util.UkrainianTtsHelper
 import com.arukai.uajpspeak.util.formatStress
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.AdView
 
 /**
  * Fragment for learning flashcards with multiple choice questions.
@@ -70,6 +72,9 @@ class LearnFlashcardsFragment : Fragment() {
         flashcardManager = FlashcardManager(requireContext())
         abecadlo = Abecadlo()
         tts = UkrainianTtsHelper(requireContext())
+
+        // Load ad
+        rootView.findViewById<AdView>(R.id.adView).loadAd(AdRequest.Builder().build())
 
         // Initialize views
         initializeViews(rootView)
@@ -193,7 +198,6 @@ class LearnFlashcardsFragment : Fragment() {
 
         // Build learning session
         sessionCards = flashcardManager.buildLearningSession(
-            requireContext(),
             categoryIds,
             phrasesMap,
             currentGender = currentGender(),
@@ -223,14 +227,14 @@ class LearnFlashcardsFragment : Fragment() {
         // Update progress – use index+1 so bar and "x / y" counter always match
         progressBar.max = sessionCards.size
         progressBar.progress = index + 1
-        progressText.text = "${index + 1} / ${sessionCards.size}"
+        progressText.text = getString(R.string.flashcard_progress, index + 1, sessionCards.size)
 
         // Show Ukrainian phrase — bold the stressed letter, uppercase the rest
         currentCardUkrainian = card.ukrainian.replace("*", "")
         ukrainianText.text = formatStress(card.ukrainian.uppercase())
 
-        // Show transliteration if available (simplified)
-        transliterationText.text = transliterateUkrainian(currentCardUkrainian)
+        // Pass raw Ukrainian (with * intact) so Japanese kana gets the ー long-vowel mark
+        transliterationText.text = transliterateUkrainian(card.ukrainian)
 
         if (isCurrentCardAnswered && currentCardOptions.isNotEmpty()) {
             // ── Restore answered state (returning from Alphabet overlay) ──────────
@@ -253,16 +257,16 @@ class LearnFlashcardsFragment : Fragment() {
             for (i in 0 until optionsContainer.childCount) {
                 val btn = optionsContainer.getChildAt(i) as? Button ?: continue
                 btn.isEnabled = false
-                when {
-                    btn.text == currentCardSelectedAnswer && currentCardAnswerCorrect -> {
+                when (btn.text) {
+                    currentCardSelectedAnswer if currentCardAnswerCorrect -> {
                         btn.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.correct_answer))
                         btn.setTextColor(ContextCompat.getColor(requireContext(), android.R.color.white))
                     }
-                    btn.text == currentCardSelectedAnswer && !currentCardAnswerCorrect -> {
+                    currentCardSelectedAnswer if !currentCardAnswerCorrect -> {
                         btn.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.wrong_answer))
                         btn.setTextColor(ContextCompat.getColor(requireContext(), android.R.color.white))
                     }
-                    btn.text == card.translation && !currentCardAnswerCorrect -> {
+                    card.translation if !currentCardAnswerCorrect -> {
                         // Highlight the correct answer when the user picked wrong
                         btn.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.correct_answer))
                         btn.setTextColor(ContextCompat.getColor(requireContext(), android.R.color.white))
@@ -485,12 +489,11 @@ class LearnFlashcardsFragment : Fragment() {
      */
     private fun transliterateUkrainian(text: String): String {
         val currentLang = LocaleHelper.getSavedLanguage(requireContext())
-
         return if (currentLang == "ja") {
-            // Use Japanese katakana conversion for Japanese users
+            // Pass text with * intact — Abecadlo.convert() maps * → ー (long vowel mark)
             abecadlo.convert(text)
         } else {
-            // Use romanization for all other languages
+            // Romanizer strips * via roman_spc mapping
             abecadlo.romanize(text)
         }
     }

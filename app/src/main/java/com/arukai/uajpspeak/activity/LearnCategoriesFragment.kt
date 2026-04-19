@@ -17,6 +17,8 @@ import androidx.lifecycle.Lifecycle
 import com.arukai.uajpspeak.R
 import com.arukai.uajpspeak.model.LearnCategory
 import com.arukai.uajpspeak.util.FlashcardManager
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.AdView
 
 /**
  * Fragment for selecting phrase categories to learn with flashcards.
@@ -37,6 +39,9 @@ class LearnCategoriesFragment : Fragment() {
         val rootView = inflater.inflate(R.layout.fragment_learn_categories, container, false)
 
         flashcardManager = FlashcardManager(requireContext())
+
+        // Load ad
+        rootView.findViewById<AdView>(R.id.adView).loadAd(AdRequest.Builder().build())
 
         // Sync stored flashcards with the current strings.xml before reading stats.
         // Builds the full phrase map for all categories and passes it to the sync.
@@ -119,6 +124,9 @@ class LearnCategoriesFragment : Fragment() {
                 )
             )
         }
+
+        // Sort: started categories (totalPhrases > 0) first, not-started last
+        categories.sortWith(compareByDescending { it.totalPhrases > 0 })
     }
 
     private fun setupCategoriesList(rootView: View) {
@@ -179,7 +187,7 @@ class LearnCategoriesFragment : Fragment() {
             }
 
             statsText.text = statsBuilder.toString()
-            progressText.text = "$progress%"
+            progressText.text = getString(R.string.learn_category_progress, progress)
             progressText.setTextColor(color)
         } else {
             // Not started yet - no indicator bar

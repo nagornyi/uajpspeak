@@ -6,7 +6,6 @@ import androidx.core.content.edit
 import com.arukai.uajpspeak.model.Flashcard
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import java.util.Calendar
 
 /**
  * Manages flashcard learning progress with spaced repetition (Anki-like algorithm).
@@ -27,9 +26,6 @@ class FlashcardManager(context: Context) {
     companion object {
         private const val PREFS_BASE = "flashcard_prefs"
         private const val KEY_FLASHCARDS = "flashcards"
-        private const val KEY_SELECTED_CATEGORIES = "selected_categories"
-        private const val KEY_LAST_SESSION_DATE = "last_session_date"
-        private const val KEY_NEW_CARDS_TODAY = "new_cards_today"
         private const val KEY_LAST_SYNCED_VERSION = "last_synced_version"
     }
 
@@ -106,20 +102,12 @@ class FlashcardManager(context: Context) {
     }
 
     /**
-     * Get learned (mastered) flashcards.
-     */
-    fun getLearnedFlashcards(categoryIds: List<Int>, currentGender: String = "m"): List<Flashcard> {
-        return getFlashcardsForCategories(categoryIds, currentGender).filter { it.isLearned() }
-    }
-
-    /**
      * Create flashcards for all phrases in selected categories if they don't exist,
      * and remove any stale cards whose phrase no longer matches strings.xml.
      * This ensures phrase edits (translation, gender, Ukrainian text) are reflected
      * immediately, even when the app versionCode hasn't changed (e.g. during development).
      */
     fun initializeFlashcardsForCategories(
-        context: Context,
         categoryIds: List<Int>,
         allPhrases: Map<Int, Array<String>>
     ) {
@@ -165,25 +153,6 @@ class FlashcardManager(context: Context) {
     }
 
     /**
-     * Get selected category IDs for learning.
-     */
-    fun getSelectedCategories(): Set<Int> {
-        val json = prefs.getString(KEY_SELECTED_CATEGORIES, null) ?: return emptySet()
-        val type = object : TypeToken<Set<Int>>() {}.type
-        return gson.fromJson(json, type)
-    }
-
-    /**
-     * Save selected categories.
-     */
-    fun saveSelectedCategories(categoryIds: Set<Int>) {
-        val json = gson.toJson(categoryIds)
-        prefs.edit {
-            putString(KEY_SELECTED_CATEGORIES, json)
-        }
-    }
-
-    /**
      * Get statistics for a category, filtered by the user's gender setting.
      * Returns Triple(total, learned, due).
      */
@@ -196,47 +165,11 @@ class FlashcardManager(context: Context) {
     }
 
     /**
-     * Reset daily new cards counter if it's a new day.
-     */
-    private fun checkAndResetDailyCounter() {
-        // Use Calendar to get local date
-        val calendar = Calendar.getInstance()
-        val today = calendar.get(Calendar.YEAR) * 1000 + calendar.get(Calendar.DAY_OF_YEAR)
-        val lastSessionDay = prefs.getLong(KEY_LAST_SESSION_DATE, 0)
-        
-        if (today.toLong() != lastSessionDay) {
-            prefs.edit {
-                putLong(KEY_LAST_SESSION_DATE, today.toLong())
-                putInt(KEY_NEW_CARDS_TODAY, 0)
-            }
-        }
-    }
-
-    /**
-     * Get number of new cards shown today.
-     */
-    fun getNewCardsToday(): Int {
-        checkAndResetDailyCounter()
-        return prefs.getInt(KEY_NEW_CARDS_TODAY, 0)
-    }
-
-    /**
-     * Increment new cards counter.
-     */
-    fun incrementNewCardsToday() {
-        val current = getNewCardsToday()
-        prefs.edit {
-            putInt(KEY_NEW_CARDS_TODAY, current + 1)
-        }
-    }
-
-    /**
      * Build a learning session with prioritized flashcards, filtered by gender.
      * Priority: 1) Due cards (previously reviewed, scheduled for re-review),
      *           2) New cards (never reviewed), limited to [maxNewCards] per session.
      */
     fun buildLearningSession(
-        context: Context,
         categoryIds: List<Int>,
         allPhrases: Map<Int, Array<String>>,
         currentGender: String = "m",
@@ -244,7 +177,7 @@ class FlashcardManager(context: Context) {
         maxNewCards: Int = 10
     ): List<Flashcard> {
         // Initialize flashcards for selected categories if needed
-        initializeFlashcardsForCategories(context, categoryIds, allPhrases)
+        initializeFlashcardsForCategories(categoryIds, allPhrases)
 
         val dueCards = getDueFlashcards(categoryIds, currentGender).shuffled()
         val newCards = getNewFlashcards(categoryIds, currentGender).shuffled()
@@ -347,15 +280,6 @@ class FlashcardManager(context: Context) {
     }
 
     /**
-     * Delete flashcards for a specific category.
-     */
-    fun deleteFlashcardsForCategory(categoryId: Int) {
-        val flashcards = getAllFlashcards().toMutableList()
-        flashcards.removeAll { it.categoryId == categoryId }
-        saveFlashcards(flashcards)
-    }
-
-    /**
      * Get overall statistics, filtered by gender.
      */
     fun getOverallStats(currentGender: String = "m"): Map<String, Int> {
@@ -368,9 +292,3 @@ class FlashcardManager(context: Context) {
         )
     }
 }
-
-
-
-
-
-

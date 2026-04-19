@@ -1,9 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:ads="http://schemas.android.com/apk/res-auto"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="?android:attr/windowBackground">
+
+    <!-- Ad separator line -->
+    <View
+        android:id="@+id/adSeparator"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_above="@+id/adContainer"
+        android:background="@color/ad_separator" />
+
+    <!-- Ad banner pinned to bottom -->
+    <LinearLayout
+        android:id="@+id/adContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="60dp"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/ad_placeholder_background"
+        android:padding="4dp"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <com.google.android.gms.ads.AdView
+            android:id="@+id/adView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            ads:adSize="BANNER"
+            ads:adUnitId="@string/zoom_screen_ad_id" />
+
+    </LinearLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/adSeparator">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -40,7 +76,7 @@
                     android:id="@+id/sessionProgressText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="0 / 20"
+                    android:text="@string/flashcards_progress_counter_placeholder"
                     android:textSize="14sp"
                     android:textColor="?android:attr/textColorPrimary" />
 
@@ -215,7 +251,9 @@
 
     </androidx.cardview.widget.CardView>
 
-</FrameLayout>
+    </FrameLayout>
+
+</RelativeLayout>
 
 
 

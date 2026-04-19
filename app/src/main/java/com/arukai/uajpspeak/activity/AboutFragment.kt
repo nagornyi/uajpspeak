@@ -1,7 +1,6 @@
 package com.arukai.uajpspeak.activity
 
 import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.Menu
@@ -14,6 +13,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import com.arukai.uajpspeak.R
 import com.google.android.material.button.MaterialButton
+import androidx.core.net.toUri
 
 class AboutFragment : Fragment() {
 
@@ -51,10 +51,10 @@ class AboutFragment : Fragment() {
     private fun openPlayStore() {
         val packageName = requireContext().packageName
         try {
-            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=$packageName")))
-        } catch (e: android.content.ActivityNotFoundException) {
+            startActivity(Intent(Intent.ACTION_VIEW, "market://details?id=$packageName".toUri()))
+        } catch (_: android.content.ActivityNotFoundException) {
             startActivity(Intent(Intent.ACTION_VIEW,
-                Uri.parse("https://play.google.com/store/apps/details?id=$packageName")))
+                "https://play.google.com/store/apps/details?id=$packageName".toUri()))
         }
     }
 

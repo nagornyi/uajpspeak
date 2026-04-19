@@ -65,28 +65,11 @@ data class Flashcard(
     fun isDue(): Boolean = System.currentTimeMillis() >= nextReviewDate
 
     /**
-     * Get learning progress as percentage.
-     */
-    fun getProgress(): Int {
-        return if (totalReviews == 0) 0
-        else ((correctReviews.toFloat() / totalReviews) * 100).toInt()
-    }
-
-    /**
      * Check if flashcard is "learned" (mastered).
      * Considered learned if: repetitions >= 3 and interval >= 21 days
      */
     fun isLearned(): Boolean = repetitions >= 3 && interval >= 21
 }
-
-/**
- * Represents a learning session configuration.
- */
-data class LearningSession(
-    val categoryIds: List<Int>,  // Categories to include in this session
-    val maxCards: Int = 20,      // Maximum cards per session
-    val newCardsPerDay: Int = 10 // Maximum new cards to introduce per day
-)
 
 /**
  * Category selection state for learning.

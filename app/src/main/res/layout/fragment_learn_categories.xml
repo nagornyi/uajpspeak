@@ -1,64 +1,102 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:ads="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fillViewport="true"
     android:background="?android:attr/windowBackground">
 
+    <!-- Ad separator line -->
+    <View
+        android:id="@+id/adSeparator"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_above="@+id/adContainer"
+        android:background="@color/ad_separator" />
+
+    <!-- Ad banner pinned to bottom -->
     <LinearLayout
+        android:id="@+id/adContainer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="16dp">
+        android:minHeight="60dp"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/ad_placeholder_background"
+        android:padding="4dp"
+        android:gravity="center"
+        android:orientation="vertical">
 
-        <!-- Header -->
-        <TextView
+        <com.google.android.gms.ads.AdView
+            android:id="@+id/adView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/learn_categories_header"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            android:paddingBottom="8dp"
-            android:textColor="?android:attr/textColorPrimary" />
+            android:layout_gravity="center"
+            ads:adSize="BANNER"
+            ads:adUnitId="@string/main_screen_ad_id" />
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/learn_categories_description"
-            android:textSize="14sp"
-            android:paddingBottom="16dp"
-            android:textColor="?android:attr/textColorSecondary" />
+    </LinearLayout>
 
-        <!-- Overall Stats -->
-        <TextView
-            android:id="@+id/overallStats"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text=""
-            android:textSize="14sp"
-            android:paddingBottom="16dp"
-            android:textColor="?android:attr/textColorPrimary"
-            android:textStyle="italic" />
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/adSeparator"
+        android:fillViewport="true">
 
-        <!-- Categories List -->
         <LinearLayout
-            android:id="@+id/categoriesContainer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:paddingBottom="16dp" />
+            android:padding="16dp">
 
-        <!-- Start Learning Button -->
-        <Button
-            android:id="@+id/startLearningButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/start_learning"
-            android:textSize="16sp"
-            android:padding="16dp"
-            android:layout_marginTop="8dp"
-            android:enabled="false" />
+            <!-- Header -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/learn_categories_header"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:paddingBottom="8dp"
+                android:textColor="?android:attr/textColorPrimary" />
 
-    </LinearLayout>
-</ScrollView>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/learn_categories_description"
+                android:textSize="14sp"
+                android:paddingBottom="16dp"
+                android:textColor="?android:attr/textColorSecondary" />
+
+            <!-- Overall Stats -->
+            <TextView
+                android:id="@+id/overallStats"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:textSize="14sp"
+                android:paddingBottom="8dp"
+                android:textColor="?android:attr/textColorPrimary"
+                android:textStyle="italic" />
+
+            <!-- Start Learning Button (above the list) — fixed 2-line height so it never shifts content below -->
+            <Button
+                android:id="@+id/startLearningButton"
+                android:layout_width="match_parent"
+                android:layout_height="72dp"
+                android:text="@string/start_learning"
+                android:textSize="16sp"
+                android:minLines="2"
+                android:maxLines="2"
+                android:layout_marginBottom="12dp"
+                android:enabled="false" />
+
+            <!-- Categories List -->
+            <LinearLayout
+                android:id="@+id/categoriesContainer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingBottom="16dp" />
+
+        </LinearLayout>
+    </ScrollView>
+
+</RelativeLayout>

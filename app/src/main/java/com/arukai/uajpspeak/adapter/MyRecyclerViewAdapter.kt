@@ -23,7 +23,6 @@ class MyRecyclerViewAdapter(
     private var myClickListener: MyClickListener? = null
 
     companion object {
-        private const val LOG_TAG = "MyRecyclerViewAdapter"
         private val abc = Abecadlo()
     }
 
@@ -57,7 +56,7 @@ class MyRecyclerViewAdapter(
     }
 
     override fun onBindViewHolder(holder: DataObjectHolder, position: Int) {
-        val part1 = mDataset[position].mText1
+        mDataset[position].mText1
         val part2 = mDataset[position].mText2
         val part3 = mDataset[position].mText3
 
@@ -82,16 +81,6 @@ class MyRecyclerViewAdapter(
         }
         holder.firstRow.setCompoundDrawablesWithIntrinsicBounds(firstFlagRes, 0, 0, 0)
         holder.secondRow.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ua, 0, 0, 0)
-    }
-
-    fun addItem(dataObj: DataObject, index: Int) {
-        mDataset.add(index, dataObj)
-        notifyItemInserted(index)
-    }
-
-    fun deleteItem(index: Int) {
-        mDataset.removeAt(index)
-        notifyItemRemoved(index)
     }
 
     override fun getItemCount(): Int = mDataset.size

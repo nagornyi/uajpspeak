@@ -54,7 +54,7 @@ class FavouritesFragment : Fragment() {
         for (arrayId in MainActivity.ALL_PHRASE_ARRAY_IDS) {
             val phrases = resources.getStringArray(arrayId)
             for (phrase in phrases) {
-                val parts = phrase.split("/")
+                val parts = phrase.split("/", limit = 3)
                 if (parts.size >= 3) {
                     val ukrainian = parts[2]
                     // Map Ukrainian text to full phrase string
@@ -79,7 +79,7 @@ class FavouritesFragment : Fragment() {
         for (fav in favorites) {
             val fullPhrase = ukrainianToPhraseMap[fav.ukrainian]
             if (fullPhrase != null) {
-                val parts = fullPhrase.split("/")
+                val parts = fullPhrase.split("/", limit = 3)
                 if (parts.size >= 3) {
                     val gender = parts[0]
                     val sourceText = parts[1]

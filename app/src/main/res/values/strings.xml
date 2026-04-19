@@ -103,6 +103,8 @@
     <string name="select_categories_prompt">Select at least one category</string>
     <string name="select_translation">Select the correct translation:</string>
     <string name="next_card">Next Card</string>
+    <string name="flashcard_progress" translatable="false">%1$d / %2$d</string>
+    <string name="learn_category_progress" translatable="false">%d%%</string>
     <string name="feedback_correct">Correct! Well done!</string>
     <string name="feedback_wrong">Incorrect. The correct answer is: %s</string>
     <string name="session_complete">Session Complete!</string>
@@ -111,6 +113,8 @@
     <string name="finish_learning">Finish</string>
     <string name="no_cards_available">No cards available</string>
     <string name="no_cards_message">Great job! You\'ve reviewed all due cards for today.\n\nCome back tomorrow for more practice, or add more categories to learn.</string>
+    <string name="flashcards_progress_counter_placeholder" translatable="false">0 / 20</string>
+    <string name="flashcards_category_progress_pct_placeholder" translatable="false">0%</string>
 
     <!-- Plurals -->
     <plurals name="cards_due_for_review">

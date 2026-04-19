@@ -3,6 +3,7 @@ package com.arukai.uajpspeak.util
 import android.app.Activity
 import android.content.Context
 import com.google.android.play.core.review.ReviewManagerFactory
+import androidx.core.content.edit
 
 /**
  * Manages the timing of the in-app rating prompt.
@@ -37,12 +38,12 @@ object RatingPromptManager {
 
         // Record first launch date
         if (!prefs.contains(KEY_FIRST_LAUNCH_DATE)) {
-            prefs.edit().putLong(KEY_FIRST_LAUNCH_DATE, now).apply()
+            prefs.edit { putLong(KEY_FIRST_LAUNCH_DATE, now) }
         }
 
         // Increment launch count
         val count = prefs.getInt(KEY_LAUNCH_COUNT, 0) + 1
-        prefs.edit().putInt(KEY_LAUNCH_COUNT, count).apply()
+        prefs.edit { putInt(KEY_LAUNCH_COUNT, count) }
 
         val firstLaunch = prefs.getLong(KEY_FIRST_LAUNCH_DATE, now)
         val lastPrompt = prefs.getLong(KEY_LAST_PROMPT_DATE, 0L)
@@ -57,10 +58,10 @@ object RatingPromptManager {
                 && daysSinceLastPrompt >= REPEAT_DAYS
 
         if (shouldPrompt) {
-            prefs.edit()
-                .putLong(KEY_LAST_PROMPT_DATE, now)
-                .putInt(KEY_PROMPT_COUNT, promptCount + 1)
-                .apply()
+            prefs.edit {
+                putLong(KEY_LAST_PROMPT_DATE, now)
+                    .putInt(KEY_PROMPT_COUNT, promptCount + 1)
+            }
             launchReviewFlow(activity)
         }
     }

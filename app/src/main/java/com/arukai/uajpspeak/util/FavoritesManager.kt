@@ -84,7 +84,7 @@ class FavoritesManager(context: Context) {
     }
 
     /**
-     * Remove favorited phrases that no longer exist in the app's phrase arrays.
+     * Remove favourited phrases that no longer exist in the app's phrase arrays.
      * This should be called on app startup to clean up orphaned favorites.
      *
      * @param validUkrainianPhrases Map of language code to set of valid Ukrainian phrases for that language

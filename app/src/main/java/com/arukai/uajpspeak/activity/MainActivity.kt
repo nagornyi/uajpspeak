@@ -753,7 +753,7 @@ class MainActivity : AppCompatActivity(), TextToSpeech.OnInitListener, Navigatio
             drawerToggle.setToolbarNavigationClickListener { onBackPressedDispatcher.onBackPressed() }
         } else {
             drawerToggle.isDrawerIndicatorEnabled = true
-            drawerToggle.setToolbarNavigationClickListener(null)
+            drawerToggle.toolbarNavigationClickListener = null
         }
         drawerToggle.syncState()
     }

@@ -10,9 +10,9 @@ class Abecadlo {
     private val spc = LinkedHashMap<String, String>()
 
     // Romanization maps
-    private val roman_hol = LinkedHashMap<String, String>()
-    private val roman_prh = LinkedHashMap<String, String>()
-    private val roman_spc = LinkedHashMap<String, String>()
+    private val romanHol = LinkedHashMap<String, String>()
+    private val romanPrh = LinkedHashMap<String, String>()
+    private val romanSpc = LinkedHashMap<String, String>()
 
     init {
         spc["*"] = "ー"
@@ -332,56 +332,56 @@ class Abecadlo {
         dzv["джьо"] = "ジョ"
 
         // Initialize romanization maps
-        roman_spc["*"] = ""
-        roman_spc["-"] = "-"
-        roman_spc["..."] = "..."
-        roman_spc["."] = "."
-        roman_spc[","] = ","
-        roman_spc[":"] = ":"
-        roman_spc[";"] = ";"
-        roman_spc["!"] = "!"
-        roman_spc["("] = "("
-        roman_spc[")"] = ")"
-        roman_spc["?"] = "?"
-        roman_spc[" "] = " "
+        // "*" is handled inline in romanize() to accent the preceding vowel
+        romanSpc["-"] = "-"
+        romanSpc["..."] = "..."
+        romanSpc["."] = "."
+        romanSpc[","] = ","
+        romanSpc[":"] = ":"
+        romanSpc[";"] = ";"
+        romanSpc["!"] = "!"
+        romanSpc["("] = "("
+        romanSpc[")"] = ")"
+        romanSpc["?"] = "?"
+        romanSpc[" "] = " "
 
         // Vowels
-        roman_hol["а"] = "a"
-        roman_hol["е"] = "e"
-        roman_hol["і"] = "i"
-        roman_hol["и"] = "y"
-        roman_hol["о"] = "o"
-        roman_hol["у"] = "u"
-        roman_hol["ї"] = "yi"
-        roman_hol["є"] = "ye"
-        roman_hol["ю"] = "yu"
-        roman_hol["я"] = "ya"
+        romanHol["а"] = "a"
+        romanHol["е"] = "e"
+        romanHol["і"] = "i"
+        romanHol["и"] = "y"
+        romanHol["о"] = "o"
+        romanHol["у"] = "u"
+        romanHol["ї"] = "yi"
+        romanHol["є"] = "ye"
+        romanHol["ю"] = "yu"
+        romanHol["я"] = "ya"
 
         // Consonants
-        roman_prh["б"] = "b"
-        roman_prh["в"] = "v"
-        roman_prh["г"] = "h"
-        roman_prh["ґ"] = "g"
-        roman_prh["д"] = "d"
-        roman_prh["ж"] = "zh"
-        roman_prh["з"] = "z"
-        roman_prh["й"] = "y"
-        roman_prh["к"] = "k"
-        roman_prh["л"] = "l"
-        roman_prh["м"] = "m"
-        roman_prh["н"] = "n"
-        roman_prh["п"] = "p"
-        roman_prh["р"] = "r"
-        roman_prh["с"] = "s"
-        roman_prh["т"] = "t"
-        roman_prh["ф"] = "f"
-        roman_prh["х"] = "kh"
-        roman_prh["ц"] = "ts"
-        roman_prh["ч"] = "ch"
-        roman_prh["ш"] = "sh"
-        roman_prh["щ"] = "shch"
-        roman_prh["ь"] = ""
-        roman_prh["'"] = ""
+        romanPrh["б"] = "b"
+        romanPrh["в"] = "v"
+        romanPrh["г"] = "h"
+        romanPrh["ґ"] = "g"
+        romanPrh["д"] = "d"
+        romanPrh["ж"] = "zh"
+        romanPrh["з"] = "z"
+        romanPrh["й"] = "y"
+        romanPrh["к"] = "k"
+        romanPrh["л"] = "l"
+        romanPrh["м"] = "m"
+        romanPrh["н"] = "n"
+        romanPrh["п"] = "p"
+        romanPrh["р"] = "r"
+        romanPrh["с"] = "s"
+        romanPrh["т"] = "t"
+        romanPrh["ф"] = "f"
+        romanPrh["х"] = "kh"
+        romanPrh["ц"] = "ts"
+        romanPrh["ч"] = "ch"
+        romanPrh["ш"] = "sh"
+        romanPrh["щ"] = "shch"
+        romanPrh["ь"] = ""
+        romanPrh["'"] = ""
     }
 
     fun convert(str: String): String {
@@ -394,10 +394,10 @@ class Abecadlo {
         for (i in 0 until s.length - 1) {
             c = s[i].toString()
             nc = s[i + 1].toString()
-            if (prh.containsKey(c) && c != "н" && c == nc) {
-                result += "ッ"
+            result += if (prh.containsKey(c) && c != "н" && c == nc) {
+                "ッ"
             } else {
-                result += c
+                c
             }
         }
         result += nc
@@ -420,7 +420,7 @@ class Abecadlo {
                 }
                 st = st + word.substring(0, word.length - 1) + last + "・"
             } else {
-                st = st + word + "・"
+                st = "$st$word・"
             }
         }
         st = st.substring(0, st.length - 1)
@@ -452,12 +452,24 @@ class Abecadlo {
         return s
     }
 
+    /** Replaces the last plain vowel in [sb] with its acute-accented form. */
+    private fun accentLastVowel(sb: StringBuilder) {
+        val accents = mapOf('a' to 'á', 'e' to 'é', 'i' to 'í', 'o' to 'ó', 'u' to 'ú', 'y' to 'ý')
+        for (i in sb.indices.reversed()) {
+            val replacement = accents[sb[i]]
+            if (replacement != null) {
+                sb.setCharAt(i, replacement)
+                return
+            }
+        }
+    }
+
     fun romanize(str: String): String {
         var s = str.lowercase()
         val result = StringBuilder()
 
-        // Special characters
-        for ((key, value) in roman_spc) {
+        // Special characters (asterisk excluded — handled in character loop)
+        for ((key, value) in romanSpc) {
             s = s.replace(key, value)
         }
 
@@ -509,6 +521,11 @@ class Abecadlo {
                 }
                 'ь' -> {
                     // Omit soft sign
+                }
+
+                // Stress mark — accent the last vowel already written to result
+                '*' -> {
+                    accentLastVowel(result)
                 }
 
                 // Regular consonants
